@@ -15,7 +15,7 @@ body {
 .app {
   max-width: 480px;
   margin: auto;
-  padding: 20px 15px 90px;
+  padding: 20px 15px 40px;
 }
 .card {
   background: white;
@@ -46,12 +46,26 @@ h1 {
   font-weight: bold;
   cursor: pointer;
 }
+.action-button {
+  width: 100%;
+  text-align: center;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
 .cafe { background: #d97706; }
 .lanche { background: #2563eb; }
 .almoco { background: #16a34a; }
 .lanche-tarde { background: #7c3aed; }
 .jantar { background: #0f766e; }
 .ceia { background: #be185d; }
+.favoritos-btn { background: #1d4ed8; }
+.compras-btn { background: #0f766e; }
 
 .option-title {
   margin: 0 0 10px;
@@ -91,38 +105,13 @@ button {
   background: #111;
   margin-bottom: 14px;
 }
-.tabs {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-  border-top: 1px solid #ddd;
-}
-.tab-btn {
-  background: none;
-  color: #444;
+.back-bottom-btn {
+  width: 100%;
+  background: #dc2626;
+  margin-top: 16px;
 }
 .hidden {
   display: none;
-}
-.chip {
-  padding: 8px 10px;
-  background: #eee;
-  border-radius: 20px;
-  margin: 5px;
-  display: inline-block;
-  cursor: pointer;
-}
-.summary {
-  background: black;
-  color: white;
-  padding: 15px;
-  border-radius: 15px;
-  margin-top: 10px;
 }
 .food-row {
   margin: 10px 0;
@@ -161,6 +150,44 @@ button {
   color: #666;
   margin-top: 6px;
 }
+.fav-list, .shopping-list {
+  padding-left: 18px;
+}
+.fav-list li, .shopping-list li {
+  margin-bottom: 8px;
+}
+.shopping-category {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #e5e7eb;
+  font-weight: bold;
+}
+.shopping-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  padding: 8px 10px;
+  background: #fafafa;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.shopping-item.checked {
+  text-decoration: line-through;
+  color: #888;
+  background: #ecfdf5;
+}
+.small-note {
+  font-size: 12px;
+  color: #666;
+  margin-top: 8px;
+}
+hr.soft {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 14px 0;
+}
 </style>
 </head>
 <body>
@@ -172,13 +199,41 @@ button {
   <div id="home" class="screen active">
     <div class="card">
       <div class="sub">Escolha a refeição que você quer consultar.</div>
+
       <button class="meal-button cafe" onclick="openMeal('cafeScreen')">☀️ Café da manhã</button>
       <button class="meal-button lanche" onclick="openMeal('lancheScreen')">🍎 Lanche da manhã</button>
       <button class="meal-button almoco" onclick="openMeal('almocoScreen')">🍽️ Almoço</button>
       <button class="meal-button lanche-tarde" onclick="openMeal('lancheTardeScreen')">☕ Lanche da tarde</button>
       <button class="meal-button jantar" onclick="openMeal('jantarScreen')">🌙 Jantar</button>
       <button class="meal-button ceia" onclick="openMeal('ceiaScreen')">🌜 Ceia</button>
+
+      <hr class="soft">
+
+      <button class="action-button favoritos-btn" onclick="openMeal('favScreen')">⭐ Favoritos</button>
+      <button class="action-button compras-btn" onclick="openMeal('shoppingScreen')">🛒 Lista de compras</button>
     </div>
+  </div>
+
+  <!-- FAVORITOS -->
+  <div id="favScreen" class="screen">
+    <button class="back-btn" onclick="goHome()">← Voltar</button>
+    <div class="card">
+      <h3 class="option-title" style="background:#1d4ed8;">Favoritos</h3>
+      <ul id="list" class="fav-list"></ul>
+    </div>
+    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
+  </div>
+
+  <!-- LISTA DE COMPRAS -->
+  <div id="shoppingScreen" class="screen">
+    <button class="back-btn" onclick="goHome()">← Voltar</button>
+    <div class="card">
+      <h3 class="option-title" style="background:#0f766e;">Lista de compras</h3>
+      <div class="sub">Toque no item para marcar. Está organizada por tipo de produto e em ordem alfabética.</div>
+      <div id="shoppingContainer"></div>
+      <div class="small-note">Dica: essa lista reúne os itens constantes no seu PDF em formato prático para mercado e feira.</div>
+    </div>
+    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
   </div>
 
   <!-- CAFÉ DA MANHÃ -->
@@ -348,6 +403,8 @@ button {
 
       <button onclick="save('Café da manhã - Opção 3')">Salvar</button>
     </div>
+
+    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
   </div>
 
   <!-- LANCHE DA MANHÃ -->
@@ -458,6 +515,8 @@ button {
 
       <button onclick="save('Lanche da manhã - Opção 3')">Salvar</button>
     </div>
+
+    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
   </div>
 
   <!-- ALMOÇO -->
@@ -754,6 +813,8 @@ button {
 
       <button onclick="save('Almoço - Opção 3')">Salvar</button>
     </div>
+
+    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
   </div>
 
   <!-- LANCHE DA TARDE -->
@@ -921,6 +982,8 @@ button {
 
       <button onclick="save('Lanche da tarde - Opção 3')">Salvar</button>
     </div>
+
+    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
   </div>
 
   <!-- JANTAR -->
@@ -1151,6 +1214,8 @@ button {
 
       <button onclick="save('Jantar - Opção 3')">Salvar</button>
     </div>
+
+    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
   </div>
 
   <!-- CEIA -->
@@ -1271,43 +1336,141 @@ button {
 
       <button onclick="save('Ceia - Opção 3')">Salvar</button>
     </div>
+
+    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
   </div>
 
-  <!-- MONTAR -->
-  <div id="builder" class="screen">
-    <div class="card">
-      <h3 class="option-title" style="background:#14532d;">Montar refeição</h3>
-      <div>
-        <div class="chip" onclick="select('Arroz - 6 colheres')">Arroz</div>
-        <div class="chip" onclick="select('Frango - 100g')">Frango</div>
-        <div class="chip" onclick="select('Feijão - 1 concha')">Feijão</div>
-        <div class="chip" onclick="select('Brócolis - 80 a 100g')">Brócolis</div>
-        <div class="chip" onclick="select('Alface - à vontade')">Alface</div>
-        <div class="chip" onclick="select('Laranja - 1 unidade')">Laranja</div>
-      </div>
-      <div class="summary" id="summary">Monte sua refeição</div>
-      <button onclick="saveMeal()">Salvar</button>
-    </div>
-  </div>
-
-  <!-- FAVORITOS -->
-  <div id="fav" class="screen">
-    <div class="card">
-      <h3 class="option-title" style="background:#2563eb;">Favoritos</h3>
-      <ul id="list"></ul>
-    </div>
-  </div>
-</div>
-
-<div class="tabs">
-  <button class="tab-btn" onclick="show('home')">Hoje</button>
-  <button class="tab-btn" onclick="show('builder')">Montar</button>
-  <button class="tab-btn" onclick="show('fav')">Favoritos</button>
 </div>
 
 <script>
-let selected = [];
 let favs = JSON.parse(localStorage.getItem('favs') || '[]');
+let shoppingChecks = JSON.parse(localStorage.getItem('shoppingChecks') || '{}');
+
+const shoppingData = {
+  "Carboidratos": [
+    "Arroz branco",
+    "Arroz integral",
+    "Aveia",
+    "Batata doce",
+    "Batata inglesa",
+    "Cuscuz",
+    "Macarrão",
+    "Mandioquinha",
+    "Mandioca",
+    "Milho",
+    "Pão de forma",
+    "Pão francês",
+    "Pão integral",
+    "Pão sírio",
+    "Polenta",
+    "Quinoa",
+    "Tapioca",
+    "Torrada magic toast"
+  ],
+  "Frutas": [
+    "Abacate",
+    "Abacaxi",
+    "Ameixa",
+    "Banana",
+    "Caqui",
+    "Goiaba",
+    "Kiwi",
+    "Laranja",
+    "Maçã",
+    "Mamão",
+    "Manga",
+    "Melancia",
+    "Melão",
+    "Morango",
+    "Pêra",
+    "Pêssego",
+    "Uva"
+  ],
+  "Leguminosas": [
+    "Ervilha",
+    "Feijão branco",
+    "Feijão carioca",
+    "Feijão preto",
+    "Grão-de-bico",
+    "Lentilha",
+    "Soja"
+  ],
+  "Legumes e verduras": [
+    "Abobrinha",
+    "Abóbora",
+    "Acelga",
+    "Agrião",
+    "Alface",
+    "Berinjela",
+    "Brócolis",
+    "Cenoura",
+    "Chuchu",
+    "Couve",
+    "Couve-flor",
+    "Espinafre",
+    "Escarola",
+    "Pimentão",
+    "Repolho",
+    "Rúcula",
+    "Tomate",
+    "Vagem"
+  ],
+  "Laticínios": [
+    "Cottage",
+    "Iogurte desnatado",
+    "Iogurte grego",
+    "Iogurte natural",
+    "Leite desnatado",
+    "Leite em pó desnatado",
+    "Leite integral",
+    "Leite semidesnatado",
+    "Minas frescal",
+    "Muçarela",
+    "Queijo branco",
+    "Queijo coalho",
+    "Queijo prato",
+    "Requeijão",
+    "Requeijão light",
+    "Ricota"
+  ],
+  "Proteínas": [
+    "Atum",
+    "Coxão mole",
+    "Filé de frango",
+    "Filé mignon",
+    "Frango desfiado",
+    "Lagarto",
+    "Maminha",
+    "Merluza",
+    "Ovos",
+    "Patinho",
+    "Peito de frango",
+    "Pescada",
+    "Sobrecoxa de frango",
+    "Tilápia"
+  ],
+  "Sementes e cereais": [
+    "Amaranto",
+    "Chia",
+    "Gergelim",
+    "Granola",
+    "Linhaça",
+    "Semente de abóbora",
+    "Semente de girassol"
+  ],
+  "Temperos e extras": [
+    "Açafrão",
+    "Alho",
+    "Café",
+    "Canela",
+    "Cebola",
+    "Chá",
+    "Curry",
+    "Lemon pepper",
+    "Orégano",
+    "Salsinha"
+  ]
+};
 
 function show(tab){
   document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
@@ -1324,33 +1487,27 @@ function goHome(){
   document.getElementById('home').classList.add('active');
 }
 
-function select(item){
-  if (!selected.includes(item)) {
-    selected.push(item);
-  }
-  document.getElementById('summary').innerText = selected.join(' + ');
-}
-
-function saveMeal(){
-  if(selected.length === 0) return;
-  favs.push(selected.join(' + '));
-  localStorage.setItem('favs', JSON.stringify(favs));
-  alert('Salvo!');
-  load();
-}
-
 function save(item){
   favs.push(item);
   localStorage.setItem('favs', JSON.stringify(favs));
   alert('Salvo!');
-  load();
+  loadFavorites();
 }
 
-function load(){
-  let list = document.getElementById('list');
+function loadFavorites(){
+  const list = document.getElementById('list');
+  if (!list) return;
   list.innerHTML = '';
+
+  if (favs.length === 0) {
+    const li = document.createElement('li');
+    li.innerText = 'Nenhum favorito salvo ainda.';
+    list.appendChild(li);
+    return;
+  }
+
   favs.forEach(f => {
-    let li = document.createElement('li');
+    const li = document.createElement('li');
     li.innerText = f;
     list.appendChild(li);
   });
@@ -1361,7 +1518,43 @@ function toggleSubs(id){
   box.classList.toggle('hidden');
 }
 
-load();
+function renderShopping(){
+  const container = document.getElementById('shoppingContainer');
+  if (!container) return;
+  container.innerHTML = '';
+
+  Object.keys(shoppingData).sort().forEach(category => {
+    const title = document.createElement('div');
+    title.className = 'shopping-category';
+    title.innerText = category;
+    container.appendChild(title);
+
+    shoppingData[category].slice().sort().forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'shopping-item' + (shoppingChecks[item] ? ' checked' : '');
+      div.onclick = () => toggleShopping(item);
+
+      const checkbox = document.createElement('span');
+      checkbox.innerText = shoppingChecks[item] ? '✅' : '⬜';
+
+      const text = document.createElement('span');
+      text.innerText = item;
+
+      div.appendChild(checkbox);
+      div.appendChild(text);
+      container.appendChild(div);
+    });
+  });
+}
+
+function toggleShopping(item){
+  shoppingChecks[item] = !shoppingChecks[item];
+  localStorage.setItem('shoppingChecks', JSON.stringify(shoppingChecks));
+  renderShopping();
+}
+
+loadFavorites();
+renderShopping();
 </script>
 
 </body>
