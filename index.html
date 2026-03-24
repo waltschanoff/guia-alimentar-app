@@ -161,10 +161,6 @@ button {
   color: #666;
   margin-top: 6px;
 }
-.placeholder {
-  color: #666;
-  font-size: 14px;
-}
 </style>
 </head>
 <body>
@@ -178,7 +174,7 @@ button {
       <div class="sub">Escolha a refeição que você quer consultar.</div>
       <button class="meal-button cafe" onclick="openMeal('cafeScreen')">☀️ Café da manhã</button>
       <button class="meal-button lanche" onclick="openMeal('lancheScreen')">🍎 Lanche da manhã</button>
-      <button class="meal-button almoco" onclick="alert('Próximo passo: montar tela completa do almoço')">🍽️ Almoço</button>
+      <button class="meal-button almoco" onclick="openMeal('almocoScreen')">🍽️ Almoço</button>
       <button class="meal-button lanche-tarde" onclick="alert('Próximo passo: montar tela completa do lanche da tarde')">☕ Lanche da tarde</button>
       <button class="meal-button jantar" onclick="alert('Próximo passo: montar tela completa do jantar')">🌙 Jantar</button>
       <button class="meal-button ceia" onclick="alert('Próximo passo: montar tela completa da ceia')">🌜 Ceia</button>
@@ -461,6 +457,302 @@ button {
       </div>
 
       <button onclick="save('Lanche da manhã - Opção 3')">Salvar</button>
+    </div>
+  </div>
+
+  <!-- ALMOÇO -->
+  <div id="almocoScreen" class="screen">
+    <button class="back-btn" onclick="goHome()">← Voltar</button>
+
+    <div class="card">
+      <h3 class="option-title" style="background:#16a34a;">Opção 1</h3>
+      <div class="option-subtitle">🍽️ Opção tradicional</div>
+      <ul class="details">
+        <li>🍚 Arroz - 6 colheres de sopa, 120g</li>
+        <li>🫘 Feijão - 1 concha, 80g</li>
+        <li>🍗 Filé de frango grelhado - 1 filé, 100g</li>
+        <li>🥦 Legumes cozidos - 2 colheres de servir, 100g</li>
+        <li>🥬 Verduras folhosas - à vontade</li>
+        <li>🍊 Fruta rica em vitamina C - 1 unidade</li>
+      </ul>
+
+      <div class="food-row">
+        <div class="food-title">🍚 Arroz - 6 colheres de sopa, 120g</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco1-arroz')">Ver substituições</button>
+        <div id="almoco1-arroz" class="substitutions hidden">
+          <ul>
+            <li>Macarrão - 4 a 5 colheres de sopa cheias, 100g</li>
+            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
+            <li>Quinoa - 4 a 5 colheres de sopa cheias, 100g</li>
+            <li>Batata inglesa - 1 unidade média ou 120 a 130g</li>
+            <li>Batata doce - 1 unidade média ou 120 a 130g</li>
+            <li>Pão integral - 2 fatias</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de carboidratos.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🫘 Feijão - 1 concha, 80g</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco1-feijao')">Ver substituições</button>
+        <div id="almoco1-feijao" class="substitutions hidden">
+          <ul>
+            <li>Lentilha - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
+            <li>Grão-de-bico - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
+            <li>Ervilha - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
+            <li>Feijão branco - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de leguminosas.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🍗 Filé de frango grelhado - 1 filé, 100g</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco1-frango')">Ver substituições</button>
+        <div id="almoco1-frango" class="substitutions hidden">
+          <ul>
+            <li>Patinho - 1 filé médio ou palma da mão, 100 a 120g</li>
+            <li>Tilápia - 1 filé médio, 100 a 120g</li>
+            <li>Merluza - 1 filé médio, 100 a 120g</li>
+            <li>Ovos - 2 unidades médias, 100g</li>
+          </ul>
+          <div class="note">Trocas diretas do grupo de proteínas.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🥦 Legumes cozidos - 2 colheres de servir, 100g</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco1-legumes')">Ver substituições</button>
+        <div id="almoco1-legumes" class="substitutions hidden">
+          <ul>
+            <li>Brócolis - 80 a 100g cozidos</li>
+            <li>Cenoura - 80 a 100g cozidos</li>
+            <li>Abobrinha - 80 a 100g cozidos</li>
+            <li>Vagem - 80 a 100g cozidos</li>
+            <li>Chuchu - 80 a 100g cozidos</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de legumes.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🥬 Verduras folhosas - à vontade</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco1-folhas')">Ver substituições</button>
+        <div id="almoco1-folhas" class="substitutions hidden">
+          <ul>
+            <li>Alface - prato cheio</li>
+            <li>Rúcula - prato cheio</li>
+            <li>Couve - prato cheio</li>
+            <li>Espinafre - prato cheio</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de folhas.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🍊 Fruta rica em vitamina C - 1 unidade</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco1-fruta')">Ver substituições</button>
+        <div id="almoco1-fruta" class="substitutions hidden">
+          <ul>
+            <li>Laranja - 1 unidade</li>
+            <li>Kiwi - 1 unidade</li>
+            <li>Morango - 1 xícara de chá picada, 120g</li>
+            <li>Abacaxi - 1 xícara de chá picada, 120g</li>
+            <li>Mamão - 1 xícara de chá picada, 120g</li>
+          </ul>
+          <div class="note">Trocas práticas de fruta rica em vitamina C.</div>
+        </div>
+      </div>
+
+      <button onclick="save('Almoço - Opção 1')">Salvar</button>
+    </div>
+
+    <div class="card">
+      <h3 class="option-title" style="background:#16a34a;">Opção 2</h3>
+      <div class="option-subtitle">🍗 Opção assada</div>
+      <ul class="details">
+        <li>🥔 Batata inglesa assada - 2 colheres de servir, 120g</li>
+        <li>🍗 Sobrecoxa de frango sem pele assada - 1 unidade</li>
+        <li>🫘 Grão-de-bico - 1 colher de servir, 50g</li>
+        <li>🥦 Legumes cozidos - 2 colheres de servir, 100g</li>
+        <li>🥬 Verduras folhosas - à vontade</li>
+        <li>🍊 Fruta rica em vitamina C - 1 unidade</li>
+      </ul>
+
+      <div class="food-row">
+        <div class="food-title">🥔 Batata inglesa assada - 2 colheres de servir, 120g</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco2-batata')">Ver substituições</button>
+        <div id="almoco2-batata" class="substitutions hidden">
+          <ul>
+            <li>Arroz - 4 a 5 colheres de sopa cheias, 100g</li>
+            <li>Macarrão - 4 a 5 colheres de sopa cheias, 100g</li>
+            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
+            <li>Quinoa - 4 a 5 colheres de sopa cheias, 100g</li>
+            <li>Pão integral - 2 fatias</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de carboidratos.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🍗 Sobrecoxa de frango sem pele assada - 1 unidade</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco2-sobrecoxa')">Ver substituições</button>
+        <div id="almoco2-sobrecoxa" class="substitutions hidden">
+          <ul>
+            <li>Peito de frango - 1 filé médio, 100 a 120g</li>
+            <li>Patinho - 1 filé médio ou palma da mão, 100 a 120g</li>
+            <li>Tilápia - 1 filé médio, 100 a 120g</li>
+            <li>Ovos - 2 unidades médias, 100g</li>
+          </ul>
+          <div class="note">Trocas diretas do grupo de proteínas.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🫘 Grão-de-bico - 1 colher de servir, 50g</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco2-graodebico')">Ver substituições</button>
+        <div id="almoco2-graodebico" class="substitutions hidden">
+          <ul>
+            <li>Feijão - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
+            <li>Lentilha - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
+            <li>Ervilha - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
+            <li>Feijão branco - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de leguminosas.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🥦 Legumes cozidos - 2 colheres de servir, 100g</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco2-legumes')">Ver substituições</button>
+        <div id="almoco2-legumes" class="substitutions hidden">
+          <ul>
+            <li>Brócolis - 80 a 100g cozidos</li>
+            <li>Cenoura - 80 a 100g cozidos</li>
+            <li>Abobrinha - 80 a 100g cozidos</li>
+            <li>Chuchu - 80 a 100g cozidos</li>
+            <li>Vagem - 80 a 100g cozidos</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de legumes.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🥬 Verduras folhosas - à vontade</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco2-folhas')">Ver substituições</button>
+        <div id="almoco2-folhas" class="substitutions hidden">
+          <ul>
+            <li>Alface - prato cheio</li>
+            <li>Rúcula - prato cheio</li>
+            <li>Couve - prato cheio</li>
+            <li>Espinafre - prato cheio</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de folhas.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🍊 Fruta rica em vitamina C - 1 unidade</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco2-fruta')">Ver substituições</button>
+        <div id="almoco2-fruta" class="substitutions hidden">
+          <ul>
+            <li>Laranja - 1 unidade</li>
+            <li>Kiwi - 1 unidade</li>
+            <li>Morango - 1 xícara de chá picada, 120g</li>
+            <li>Abacaxi - 1 xícara de chá picada, 120g</li>
+            <li>Mamão - 1 xícara de chá picada, 120g</li>
+          </ul>
+          <div class="note">Trocas práticas de fruta rica em vitamina C.</div>
+        </div>
+      </div>
+
+      <button onclick="save('Almoço - Opção 2')">Salvar</button>
+    </div>
+
+    <div class="card">
+      <h3 class="option-title" style="background:#16a34a;">Opção 3</h3>
+      <div class="option-subtitle">🥪 Opção rápida</div>
+      <ul class="details">
+        <li>🍞 Pão integral - 2 fatias</li>
+        <li>🍗 Frango desfiado - 3 colheres de sopa, 100g</li>
+        <li>🥦 Legumes - à vontade</li>
+        <li>🥬 Verduras folhosas - à vontade</li>
+        <li>🍊 Fruta rica em vitamina C - 1 unidade</li>
+      </ul>
+
+      <div class="food-row">
+        <div class="food-title">🍞 Pão integral - 2 fatias</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco3-pao')">Ver substituições</button>
+        <div id="almoco3-pao" class="substitutions hidden">
+          <ul>
+            <li>Pão francês - 1 unidade</li>
+            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
+            <li>Arroz - 4 a 5 colheres de sopa cheias, 100g</li>
+            <li>Batata inglesa - 1 unidade média ou 120 a 130g</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de carboidratos.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🍗 Frango desfiado - 3 colheres de sopa, 100g</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco3-frango')">Ver substituições</button>
+        <div id="almoco3-frango" class="substitutions hidden">
+          <ul>
+            <li>Patinho - 1 filé médio ou palma da mão, 100 a 120g</li>
+            <li>Tilápia - 1 filé médio, 100 a 120g</li>
+            <li>Merluza - 1 filé médio, 100 a 120g</li>
+            <li>Ovos - 2 unidades médias, 100g</li>
+          </ul>
+          <div class="note">Trocas diretas do grupo de proteínas.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🥦 Legumes - à vontade</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco3-legumes')">Ver substituições</button>
+        <div id="almoco3-legumes" class="substitutions hidden">
+          <ul>
+            <li>Brócolis - 80 a 100g cozidos</li>
+            <li>Cenoura - 80 a 100g cozidos</li>
+            <li>Abobrinha - 80 a 100g cozidos</li>
+            <li>Chuchu - 80 a 100g cozidos</li>
+            <li>Vagem - 80 a 100g cozidos</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de legumes.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🥬 Verduras folhosas - à vontade</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco3-folhas')">Ver substituições</button>
+        <div id="almoco3-folhas" class="substitutions hidden">
+          <ul>
+            <li>Alface - prato cheio</li>
+            <li>Rúcula - prato cheio</li>
+            <li>Couve - prato cheio</li>
+            <li>Espinafre - prato cheio</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de folhas.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🍊 Fruta rica em vitamina C - 1 unidade</div>
+        <button class="sub-btn" onclick="toggleSubs('almoco3-fruta')">Ver substituições</button>
+        <div id="almoco3-fruta" class="substitutions hidden">
+          <ul>
+            <li>Laranja - 1 unidade</li>
+            <li>Kiwi - 1 unidade</li>
+            <li>Morango - 1 xícara de chá picada, 120g</li>
+            <li>Abacaxi - 1 xícara de chá picada, 120g</li>
+            <li>Mamão - 1 xícara de chá picada, 120g</li>
+          </ul>
+          <div class="note">Trocas práticas de fruta rica em vitamina C.</div>
+        </div>
+      </div>
+
+      <button onclick="save('Almoço - Opção 3')">Salvar</button>
     </div>
   </div>
 
