@@ -129,12 +129,72 @@ button {
   <div id="home">
     <div class="card">
       <h3>Café da manhã</h3>
-      <div class="sub">Opções com quantidade</div>
+      <div class="sub">Opção base com quantidade</div>
       <ul class="details">
         <li>Pão francês - 1 unidade</li>
         <li>Ovo - 1 unidade</li>
         <li>Cappuccino saudável + água - 1 xícara de chá, 240ml</li>
       </ul>
+
+      <div class="food-row">
+        <div class="food-title">Pão francês - 1 unidade</div>
+        <button class="sub-btn" onclick="toggleSubs('subs-pao')">Ver substituições</button>
+        <div id="subs-pao" class="substitutions hidden">
+          <ul>
+            <li>Pão integral - 2 fatias</li>
+            <li>Pão de forma - 2 fatias, 50 a 60g</li>
+            <li>Pão sírio pequeno - 1 unidade</li>
+            <li>Arroz - 4 a 5 colheres de sopa cheias, 100g cozidos</li>
+            <li>Macarrão - 4 a 5 colheres de sopa cheias, 100g cozidos</li>
+            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g cozidos</li>
+            <li>Polenta - 4 a 5 colheres de sopa cheias, 100g cozidos</li>
+            <li>Quinoa - 4 a 5 colheres de sopa cheias, 100g cozidos</li>
+            <li>Batata inglesa - 1 unidade média ou 120 a 130g cozidos</li>
+            <li>Batata doce - 1 unidade média ou 120 a 130g cozidos</li>
+            <li>Mandioca - 1 unidade média ou 120 a 130g cozidos</li>
+            <li>Mandioquinha - 1 unidade média ou 120 a 130g cozidos</li>
+            <li>Milho - 1 unidade média ou 120 a 130g cozidos</li>
+          </ul>
+          <div class="note">Equivalência do grupo de carboidratos e pães. :contentReference[oaicite:2]{index=2}</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">Ovo - 1 unidade</div>
+        <button class="sub-btn" onclick="toggleSubs('subs-ovo')">Ver substituições</button>
+        <div id="subs-ovo" class="substitutions hidden">
+          <ul>
+            <li>Ovos - 2 unidades médias, 100g</li>
+            <li>Patinho - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+            <li>Maminha - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+            <li>Filé mignon - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+            <li>Coxão mole - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+            <li>Peito de frango - 1 filé médio, 100 a 120g</li>
+            <li>Sobrecoxa de frango sem pele - 1 unidade pequena, 100 a 120g</li>
+            <li>Tilápia - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+            <li>Pescada - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+            <li>Merluza - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+          </ul>
+          <div class="note">Equivalência do grupo de proteínas. :contentReference[oaicite:3]{index=3}</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">Cappuccino saudável + água - 1 xícara de chá, 240ml</div>
+        <button class="sub-btn" onclick="toggleSubs('subs-cappuccino')">Ver substituições</button>
+        <div id="subs-cappuccino" class="substitutions hidden">
+          <ul>
+            <li>Leite integral - 1 copo, 200ml</li>
+            <li>Leite desnatado - 1 copo, 200ml</li>
+            <li>Leite semidesnatado - 1 copo, 200ml</li>
+            <li>Iogurte natural - 1 copo, 200ml</li>
+            <li>Iogurte desnatado - 1 copo, 200ml</li>
+            <li>Iogurte grego - 1 pote, 100 a 120g</li>
+          </ul>
+          <div class="note">Equivalência mais próxima dentro do grupo de laticínios. A água continua livre. :contentReference[oaicite:4]{index=4}</div>
+        </div>
+      </div>
+
       <button onclick="save('Café da manhã')">Salvar</button>
     </div>
 
@@ -179,7 +239,7 @@ button {
             <li>Pão francês - 1 unidade</li>
             <li>Pão integral - 2 fatias</li>
           </ul>
-          <div class="note">Equivalência do grupo de carboidratos.</div>
+          <div class="note">Equivalência do grupo de carboidratos. :contentReference[oaicite:5]{index=5}</div>
         </div>
       </div>
 
@@ -196,7 +256,7 @@ button {
             <li>Lentilha - 1 concha média ou 4 colheres de sopa cheias, 100g cozidos</li>
             <li>Soja - 1 concha média ou 4 colheres de sopa cheias, 100g cozidos</li>
           </ul>
-          <div class="note">Equivalência do grupo de leguminosas.</div>
+          <div class="note">Equivalência do grupo de leguminosas. :contentReference[oaicite:6]{index=6}</div>
         </div>
       </div>
 
@@ -215,7 +275,7 @@ button {
             <li>Ovos - 2 unidades médias, 100g</li>
             <li>Sobrecoxa de frango sem pele - 1 unidade pequena, 100 a 120g</li>
           </ul>
-          <div class="note">Equivalência do grupo de proteínas.</div>
+          <div class="note">Equivalência do grupo de proteínas. :contentReference[oaicite:7]{index=7}</div>
         </div>
       </div>
 
@@ -235,7 +295,7 @@ button {
             <li>Abobrinha - 1 concha média ou 1 xícara de chá cheia, 80 a 100g cozidos</li>
             <li>Repolho - 1 concha média ou 1 xícara de chá cheia, 80 a 100g cozidos</li>
           </ul>
-          <div class="note">Equivalência do grupo de legumes.</div>
+          <div class="note">Equivalência do grupo de legumes. :contentReference[oaicite:8]{index=8}</div>
         </div>
       </div>
 
@@ -252,7 +312,7 @@ button {
             <li>Couve - 1 prato cheio ou 2 xícaras de chá bem cheias, 80 a 100g cruas</li>
             <li>Espinafre - 1 prato cheio ou 2 xícaras de chá bem cheias, 80 a 100g cruas</li>
           </ul>
-          <div class="note">Equivalência do grupo de verduras folhosas.</div>
+          <div class="note">Equivalência do grupo de verduras folhosas. :contentReference[oaicite:9]{index=9}</div>
         </div>
       </div>
 
@@ -272,7 +332,7 @@ button {
             <li>Laranja - 1 unidade média ou 1 xícara de chá picada, 120g</li>
             <li>Abacaxi - 1 unidade média ou 1 xícara de chá picada, 120g</li>
           </ul>
-          <div class="note">Vitamina C ajuda na absorção de nutrientes como ferro.</div>
+          <div class="note">Vitamina C ajuda na absorção de nutrientes como ferro. :contentReference[oaicite:10]{index=10}</div>
         </div>
       </div>
 
