@@ -1,1506 +1,928 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia Alimentar</title>
-<link rel="manifest" href="manifest.json">
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  color: #222;
-}
-.app {
-  max-width: 480px;
-  margin: auto;
-  padding: 20px 15px 40px;
-}
-.card {
-  background: white;
-  padding: 15px;
-  border-radius: 18px;
-  margin-bottom: 14px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
-h1 {
-  margin-bottom: 20px;
-  color: #14532d;
-}
-.screen {
-  display: none;
-}
-.screen.active {
-  display: block;
-}
-.meal-button {
-  width: 100%;
-  text-align: left;
-  padding: 16px;
-  border: none;
-  border-radius: 16px;
-  margin-bottom: 12px;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.action-button {
-  width: 100%;
-  text-align: center;
-  padding: 14px;
-  border: none;
-  border-radius: 14px;
-  margin-bottom: 12px;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.cafe { background: #d97706; }
-.lanche { background: #2563eb; }
-.almoco { background: #16a34a; }
-.lanche-tarde { background: #7c3aed; }
-.jantar { background: #0f766e; }
-.ceia { background: #be185d; }
-.favoritos-btn { background: #1d4ed8; }
-.compras-btn { background: #0f766e; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guia Alimentar</title>
+  <link rel="manifest" href="manifest.json" />
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+    }
+    .app {
+      max-width: 480px;
+      margin: auto;
+      padding: 20px 15px 40px;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #14532d;
+    }
+    .screen {
+      display: none;
+    }
+    .screen.active {
+      display: block;
+    }
+    .meal-button {
+      width: 100%;
+      text-align: left;
+      padding: 16px;
+      border: none;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .action-button {
+      width: 100%;
+      text-align: center;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      margin-bottom: 12px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .mini-button {
+      width: 100%;
+      text-align: center;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .cafe { background: #d97706; }
+    .lanche { background: #2563eb; }
+    .almoco { background: #16a34a; }
+    .lanche-tarde { background: #7c3aed; }
+    .jantar { background: #0f766e; }
+    .ceia { background: #be185d; }
+    .favoritos-btn { background: #1d4ed8; }
+    .compras-btn { background: #0f766e; }
+    .receitas-btn { background: #ea580c; }
 
-.option-title {
-  margin: 0 0 10px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  font-size: 18px;
-  color: white;
-  background: #14532d;
-}
-.option-subtitle {
-  font-size: 13px;
-  color: #166534;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-.sub {
-  color: #555;
-  margin-bottom: 10px;
-}
-.details {
-  margin: 10px 0;
-  padding-left: 18px;
-  color: #222;
-}
-.details li {
-  margin-bottom: 6px;
-}
-button {
-  padding: 10px 12px;
-  border: none;
-  border-radius: 10px;
-  background: #16a34a;
-  color: white;
-  cursor: pointer;
-}
-.back-btn {
-  background: #111;
-  margin-bottom: 14px;
-}
-.back-bottom-btn {
-  width: 100%;
-  background: #dc2626;
-  margin-top: 16px;
-}
-.hidden {
-  display: none;
-}
-.food-row {
-  margin: 10px 0;
-  padding: 10px;
-  background: #fafafa;
-  border-radius: 12px;
-  border: 1px solid #eee;
-}
-.food-title {
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-.sub-btn {
-  background: #111;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 8px 12px;
-  font-size: 13px;
-}
-.substitutions {
-  margin-top: 10px;
-  padding: 10px;
-  background: #f1f5f9;
-  border-radius: 12px;
-}
-.substitutions ul {
-  margin: 8px 0 0;
-  padding-left: 18px;
-}
-.substitutions li {
-  margin-bottom: 6px;
-}
-.note {
-  font-size: 12px;
-  color: #666;
-  margin-top: 6px;
-}
-.fav-list, .print-list {
-  padding-left: 18px;
-}
-.fav-list li, .print-list li {
-  margin-bottom: 8px;
-}
-.shopping-category {
-  margin-top: 14px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: #e5e7eb;
-  font-weight: bold;
-}
-.shopping-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 8px 0;
-  padding: 8px 10px;
-  background: #fafafa;
-  border-radius: 10px;
-  cursor: pointer;
-}
-.shopping-item.checked {
-  text-decoration: line-through;
-  color: #888;
-  background: #ecfdf5;
-}
-.small-note {
-  font-size: 12px;
-  color: #666;
-  margin-top: 8px;
-}
-hr.soft {
-  border: none;
-  border-top: 1px solid #eee;
-  margin: 14px 0;
-}
-.print-card {
-  background: #fff7ed;
-  border: 1px dashed #fb923c;
-}
-.print-empty {
-  color: #777;
-  font-style: italic;
-}
-</style>
+    .option-title {
+      margin: 0 0 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 18px;
+      color: white;
+      background: #14532d;
+    }
+    .option-subtitle {
+      font-size: 13px;
+      color: #166534;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .sub {
+      color: #555;
+      margin-bottom: 10px;
+    }
+    .details {
+      margin: 10px 0;
+      padding-left: 18px;
+      color: #222;
+    }
+    .details li {
+      margin-bottom: 6px;
+    }
+    button {
+      padding: 10px 12px;
+      border: none;
+      border-radius: 10px;
+      background: #16a34a;
+      color: white;
+      cursor: pointer;
+    }
+    .back-btn {
+      background: #111;
+      margin-bottom: 14px;
+    }
+    .back-bottom-btn {
+      width: 100%;
+      background: #dc2626;
+      margin-top: 16px;
+    }
+    .hidden {
+      display: none;
+    }
+    .food-row {
+      margin: 10px 0;
+      padding: 10px;
+      background: #fafafa;
+      border-radius: 12px;
+      border: 1px solid #eee;
+    }
+    .food-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .sub-btn {
+      background: #111;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+    .substitutions {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f1f5f9;
+      border-radius: 12px;
+    }
+    .substitutions ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+    .substitutions li {
+      margin-bottom: 6px;
+    }
+    .note {
+      font-size: 12px;
+      color: #666;
+      margin-top: 6px;
+    }
+    .fav-list, .print-list {
+      padding-left: 18px;
+    }
+    .fav-list li, .print-list li {
+      margin-bottom: 8px;
+    }
+    .shopping-category {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #e5e7eb;
+      font-weight: bold;
+    }
+    .shopping-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 8px 0;
+      padding: 8px 10px;
+      background: #fafafa;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .shopping-item.checked {
+      text-decoration: line-through;
+      color: #888;
+      background: #ecfdf5;
+    }
+    .small-note {
+      font-size: 12px;
+      color: #666;
+      margin-top: 8px;
+    }
+    hr.soft {
+      border: none;
+      border-top: 1px solid #eee;
+      margin: 14px 0;
+    }
+    .print-card {
+      background: #fff7ed;
+      border: 1px dashed #fb923c;
+    }
+    .print-empty {
+      color: #777;
+      font-style: italic;
+    }
+    .recipe-card {
+      background: #fffaf5;
+      border: 1px solid #fed7aa;
+    }
+    .recipe-title {
+      margin: 0 0 8px;
+      color: #9a3412;
+      font-size: 18px;
+    }
+    .shopping-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 12px 0 4px;
+    }
+    .clear-btn { background: #b91c1c; }
+    .share-btn { background: #2563eb; }
+    .pdf-btn { background: #7c3aed; }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #pdfArea, #pdfArea * {
+        visibility: visible;
+      }
+      #pdfArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white;
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="app">
+    <h1>Guia Alimentar</h1>
 
-<div class="app">
-  <h1>Guia Alimentar</h1>
+    <!-- HOME -->
+    <div id="home" class="screen active">
+      <div class="card">
+        <div class="sub">Escolha a refeição que você quer consultar.</div>
 
-  <!-- TELA INICIAL -->
-  <div id="home" class="screen active">
-    <div class="card">
-      <div class="sub">Escolha a refeição que você quer consultar.</div>
+        <button class="meal-button cafe" onclick="openMeal('cafeScreen')">☀️ Café da manhã</button>
+        <button class="meal-button lanche" onclick="openMeal('lancheScreen')">🍎 Lanche da manhã</button>
+        <button class="meal-button almoco" onclick="openMeal('almocoScreen')">🍽️ Almoço</button>
+        <button class="meal-button lanche-tarde" onclick="openMeal('lancheTardeScreen')">☕ Lanche da tarde</button>
+        <button class="meal-button jantar" onclick="openMeal('jantarScreen')">🌙 Jantar</button>
+        <button class="meal-button ceia" onclick="openMeal('ceiaScreen')">🌜 Ceia</button>
 
-      <button class="meal-button cafe" onclick="openMeal('cafeScreen')">☀️ Café da manhã</button>
-      <button class="meal-button lanche" onclick="openMeal('lancheScreen')">🍎 Lanche da manhã</button>
-      <button class="meal-button almoco" onclick="openMeal('almocoScreen')">🍽️ Almoço</button>
-      <button class="meal-button lanche-tarde" onclick="openMeal('lancheTardeScreen')">☕ Lanche da tarde</button>
-      <button class="meal-button jantar" onclick="openMeal('jantarScreen')">🌙 Jantar</button>
-      <button class="meal-button ceia" onclick="openMeal('ceiaScreen')">🌜 Ceia</button>
+        <hr class="soft">
 
-      <hr class="soft">
-
-      <button class="action-button favoritos-btn" onclick="openMeal('favScreen')">⭐ Favoritos</button>
-      <button class="action-button compras-btn" onclick="openMeal('shoppingScreen')">🛒 Lista de compras</button>
+        <button class="action-button favoritos-btn" onclick="openMeal('favScreen')">⭐ Favoritos</button>
+        <button class="action-button compras-btn" onclick="openMeal('shoppingScreen')">🛒 Lista de compras</button>
+        <button class="action-button receitas-btn" onclick="openMeal('recipesScreen')">📖 Receitas</button>
+      </div>
     </div>
+
+    <!-- FAVORITOS -->
+    <div id="favScreen" class="screen">
+      <button class="back-btn" onclick="goHome()">← Voltar</button>
+      <div class="card">
+        <h3 class="option-title" style="background:#1d4ed8;">Favoritos</h3>
+        <ul id="list" class="fav-list"></ul>
+      </div>
+      <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
+    </div>
+
+    <!-- LISTA DE COMPRAS -->
+    <div id="shoppingScreen" class="screen">
+      <button class="back-btn" onclick="goHome()">← Voltar</button>
+      <div class="card">
+        <h3 class="option-title" style="background:#0f766e;">Lista de compras</h3>
+        <div class="sub">Toque no item para marcar. Está organizada por tipo de produto e em ordem alfabética.</div>
+
+        <div class="shopping-actions">
+          <button class="mini-button clear-btn" onclick="clearShopping()">🧹 Limpar lista</button>
+          <button class="mini-button share-btn" onclick="shareShoppingList()">📤 Compartilhar lista</button>
+          <button class="mini-button pdf-btn" onclick="generateShoppingPDF()">📄 Gerar PDF</button>
+        </div>
+
+        <div id="shoppingContainer"></div>
+        <div class="small-note">Dica: marque o que precisa e use a lista pronta no final para tirar print.</div>
+      </div>
+
+      <div class="card print-card" id="pdfArea">
+        <h3 class="option-title" style="background:#ea580c;">Minha lista para print</h3>
+        <div class="sub">Só aparecem aqui os itens que você marcou acima.</div>
+        <div id="printListContainer"></div>
+      </div>
+
+      <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
+    </div>
+
+    <!-- RECEITAS -->
+    <div id="recipesScreen" class="screen">
+      <button class="back-btn" onclick="goHome()">← Voltar</button>
+
+      <div class="card recipe-card">
+        <h3 class="recipe-title">🍳 Ovos cozidos cremosos</h3>
+        <div class="sub"><strong>Ingredientes</strong></div>
+        <ul class="details">
+          <li>1 ovo cozido</li>
+          <li>1 colher de sobremesa de requeijão light</li>
+          <li>3 tomatinhos cereja</li>
+          <li>Temperos a gosto</li>
+        </ul>
+        <div class="sub"><strong>Modo de preparo</strong></div>
+        <p>Pique os ovos em cubinhos pequenos, junte todos os ingredientes e pronto.</p>
+      </div>
+
+      <div class="card recipe-card">
+        <h3 class="recipe-title">🐟 Patê fit</h3>
+        <div class="sub"><strong>Ingredientes</strong></div>
+        <ul class="details">
+          <li>1 lata de atum ou 200g de frango cozido desfiado</li>
+          <li>1/2 cenoura</li>
+          <li>2 colheres de sopa cheias de requeijão light</li>
+          <li>Temperos a gosto</li>
+        </ul>
+        <div class="sub"><strong>Modo de preparo</strong></div>
+        <p>Misture todos os ingredientes com um garfo.</p>
+      </div>
+
+      <div class="card recipe-card">
+        <h3 class="recipe-title">🥛 Requeijão fake de iogurte</h3>
+        <div class="sub"><strong>Ingredientes</strong></div>
+        <ul class="details">
+          <li>Iogurte natural</li>
+          <li>Temperos a gosto</li>
+        </ul>
+        <div class="sub"><strong>Modo de preparo</strong></div>
+        <p>Em um coador de café ou pano, deixe o iogurte dessorar na geladeira de um dia para o outro. Depois que tirar o soro, tempere a massa a gosto.</p>
+        <div class="note">Dica de tempero: lemon pepper, orégano e azeite.</div>
+      </div>
+
+      <div class="card recipe-card">
+        <h3 class="recipe-title">🥞 Aveioca</h3>
+        <div class="sub"><strong>Ingredientes</strong></div>
+        <ul class="details">
+          <li>2 colheres de sopa de tapioca</li>
+          <li>2 colheres de sopa de aveia</li>
+          <li>3 colheres de sopa de água</li>
+          <li>Temperos a gosto</li>
+          <li>Mix de sementes a gosto (chia, linhaça, gergelim)</li>
+        </ul>
+        <div class="sub"><strong>Modo de preparo</strong></div>
+        <p>Junte todos os ingredientes e bata com um garfo até ficar homogêneo. Despeje em frigideira untada ou antiaderente em fogo baixo. Quando soltar do fundo, vire e deixe dourar. Recheie como preferir.</p>
+      </div>
+
+      <div class="card recipe-card">
+        <h3 class="recipe-title">☕ Cappuccino saudável</h3>
+        <div class="sub"><strong>Ingredientes</strong></div>
+        <ul class="details">
+          <li>300 g de leite em pó desnatado</li>
+          <li>50 g de café solúvel</li>
+          <li>1/2 xícara de cacau em pó</li>
+          <li>2 colheres de sopa de canela em pó</li>
+          <li>2 colheres de chá de bicarbonato de sódio</li>
+        </ul>
+        <div class="sub"><strong>Modo de preparo</strong></div>
+        <p>Misture tudo muito bem. Para servir, use 4 colheres da mistura para uma xícara de água, ou 2 a 3 colheres para uma xícara de leite. Mexa bem e pronto.</p>
+      </div>
+
+      <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
+    </div>
+
+    <!-- TELAS DE REFEIÇÃO -->
+    <div id="cafeScreen" class="screen"></div>
+    <div id="lancheScreen" class="screen"></div>
+    <div id="almocoScreen" class="screen"></div>
+    <div id="lancheTardeScreen" class="screen"></div>
+    <div id="jantarScreen" class="screen"></div>
+    <div id="ceiaScreen" class="screen"></div>
   </div>
 
-  <!-- FAVORITOS -->
-  <div id="favScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">← Voltar</button>
-    <div class="card">
-      <h3 class="option-title" style="background:#1d4ed8;">Favoritos</h3>
-      <ul id="list" class="fav-list"></ul>
-    </div>
-    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
-  </div>
-
-  <!-- LISTA DE COMPRAS -->
-  <div id="shoppingScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">← Voltar</button>
-    <div class="card">
-      <h3 class="option-title" style="background:#0f766e;">Lista de compras</h3>
-      <div class="sub">Toque no item para marcar. Está organizada por tipo de produto e em ordem alfabética.</div>
-      <div id="shoppingContainer"></div>
-      <div class="small-note">Dica: marque o que precisa e use a lista pronta no final para tirar print.</div>
-    </div>
-
-    <div class="card print-card">
-      <h3 class="option-title" style="background:#ea580c;">Minha lista para print</h3>
-      <div class="sub">Só aparecem aqui os itens que você marcou acima.</div>
-      <div id="printListContainer"></div>
-    </div>
-
-    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
-  </div>
-
-  <!-- CAFÉ DA MANHÃ -->
-  <div id="cafeScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">← Voltar</button>
-
-    <div class="card">
-      <h3 class="option-title">Opção 1</h3>
-      <div class="option-subtitle">🍞 Opção clássica</div>
-      <ul class="details">
-        <li>🍞 Pão francês - 1 unidade</li>
-        <li>🥚 Ovo - 1 unidade</li>
-        <li>☕ Cappuccino saudável + água - 1 xícara de chá, 240ml</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🍞 Pão francês - 1 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('cafe1-pao')">Ver substituições</button>
-        <div id="cafe1-pao" class="substitutions hidden">
-          <ul>
-            <li>Pão integral - 2 fatias</li>
-            <li>Pão de forma - 2 fatias</li>
-            <li>Pão sírio pequeno - 1 unidade</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Batata inglesa - 1 unidade média ou 120 a 130g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de carboidratos.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥚 Ovo - 1 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('cafe1-ovo')">Ver substituições</button>
-        <div id="cafe1-ovo" class="substitutions hidden">
-          <ul>
-            <li>Ovos - 2 unidades médias, 100g</li>
-            <li>Peito de frango - 1 filé médio, 100 a 120g</li>
-            <li>Tilápia - 1 filé médio, 100 a 120g</li>
-            <li>Patinho - 1 filé médio ou palma da mão, 100 a 120g</li>
-          </ul>
-          <div class="note">Trocas diretas do grupo de proteínas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">☕ Cappuccino saudável + água - 1 xícara de chá, 240ml</div>
-        <button class="sub-btn" onclick="toggleSubs('cafe1-cappuccino')">Ver substituições</button>
-        <div id="cafe1-cappuccino" class="substitutions hidden">
-          <ul>
-            <li>Leite desnatado - 1 copo, 200ml</li>
-            <li>Leite semidesnatado - 1 copo, 200ml</li>
-            <li>Iogurte natural - 1 copo, 200ml</li>
-            <li>Iogurte grego - 1 pote, 100 a 120g</li>
-          </ul>
-          <div class="note">Trocas mais próximas no grupo de laticínios.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Café da manhã - Opção 1')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="option-title">Opção 2</h3>
-      <div class="option-subtitle">🍳 Opção proteica</div>
-      <ul class="details">
-        <li>🥞 Crepioca - 1 ovo + 2 colheres de sopa de tapioca</li>
-        <li>🧀 Muçarela - 1 fatia</li>
-        <li>🍅 Tomate - à vontade</li>
-        <li>☕ Café - 1 xícara, 80ml</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🥞 Crepioca - 1 ovo + 2 colheres de sopa de tapioca</div>
-        <button class="sub-btn" onclick="toggleSubs('cafe2-crepioca')">Ver substituições</button>
-        <div id="cafe2-crepioca" class="substitutions hidden">
-          <ul>
-            <li>Pão integral - 2 fatias + ovo</li>
-            <li>Pão francês - 1 unidade + ovo</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias + ovo</li>
-            <li>Tapioca - porção equivalente + ovo</li>
-          </ul>
-          <div class="note">Trocas práticas mantendo base + proteína.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🧀 Muçarela - 1 fatia</div>
-        <button class="sub-btn" onclick="toggleSubs('cafe2-mucarela')">Ver substituições</button>
-        <div id="cafe2-mucarela" class="substitutions hidden">
-          <ul>
-            <li>Ricota - 3 colheres de sopa cheias, 80g</li>
-            <li>Cottage - 3 colheres de sopa cheias, 80g</li>
-            <li>Minas frescal - porção equivalente</li>
-            <li>Queijo coalho - 1 fatia média, 30g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de laticínios.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🍅 Tomate - à vontade</div>
-        <button class="sub-btn" onclick="toggleSubs('cafe2-tomate')">Ver substituições</button>
-        <div id="cafe2-tomate" class="substitutions hidden">
-          <ul>
-            <li>Cenoura - 80 a 100g</li>
-            <li>Abobrinha - 80 a 100g</li>
-            <li>Brócolis - 80 a 100g</li>
-            <li>Pimentão - 80 a 100g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de legumes.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Café da manhã - Opção 2')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="option-title">Opção 3</h3>
-      <div class="option-subtitle">🥤 Opção leve</div>
-      <ul class="details">
-        <li>🍞 Pão integral - 2 fatias</li>
-        <li>🐟 Atum com requeijão light - 1 colher de sopa, 30g</li>
-        <li>🍊 Suco natural - 1 copo, 200ml</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🍞 Pão integral - 2 fatias</div>
-        <button class="sub-btn" onclick="toggleSubs('cafe3-pao')">Ver substituições</button>
-        <div id="cafe3-pao" class="substitutions hidden">
-          <ul>
-            <li>Pão francês - 1 unidade</li>
-            <li>Pão sírio pequeno - 1 unidade</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Batata inglesa - 1 unidade média ou 120 a 130g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de carboidratos.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🐟 Atum com requeijão light - 1 colher de sopa, 30g</div>
-        <button class="sub-btn" onclick="toggleSubs('cafe3-atum')">Ver substituições</button>
-        <div id="cafe3-atum" class="substitutions hidden">
-          <ul>
-            <li>Frango desfiado com requeijão light - porção equivalente</li>
-            <li>Ricota temperada - porção equivalente</li>
-            <li>Cottage com frango - porção equivalente</li>
-            <li>Ovos mexidos com requeijão light - porção equivalente</li>
-          </ul>
-          <div class="note">Trocas práticas para recheio/proteína.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🍊 Suco natural - 1 copo, 200ml</div>
-        <button class="sub-btn" onclick="toggleSubs('cafe3-suco')">Ver substituições</button>
-        <div id="cafe3-suco" class="substitutions hidden">
-          <ul>
-            <li>Laranja - 1 unidade</li>
-            <li>Maçã - 1 unidade</li>
-            <li>Mamão - 1 xícara de chá picada, 120g</li>
-            <li>Melão - 1 xícara de chá picada, 120g</li>
-          </ul>
-          <div class="note">No plano, pode ser trocado por fruta equivalente.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Café da manhã - Opção 3')">Salvar</button>
-    </div>
-
-    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
-  </div>
-
-  <!-- LANCHE DA MANHÃ -->
-  <div id="lancheScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">← Voltar</button>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#2563eb;">Opção 1</h3>
-      <div class="option-subtitle">🥣 Opção cremosa</div>
-      <ul class="details">
-        <li>🥛 Iogurte natural - 1 unidade, 170ml</li>
-        <li>🍓 Morango - 4 unidades</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🥛 Iogurte natural - 1 unidade, 170ml</div>
-        <button class="sub-btn" onclick="toggleSubs('lanche1-iogurte')">Ver substituições</button>
-        <div id="lanche1-iogurte" class="substitutions hidden">
-          <ul>
-            <li>Iogurte grego - 1 pote, 100 a 120g</li>
-            <li>Leite desnatado - 1 copo, 200ml</li>
-            <li>Leite semidesnatado - 1 copo, 200ml</li>
-            <li>Cottage - 3 colheres de sopa cheias, 80g</li>
-            <li>Ricota - 3 colheres de sopa cheias, 80g</li>
-          </ul>
-          <div class="note">Trocas práticas dentro do grupo de laticínios.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🍓 Morango - 4 unidades</div>
-        <button class="sub-btn" onclick="toggleSubs('lanche1-morango')">Ver substituições</button>
-        <div id="lanche1-morango" class="substitutions hidden">
-          <ul>
-            <li>🥝 Kiwi - 1 unidade média ou 1 xícara de chá picada, 120g</li>
-            <li>🍈 Melão - 1 xícara de chá picado, 120g</li>
-            <li>🍎 Maçã - 1 unidade média</li>
-            <li>🍐 Pêra - 1 unidade média</li>
-            <li>🍍 Abacaxi - 1 xícara de chá picada, 120g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de frutas.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Lanche da manhã - Opção 1')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#2563eb;">Opção 2</h3>
-      <div class="option-subtitle">🥭 Opção com fruta e cereal</div>
-      <ul class="details">
-        <li>🥭 Manga - 1/2 unidade</li>
-        <li>🌾 Aveia - 1 colher de sopa, 20g</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🥭 Manga - 1/2 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('lanche2-manga')">Ver substituições</button>
-        <div id="lanche2-manga" class="substitutions hidden">
-          <ul>
-            <li>🍎 Maçã - 1 unidade média</li>
-            <li>🥝 Kiwi - 1 unidade média</li>
-            <li>🍓 Morango - 1 xícara de chá picada, 120g</li>
-            <li>🍈 Melão - 1 xícara de chá picado, 120g</li>
-            <li>🍈 Mamão - 1 xícara de chá picado, 120g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de frutas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🌾 Aveia - 1 colher de sopa, 20g</div>
-        <button class="sub-btn" onclick="toggleSubs('lanche2-aveia')">Ver substituições</button>
-        <div id="lanche2-aveia" class="substitutions hidden">
-          <ul>
-            <li>Chia - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
-            <li>Linhaça - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
-            <li>Granola - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
-            <li>Amaranto - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de sementes e cereais.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Lanche da manhã - Opção 2')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#2563eb;">Opção 3</h3>
-      <div class="option-subtitle">💪 Opção prática</div>
-      <ul class="details">
-        <li>🥤 Bebida láctea proteica - 1 unidade</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🥤 Bebida láctea proteica - 1 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('lanche3-bebida')">Ver substituições</button>
-        <div id="lanche3-bebida" class="substitutions hidden">
-          <ul>
-            <li>Iogurte natural - 1 copo, 200ml</li>
-            <li>Iogurte grego - 1 pote, 100 a 120g</li>
-            <li>Leite desnatado - 1 copo, 200ml</li>
-            <li>Cottage - 3 colheres de sopa cheias, 80g + fruta</li>
-          </ul>
-          <div class="note">Trocas mais próximas para uso no dia a dia.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Lanche da manhã - Opção 3')">Salvar</button>
-    </div>
-
-    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
-  </div>
-
-  <!-- ALMOÇO -->
-  <div id="almocoScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">← Voltar</button>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#16a34a;">Opção 1</h3>
-      <div class="option-subtitle">🍽️ Opção tradicional</div>
-      <ul class="details">
-        <li>🍚 Arroz - 6 colheres de sopa, 120g</li>
-        <li>🫘 Feijão - 1 concha, 80g</li>
-        <li>🍗 Filé de frango grelhado - 1 filé, 100g</li>
-        <li>🥦 Legumes cozidos - 2 colheres de servir, 100g</li>
-        <li>🥬 Verduras folhosas - à vontade</li>
-        <li>🍊 Fruta rica em vitamina C - 1 unidade</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🍚 Arroz - 6 colheres de sopa, 120g</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco1-arroz')">Ver substituições</button>
-        <div id="almoco1-arroz" class="substitutions hidden">
-          <ul>
-            <li>Macarrão - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Quinoa - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Batata inglesa - 1 unidade média ou 120 a 130g</li>
-            <li>Batata doce - 1 unidade média ou 120 a 130g</li>
-            <li>Pão integral - 2 fatias</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de carboidratos.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🫘 Feijão - 1 concha, 80g</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco1-feijao')">Ver substituições</button>
-        <div id="almoco1-feijao" class="substitutions hidden">
-          <ul>
-            <li>Lentilha - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-            <li>Grão-de-bico - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-            <li>Ervilha - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-            <li>Feijão branco - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de leguminosas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🍗 Filé de frango grelhado - 1 filé, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco1-frango')">Ver substituições</button>
-        <div id="almoco1-frango" class="substitutions hidden">
-          <ul>
-            <li>Patinho - 1 filé médio ou palma da mão, 100 a 120g</li>
-            <li>Tilápia - 1 filé médio, 100 a 120g</li>
-            <li>Merluza - 1 filé médio, 100 a 120g</li>
-            <li>Ovos - 2 unidades médias, 100g</li>
-          </ul>
-          <div class="note">Trocas diretas do grupo de proteínas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥦 Legumes cozidos - 2 colheres de servir, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco1-legumes')">Ver substituições</button>
-        <div id="almoco1-legumes" class="substitutions hidden">
-          <ul>
-            <li>Brócolis - 80 a 100g cozidos</li>
-            <li>Cenoura - 80 a 100g cozidos</li>
-            <li>Abobrinha - 80 a 100g cozidos</li>
-            <li>Vagem - 80 a 100g cozidos</li>
-            <li>Chuchu - 80 a 100g cozidos</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de legumes.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥬 Verduras folhosas - à vontade</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco1-folhas')">Ver substituições</button>
-        <div id="almoco1-folhas" class="substitutions hidden">
-          <ul>
-            <li>Alface - prato cheio</li>
-            <li>Rúcula - prato cheio</li>
-            <li>Couve - prato cheio</li>
-            <li>Espinafre - prato cheio</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de folhas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🍊 Fruta rica em vitamina C - 1 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco1-fruta')">Ver substituições</button>
-        <div id="almoco1-fruta" class="substitutions hidden">
-          <ul>
-            <li>Laranja - 1 unidade</li>
-            <li>Kiwi - 1 unidade</li>
-            <li>Morango - 1 xícara de chá picada, 120g</li>
-            <li>Abacaxi - 1 xícara de chá picada, 120g</li>
-            <li>Mamão - 1 xícara de chá picada, 120g</li>
-          </ul>
-          <div class="note">Trocas práticas de fruta rica em vitamina C.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Almoço - Opção 1')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#16a34a;">Opção 2</h3>
-      <div class="option-subtitle">🍗 Opção assada</div>
-      <ul class="details">
-        <li>🥔 Batata inglesa assada - 2 colheres de servir, 120g</li>
-        <li>🍗 Sobrecoxa de frango sem pele assada - 1 unidade</li>
-        <li>🫘 Grão-de-bico - 1 colher de servir, 50g</li>
-        <li>🥦 Legumes cozidos - 2 colheres de servir, 100g</li>
-        <li>🥬 Verduras folhosas - à vontade</li>
-        <li>🍊 Fruta rica em vitamina C - 1 unidade</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🥔 Batata inglesa assada - 2 colheres de servir, 120g</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco2-batata')">Ver substituições</button>
-        <div id="almoco2-batata" class="substitutions hidden">
-          <ul>
-            <li>Arroz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Macarrão - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Quinoa - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Pão integral - 2 fatias</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de carboidratos.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🍗 Sobrecoxa de frango sem pele assada - 1 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco2-sobrecoxa')">Ver substituições</button>
-        <div id="almoco2-sobrecoxa" class="substitutions hidden">
-          <ul>
-            <li>Peito de frango - 1 filé médio, 100 a 120g</li>
-            <li>Patinho - 1 filé médio ou palma da mão, 100 a 120g</li>
-            <li>Tilápia - 1 filé médio, 100 a 120g</li>
-            <li>Ovos - 2 unidades médias, 100g</li>
-          </ul>
-          <div class="note">Trocas diretas do grupo de proteínas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🫘 Grão-de-bico - 1 colher de servir, 50g</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco2-graodebico')">Ver substituições</button>
-        <div id="almoco2-graodebico" class="substitutions hidden">
-          <ul>
-            <li>Feijão - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-            <li>Lentilha - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-            <li>Ervilha - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-            <li>Feijão branco - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de leguminosas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥦 Legumes cozidos - 2 colheres de servir, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco2-legumes')">Ver substituições</button>
-        <div id="almoco2-legumes" class="substitutions hidden">
-          <ul>
-            <li>Brócolis - 80 a 100g cozidos</li>
-            <li>Cenoura - 80 a 100g cozidos</li>
-            <li>Abobrinha - 80 a 100g cozidos</li>
-            <li>Chuchu - 80 a 100g cozidos</li>
-            <li>Vagem - 80 a 100g cozidos</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de legumes.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥬 Verduras folhosas - à vontade</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco2-folhas')">Ver substituições</button>
-        <div id="almoco2-folhas" class="substitutions hidden">
-          <ul>
-            <li>Alface - prato cheio</li>
-            <li>Rúcula - prato cheio</li>
-            <li>Couve - prato cheio</li>
-            <li>Espinafre - prato cheio</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de folhas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🍊 Fruta rica em vitamina C - 1 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco2-fruta')">Ver substituições</button>
-        <div id="almoco2-fruta" class="substitutions hidden">
-          <ul>
-            <li>Laranja - 1 unidade</li>
-            <li>Kiwi - 1 unidade</li>
-            <li>Morango - 1 xícara de chá picada, 120g</li>
-            <li>Abacaxi - 1 xícara de chá picada, 120g</li>
-            <li>Mamão - 1 xícara de chá picada, 120g</li>
-          </ul>
-          <div class="note">Trocas práticas de fruta rica em vitamina C.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Almoço - Opção 2')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#16a34a;">Opção 3</h3>
-      <div class="option-subtitle">🥪 Opção rápida</div>
-      <ul class="details">
-        <li>🍞 Pão integral - 2 fatias</li>
-        <li>🍗 Frango desfiado - 3 colheres de sopa, 100g</li>
-        <li>🥦 Legumes - à vontade</li>
-        <li>🥬 Verduras folhosas - à vontade</li>
-        <li>🍊 Fruta rica em vitamina C - 1 unidade</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🍞 Pão integral - 2 fatias</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco3-pao')">Ver substituições</button>
-        <div id="almoco3-pao" class="substitutions hidden">
-          <ul>
-            <li>Pão francês - 1 unidade</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Arroz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Batata inglesa - 1 unidade média ou 120 a 130g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de carboidratos.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🍗 Frango desfiado - 3 colheres de sopa, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco3-frango')">Ver substituições</button>
-        <div id="almoco3-frango" class="substitutions hidden">
-          <ul>
-            <li>Patinho - 1 filé médio ou palma da mão, 100 a 120g</li>
-            <li>Tilápia - 1 filé médio, 100 a 120g</li>
-            <li>Merluza - 1 filé médio, 100 a 120g</li>
-            <li>Ovos - 2 unidades médias, 100g</li>
-          </ul>
-          <div class="note">Trocas diretas do grupo de proteínas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥦 Legumes - à vontade</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco3-legumes')">Ver substituições</button>
-        <div id="almoco3-legumes" class="substitutions hidden">
-          <ul>
-            <li>Brócolis - 80 a 100g cozidos</li>
-            <li>Cenoura - 80 a 100g cozidos</li>
-            <li>Abobrinha - 80 a 100g cozidos</li>
-            <li>Chuchu - 80 a 100g cozidos</li>
-            <li>Vagem - 80 a 100g cozidos</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de legumes.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥬 Verduras folhosas - à vontade</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco3-folhas')">Ver substituições</button>
-        <div id="almoco3-folhas" class="substitutions hidden">
-          <ul>
-            <li>Alface - prato cheio</li>
-            <li>Rúcula - prato cheio</li>
-            <li>Couve - prato cheio</li>
-            <li>Espinafre - prato cheio</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de folhas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🍊 Fruta rica em vitamina C - 1 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('almoco3-fruta')">Ver substituições</button>
-        <div id="almoco3-fruta" class="substitutions hidden">
-          <ul>
-            <li>Laranja - 1 unidade</li>
-            <li>Kiwi - 1 unidade</li>
-            <li>Morango - 1 xícara de chá picada, 120g</li>
-            <li>Abacaxi - 1 xícara de chá picada, 120g</li>
-            <li>Mamão - 1 xícara de chá picada, 120g</li>
-          </ul>
-          <div class="note">Trocas práticas de fruta rica em vitamina C.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Almoço - Opção 3')">Salvar</button>
-    </div>
-
-    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
-  </div>
-
-  <!-- LANCHE DA TARDE -->
-  <div id="lancheTardeScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">← Voltar</button>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#7c3aed;">Opção 1</h3>
-      <div class="option-subtitle">☕ Opção quente</div>
-      <ul class="details">
-        <li>🥞 Aveioca - 1 receita</li>
-        <li>🥚 Ovo - 1 unidade</li>
-        <li>🍵 Chá - 1 xícara de chá, 240ml</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🥞 Aveioca - 1 receita</div>
-        <button class="sub-btn" onclick="toggleSubs('tarde1-aveioca')">Ver substituições</button>
-        <div id="tarde1-aveioca" class="substitutions hidden">
-          <ul>
-            <li>Crepioca - porção equivalente</li>
-            <li>Pão integral - 2 fatias</li>
-            <li>Pão francês - 1 unidade</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-          </ul>
-          <div class="note">Trocas práticas da base do lanche.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥚 Ovo - 1 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('tarde1-ovo')">Ver substituições</button>
-        <div id="tarde1-ovo" class="substitutions hidden">
-          <ul>
-            <li>Ovos - 2 unidades médias, 100g</li>
-            <li>Peito de frango - 1 filé médio, 100 a 120g</li>
-            <li>Tilápia - 1 filé médio, 100 a 120g</li>
-            <li>Patinho - 1 filé médio ou palma da mão, 100 a 120g</li>
-          </ul>
-          <div class="note">Trocas diretas do grupo de proteínas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🍵 Chá - 1 xícara de chá, 240ml</div>
-        <button class="sub-btn" onclick="toggleSubs('tarde1-cha')">Ver substituições</button>
-        <div id="tarde1-cha" class="substitutions hidden">
-          <ul>
-            <li>Café sem açúcar - 1 xícara</li>
-            <li>Água - livre</li>
-            <li>Cappuccino saudável - 1 xícara</li>
-          </ul>
-          <div class="note">Opções práticas de bebida.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Lanche da tarde - Opção 1')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#7c3aed;">Opção 2</h3>
-      <div class="option-subtitle">🍓 Opção refrescante</div>
-      <ul class="details">
-        <li>🍓 Salada de frutas - 3 colheres de servir, 200g</li>
-        <li>🌱 Chia - 1 colher de sopa, 20g</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🍓 Salada de frutas - 3 colheres de servir, 200g</div>
-        <button class="sub-btn" onclick="toggleSubs('tarde2-frutas')">Ver substituições</button>
-        <div id="tarde2-frutas" class="substitutions hidden">
-          <ul>
-            <li>Maçã - 1 unidade</li>
-            <li>Pêra - 1 unidade</li>
-            <li>Melão - 1 xícara de chá picado, 120g</li>
-            <li>Mamão - 1 xícara de chá picado, 120g</li>
-            <li>Morango - 1 xícara de chá picada, 120g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de frutas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🌱 Chia - 1 colher de sopa, 20g</div>
-        <button class="sub-btn" onclick="toggleSubs('tarde2-chia')">Ver substituições</button>
-        <div id="tarde2-chia" class="substitutions hidden">
-          <ul>
-            <li>Aveia - 1 colher de sopa, 20g</li>
-            <li>Linhaça - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
-            <li>Granola - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
-            <li>Amaranto - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de sementes e cereais.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Lanche da tarde - Opção 2')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#7c3aed;">Opção 3</h3>
-      <div class="option-subtitle">🥪 Opção salgada</div>
-      <ul class="details">
-        <li>🍞 Pão integral - 2 fatias</li>
-        <li>🧀 Queijo branco - 1 fatia, 20g</li>
-        <li>🍅 Tomate - 3 fatias, 30g</li>
-        <li>🥬 Rúcula - à vontade</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🍞 Pão integral - 2 fatias</div>
-        <button class="sub-btn" onclick="toggleSubs('tarde3-pao')">Ver substituições</button>
-        <div id="tarde3-pao" class="substitutions hidden">
-          <ul>
-            <li>Pão francês - 1 unidade</li>
-            <li>Pão sírio pequeno - 1 unidade</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Tapioca - porção equivalente</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de carboidratos.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🧀 Queijo branco - 1 fatia, 20g</div>
-        <button class="sub-btn" onclick="toggleSubs('tarde3-queijo')">Ver substituições</button>
-        <div id="tarde3-queijo" class="substitutions hidden">
-          <ul>
-            <li>Ricota - 3 colheres de sopa cheias, 80g</li>
-            <li>Cottage - 3 colheres de sopa cheias, 80g</li>
-            <li>Muçarela - 1 fatia</li>
-            <li>Minas frescal - porção equivalente</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de laticínios.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🍅 Tomate - 3 fatias, 30g</div>
-        <button class="sub-btn" onclick="toggleSubs('tarde3-tomate')">Ver substituições</button>
-        <div id="tarde3-tomate" class="substitutions hidden">
-          <ul>
-            <li>Cenoura - 80 a 100g</li>
-            <li>Abobrinha - 80 a 100g</li>
-            <li>Brócolis - 80 a 100g</li>
-            <li>Pimentão - 80 a 100g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de legumes.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥬 Rúcula - à vontade</div>
-        <button class="sub-btn" onclick="toggleSubs('tarde3-rucula')">Ver substituições</button>
-        <div id="tarde3-rucula" class="substitutions hidden">
-          <ul>
-            <li>Alface - prato cheio</li>
-            <li>Agrião - prato cheio</li>
-            <li>Couve - prato cheio</li>
-            <li>Espinafre - prato cheio</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de folhas.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Lanche da tarde - Opção 3')">Salvar</button>
-    </div>
-
-    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
-  </div>
-
-  <!-- JANTAR -->
-  <div id="jantarScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">← Voltar</button>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#0f766e;">Opção 1</h3>
-      <div class="option-subtitle">🍛 Opção tradicional</div>
-      <ul class="details">
-        <li>🥔 Purê de batatas - 2 colheres de servir, 100g</li>
-        <li>🟢 Ervilha - 1 colher de servir, 50g</li>
-        <li>🥩 Carne moída, patinho - 2 colheres de servir, 100g</li>
-        <li>🥦 Legumes cozidos - 2 colheres de servir, 100g</li>
-        <li>🥬 Verduras folhosas - à vontade</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🥔 Purê de batatas - 2 colheres de servir, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('jantar1-pure')">Ver substituições</button>
-        <div id="jantar1-pure" class="substitutions hidden">
-          <ul>
-            <li>Arroz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Macarrão - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Mandioca - 1 unidade média ou 120 a 130g</li>
-            <li>Pão integral - 2 fatias</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de carboidratos.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🟢 Ervilha - 1 colher de servir, 50g</div>
-        <button class="sub-btn" onclick="toggleSubs('jantar1-ervilha')">Ver substituições</button>
-        <div id="jantar1-ervilha" class="substitutions hidden">
-          <ul>
-            <li>Feijão - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-            <li>Lentilha - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-            <li>Grão-de-bico - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de leguminosas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥩 Carne moída, patinho - 2 colheres de servir, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('jantar1-carne')">Ver substituições</button>
-        <div id="jantar1-carne" class="substitutions hidden">
-          <ul>
-            <li>Peito de frango - 1 filé médio, 100 a 120g</li>
-            <li>Tilápia - 1 filé médio, 100 a 120g</li>
-            <li>Merluza - 1 filé médio, 100 a 120g</li>
-            <li>Ovos - 2 unidades médias, 100g</li>
-          </ul>
-          <div class="note">Trocas diretas do grupo de proteínas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥦 Legumes cozidos - 2 colheres de servir, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('jantar1-legumes')">Ver substituições</button>
-        <div id="jantar1-legumes" class="substitutions hidden">
-          <ul>
-            <li>Brócolis - 80 a 100g cozidos</li>
-            <li>Abobrinha - 80 a 100g cozidos</li>
-            <li>Cenoura - 80 a 100g cozidos</li>
-            <li>Chuchu - 80 a 100g cozidos</li>
-            <li>Vagem - 80 a 100g cozidos</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de legumes.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥬 Verduras folhosas - à vontade</div>
-        <button class="sub-btn" onclick="toggleSubs('jantar1-folhas')">Ver substituições</button>
-        <div id="jantar1-folhas" class="substitutions hidden">
-          <ul>
-            <li>Alface - prato cheio</li>
-            <li>Rúcula - prato cheio</li>
-            <li>Couve - prato cheio</li>
-            <li>Espinafre - prato cheio</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de folhas.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Jantar - Opção 1')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#0f766e;">Opção 2</h3>
-      <div class="option-subtitle">🥪 Opção rápida</div>
-      <ul class="details">
-        <li>🍞 Pão integral - 2 fatias</li>
-        <li>🥩 Coxão mole desfiado - 5 colheres de sopa, 100g</li>
-        <li>🥦 Legumes cozidos - 2 colheres de servir, 100g</li>
-        <li>🥬 Verduras folhosas - à vontade</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🍞 Pão integral - 2 fatias</div>
-        <button class="sub-btn" onclick="toggleSubs('jantar2-pao')">Ver substituições</button>
-        <div id="jantar2-pao" class="substitutions hidden">
-          <ul>
-            <li>Pão francês - 1 unidade</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Arroz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Batata inglesa - 1 unidade média ou 120 a 130g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de carboidratos.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥩 Coxão mole desfiado - 5 colheres de sopa, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('jantar2-coxao')">Ver substituições</button>
-        <div id="jantar2-coxao" class="substitutions hidden">
-          <ul>
-            <li>Patinho - 1 filé médio ou palma da mão, 100 a 120g</li>
-            <li>Peito de frango - 1 filé médio, 100 a 120g</li>
-            <li>Tilápia - 1 filé médio, 100 a 120g</li>
-            <li>Ovos - 2 unidades médias, 100g</li>
-          </ul>
-          <div class="note">Trocas diretas do grupo de proteínas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥦 Legumes cozidos - 2 colheres de servir, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('jantar2-legumes')">Ver substituições</button>
-        <div id="jantar2-legumes" class="substitutions hidden">
-          <ul>
-            <li>Brócolis - 80 a 100g cozidos</li>
-            <li>Abobrinha - 80 a 100g cozidos</li>
-            <li>Cenoura - 80 a 100g cozidos</li>
-            <li>Chuchu - 80 a 100g cozidos</li>
-            <li>Vagem - 80 a 100g cozidos</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de legumes.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥬 Verduras folhosas - à vontade</div>
-        <button class="sub-btn" onclick="toggleSubs('jantar2-folhas')">Ver substituições</button>
-        <div id="jantar2-folhas" class="substitutions hidden">
-          <ul>
-            <li>Alface - prato cheio</li>
-            <li>Rúcula - prato cheio</li>
-            <li>Couve - prato cheio</li>
-            <li>Espinafre - prato cheio</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de folhas.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Jantar - Opção 2')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#0f766e;">Opção 3</h3>
-      <div class="option-subtitle">🌮 Opção leve</div>
-      <ul class="details">
-        <li>🌮 Tapioca + chia - 4 colheres de sopa, 100g</li>
-        <li>🍗 Filé de frango desfiado - 5 colheres de sopa, 100g</li>
-        <li>🥦 Legumes cozidos - 2 colheres de servir, 100g</li>
-        <li>🥬 Verduras folhosas - à vontade</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🌮 Tapioca + chia - 4 colheres de sopa, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('jantar3-tapioca')">Ver substituições</button>
-        <div id="jantar3-tapioca" class="substitutions hidden">
-          <ul>
-            <li>Pão integral - 2 fatias</li>
-            <li>Pão francês - 1 unidade</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Arroz - 4 a 5 colheres de sopa cheias, 100g</li>
-          </ul>
-          <div class="note">Trocas práticas da base com carboidrato.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🍗 Filé de frango desfiado - 5 colheres de sopa, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('jantar3-frango')">Ver substituições</button>
-        <div id="jantar3-frango" class="substitutions hidden">
-          <ul>
-            <li>Patinho - 1 filé médio ou palma da mão, 100 a 120g</li>
-            <li>Tilápia - 1 filé médio, 100 a 120g</li>
-            <li>Merluza - 1 filé médio, 100 a 120g</li>
-            <li>Ovos - 2 unidades médias, 100g</li>
-          </ul>
-          <div class="note">Trocas diretas do grupo de proteínas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥦 Legumes cozidos - 2 colheres de servir, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('jantar3-legumes')">Ver substituições</button>
-        <div id="jantar3-legumes" class="substitutions hidden">
-          <ul>
-            <li>Brócolis - 80 a 100g cozidos</li>
-            <li>Abobrinha - 80 a 100g cozidos</li>
-            <li>Cenoura - 80 a 100g cozidos</li>
-            <li>Chuchu - 80 a 100g cozidos</li>
-            <li>Vagem - 80 a 100g cozidos</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de legumes.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥬 Verduras folhosas - à vontade</div>
-        <button class="sub-btn" onclick="toggleSubs('jantar3-folhas')">Ver substituições</button>
-        <div id="jantar3-folhas" class="substitutions hidden">
-          <ul>
-            <li>Alface - prato cheio</li>
-            <li>Rúcula - prato cheio</li>
-            <li>Couve - prato cheio</li>
-            <li>Espinafre - prato cheio</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de folhas.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Jantar - Opção 3')">Salvar</button>
-    </div>
-
-    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
-  </div>
-
-  <!-- CEIA -->
-  <div id="ceiaScreen" class="screen">
-    <button class="back-btn" onclick="goHome()">← Voltar</button>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#be185d;">Opção 1</h3>
-      <div class="option-subtitle">🍞 Opção leve</div>
-      <ul class="details">
-        <li>🍞 Torrada magic toast - 7 unidades</li>
-        <li>🧀 Requeijão - 1 colher de sopa, 30g</li>
-        <li>🍵 Chá - 1 xícara de chá, 240ml</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🍞 Torrada magic toast - 7 unidades</div>
-        <button class="sub-btn" onclick="toggleSubs('ceia1-torrada')">Ver substituições</button>
-        <div id="ceia1-torrada" class="substitutions hidden">
-          <ul>
-            <li>Pão integral - 2 fatias</li>
-            <li>Pão de forma - 2 fatias</li>
-            <li>Pão francês - 1 unidade</li>
-            <li>Pão sírio pequeno - 1 unidade</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de pães e torradas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🧀 Requeijão - 1 colher de sopa, 30g</div>
-        <button class="sub-btn" onclick="toggleSubs('ceia1-requeijao')">Ver substituições</button>
-        <div id="ceia1-requeijao" class="substitutions hidden">
-          <ul>
-            <li>Requeijão light - 1 colher de sopa</li>
-            <li>Cottage - 3 colheres de sopa cheias, 80g</li>
-            <li>Ricota - 3 colheres de sopa cheias, 80g</li>
-            <li>Minas frescal - porção equivalente</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de laticínios.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🍵 Chá - 1 xícara de chá, 240ml</div>
-        <button class="sub-btn" onclick="toggleSubs('ceia1-cha')">Ver substituições</button>
-        <div id="ceia1-cha" class="substitutions hidden">
-          <ul>
-            <li>Água - livre</li>
-            <li>Café sem açúcar - 1 xícara</li>
-            <li>Leite morno desnatado - 1 copo, 200ml</li>
-          </ul>
-          <div class="note">Trocas práticas de bebida para a noite.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Ceia - Opção 1')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#be185d;">Opção 2</h3>
-      <div class="option-subtitle">🥣 Opção cremosa</div>
-      <ul class="details">
-        <li>🥣 Mingau de aveia - 1 copo médio, 200ml</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🥣 Mingau de aveia - 1 copo médio, 200ml</div>
-        <button class="sub-btn" onclick="toggleSubs('ceia2-mingau')">Ver substituições</button>
-        <div id="ceia2-mingau" class="substitutions hidden">
-          <ul>
-            <li>Iogurte natural com aveia - porção equivalente</li>
-            <li>Iogurte grego com aveia - porção equivalente</li>
-            <li>Leite com aveia - 1 copo, 200ml</li>
-            <li>Chia com iogurte - porção equivalente</li>
-          </ul>
-          <div class="note">Trocas práticas mantendo a ideia de ceia cremosa.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Ceia - Opção 2')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="option-title" style="background:#be185d;">Opção 3</h3>
-      <div class="option-subtitle">🥑 Opção fruta</div>
-      <ul class="details">
-        <li>🥑 Abacate - 3 colheres de sopa, 90g</li>
-        <li>🥛 Leite em pó desnatado - 1 colher de sopa, 20g</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">🥑 Abacate - 3 colheres de sopa, 90g</div>
-        <button class="sub-btn" onclick="toggleSubs('ceia3-abacate')">Ver substituições</button>
-        <div id="ceia3-abacate" class="substitutions hidden">
-          <ul>
-            <li>Maçã - 1 unidade</li>
-            <li>Pêra - 1 unidade</li>
-            <li>Melão - 1 xícara de chá picado, 120g</li>
-            <li>Mamão - 1 xícara de chá picado, 120g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de frutas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">🥛 Leite em pó desnatado - 1 colher de sopa, 20g</div>
-        <button class="sub-btn" onclick="toggleSubs('ceia3-leitepo')">Ver substituições</button>
-        <div id="ceia3-leitepo" class="substitutions hidden">
-          <ul>
-            <li>Leite desnatado - 1 copo, 200ml</li>
-            <li>Iogurte natural - 1 copo, 200ml</li>
-            <li>Iogurte desnatado - 1 copo, 200ml</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de laticínios.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Ceia - Opção 3')">Salvar</button>
-    </div>
-
-    <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
-  </div>
-
-</div>
-
-<script>
-let favs = JSON.parse(localStorage.getItem('favs') || '[]');
-let shoppingChecks = JSON.parse(localStorage.getItem('shoppingChecks') || '{}');
-
-const shoppingData = {
-  "Carboidratos": [
-    "Arroz branco","Arroz integral","Aveia","Batata doce","Batata inglesa","Cuscuz","Macarrão",
-    "Mandioquinha","Mandioca","Milho","Pão de forma","Pão francês","Pão integral","Pão sírio",
-    "Polenta","Quinoa","Tapioca","Torrada magic toast"
-  ],
-  "Frutas": [
-    "Abacate","Abacaxi","Ameixa","Banana","Caqui","Goiaba","Kiwi","Laranja","Maçã","Mamão",
-    "Manga","Melancia","Melão","Morango","Pêra","Pêssego","Uva"
-  ],
-  "Leguminosas": [
-    "Ervilha","Feijão branco","Feijão carioca","Feijão preto","Grão-de-bico","Lentilha","Soja"
-  ],
-  "Legumes e verduras": [
-    "Abobrinha","Abóbora","Acelga","Agrião","Alface","Berinjela","Brócolis","Cenoura","Chuchu",
-    "Couve","Couve-flor","Espinafre","Escarola","Pimentão","Repolho","Rúcula","Tomate","Vagem"
-  ],
-  "Laticínios": [
-    "Cottage","Iogurte desnatado","Iogurte grego","Iogurte natural","Leite desnatado",
-    "Leite em pó desnatado","Leite integral","Leite semidesnatado","Minas frescal","Muçarela",
-    "Queijo branco","Queijo coalho","Queijo prato","Requeijão","Requeijão light","Ricota"
-  ],
-  "Proteínas": [
-    "Atum","Coxão mole","Filé de frango","Filé mignon","Frango desfiado","Lagarto","Maminha",
-    "Merluza","Ovos","Patinho","Peito de frango","Pescada","Sobrecoxa de frango","Tilápia"
-  ],
-  "Sementes e cereais": [
-    "Amaranto","Chia","Gergelim","Granola","Linhaça","Semente de abóbora","Semente de girassol"
-  ],
-  "Temperos e extras": [
-    "Açafrão","Alho","Café","Canela","Cebola","Chá","Curry","Lemon pepper","Orégano","Salsinha"
-  ]
-};
-
-function openMeal(screenId){
-  document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
-  document.getElementById(screenId).classList.add('active');
-}
-
-function goHome(){
-  document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
-  document.getElementById('home').classList.add('active');
-}
-
-function save(item){
-  favs.push(item);
-  localStorage.setItem('favs', JSON.stringify(favs));
-  alert('Salvo!');
-  loadFavorites();
-}
-
-function loadFavorites(){
-  const list = document.getElementById('list');
-  if (!list) return;
-  list.innerHTML = '';
-  if (favs.length === 0) {
-    const li = document.createElement('li');
-    li.innerText = 'Nenhum favorito salvo ainda.';
-    list.appendChild(li);
-    return;
-  }
-  favs.forEach(f => {
-    const li = document.createElement('li');
-    li.innerText = f;
-    list.appendChild(li);
-  });
-}
-
-function toggleSubs(id){
-  const box = document.getElementById(id);
-  box.classList.toggle('hidden');
-}
-
-function renderShopping(){
-  const container = document.getElementById('shoppingContainer');
-  if (!container) return;
-  container.innerHTML = '';
-
-  Object.keys(shoppingData).sort().forEach(category => {
-    const title = document.createElement('div');
-    title.className = 'shopping-category';
-    title.innerText = category;
-    container.appendChild(title);
-
-    shoppingData[category].slice().sort().forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'shopping-item' + (shoppingChecks[item] ? ' checked' : '');
-      div.onclick = () => toggleShopping(item);
-
-      const checkbox = document.createElement('span');
-      checkbox.innerText = shoppingChecks[item] ? '✅' : '⬜';
-
-      const text = document.createElement('span');
-      text.innerText = item;
-
-      div.appendChild(checkbox);
-      div.appendChild(text);
-      container.appendChild(div);
-    });
-  });
-
-  renderPrintList();
-}
-
-function renderPrintList(){
-  const container = document.getElementById('printListContainer');
-  if (!container) return;
-  container.innerHTML = '';
-
-  const selectedItems = Object.keys(shoppingChecks).filter(item => shoppingChecks[item]).sort();
-
-  if (selectedItems.length === 0) {
-    const empty = document.createElement('div');
-    empty.className = 'print-empty';
-    empty.innerText = 'Nenhum item marcado ainda.';
-    container.appendChild(empty);
-    return;
-  }
-
-  const ul = document.createElement('ul');
-  ul.className = 'print-list';
-
-  selectedItems.forEach(item => {
-    const li = document.createElement('li');
-    li.innerText = item;
-    ul.appendChild(li);
-  });
-
-  container.appendChild(ul);
-}
-
-function toggleShopping(item){
-  shoppingChecks[item] = !shoppingChecks[item];
-  localStorage.setItem('shoppingChecks', JSON.stringify(shoppingChecks));
-  renderShopping();
-}
-
-loadFavorites();
-renderShopping();
-</script>
-
+  <script>
+    let favs = JSON.parse(localStorage.getItem('favs') || '[]');
+    let shoppingChecks = JSON.parse(localStorage.getItem('shoppingChecks') || '{}');
+
+    const substitutions = {
+      carbo: [
+        "Pão integral - 2 fatias",
+        "Pão francês - 1 unidade",
+        "Pão sírio pequeno - 1 unidade",
+        "Arroz - 4 a 5 colheres de sopa cheias, 100g",
+        "Cuscuz - 4 a 5 colheres de sopa cheias, 100g",
+        "Macarrão - 4 a 5 colheres de sopa cheias, 100g",
+        "Quinoa - 4 a 5 colheres de sopa cheias, 100g",
+        "Batata inglesa - 1 unidade média ou 120 a 130g",
+        "Batata doce - 1 unidade média ou 120 a 130g",
+        "Mandioca - 1 unidade média ou 120 a 130g",
+        "Mandioquinha - 1 unidade média ou 120 a 130g"
+      ],
+      proteina: [
+        "Ovos - 2 unidades médias, 100g",
+        "Peito de frango - 1 filé médio, 100 a 120g",
+        "Patinho - 1 filé médio ou palma da mão, 100 a 120g",
+        "Tilápia - 1 filé médio, 100 a 120g",
+        "Merluza - 1 filé médio, 100 a 120g",
+        "Sobrecoxa de frango - 1 unidade pequena, 100 a 120g"
+      ],
+      laticinio: [
+        "Leite desnatado - 1 copo, 200ml",
+        "Leite semidesnatado - 1 copo, 200ml",
+        "Iogurte natural - 1 copo, 200ml",
+        "Iogurte grego - 1 pote, 100 a 120g",
+        "Ricota - 3 colheres de sopa cheias, 80g",
+        "Cottage - 3 colheres de sopa cheias, 80g",
+        "Muçarela - 1 fatia",
+        "Minas frescal - porção equivalente"
+      ],
+      fruta: [
+        "Laranja - 1 unidade",
+        "Kiwi - 1 unidade",
+        "Morango - 1 xícara de chá picada, 120g",
+        "Abacaxi - 1 xícara de chá picada, 120g",
+        "Mamão - 1 xícara de chá picada, 120g",
+        "Maçã - 1 unidade",
+        "Pêra - 1 unidade",
+        "Melão - 1 xícara de chá picada, 120g",
+        "Manga - 1/2 unidade"
+      ],
+      legumes: [
+        "Brócolis - 80 a 100g",
+        "Cenoura - 80 a 100g",
+        "Abobrinha - 80 a 100g",
+        "Chuchu - 80 a 100g",
+        "Vagem - 80 a 100g",
+        "Tomate - à vontade",
+        "Pimentão - 80 a 100g"
+      ],
+      folhas: [
+        "Alface - prato cheio",
+        "Rúcula - prato cheio",
+        "Couve - prato cheio",
+        "Espinafre - prato cheio",
+        "Agrião - prato cheio"
+      ],
+      leguminosa: [
+        "Feijão - 1 concha média ou 4 colheres de sopa cheias, 100g",
+        "Lentilha - 1 concha média ou 4 colheres de sopa cheias, 100g",
+        "Grão-de-bico - 1 concha média ou 4 colheres de sopa cheias, 100g",
+        "Ervilha - 1 concha média ou 4 colheres de sopa cheias, 100g"
+      ],
+      sementes: [
+        "Aveia - 1 colher de sopa, 20g",
+        "Chia - 1 a 2 colheres de sopa cheias, 15 a 20g",
+        "Linhaça - 1 a 2 colheres de sopa cheias, 15 a 20g",
+        "Granola - 1 a 2 colheres de sopa cheias, 15 a 20g",
+        "Amaranto - 1 a 2 colheres de sopa cheias, 15 a 20g"
+      ],
+      bebida: [
+        "Chá - 1 xícara de chá, 240ml",
+        "Café sem açúcar - 1 xícara",
+        "Água - livre",
+        "Cappuccino saudável - 1 xícara"
+      ]
+    };
+
+    const meals = {
+      cafeScreen: {
+        color: "#d97706",
+        title: "Café da manhã",
+        options: [
+          {
+            title: "Opção 1",
+            subtitle: "🍞 Opção clássica",
+            items: [
+              { name: "🍞 Pão francês - 1 unidade", group: "carbo" },
+              { name: "🥚 Ovo - 1 unidade", group: "proteina" },
+              { name: "☕ Cappuccino saudável + água - 1 xícara de chá, 240ml", group: "laticinio" }
+            ]
+          },
+          {
+            title: "Opção 2",
+            subtitle: "🍳 Opção proteica",
+            items: [
+              { name: "🥞 Crepioca - 1 ovo + 2 colheres de sopa de tapioca", group: "carbo" },
+              { name: "🧀 Muçarela - 1 fatia", group: "laticinio" },
+              { name: "🍅 Tomate - à vontade", group: "legumes" },
+              { name: "☕ Café - 1 xícara, 80ml", group: "bebida" }
+            ]
+          },
+          {
+            title: "Opção 3",
+            subtitle: "🥤 Opção leve",
+            items: [
+              { name: "🍞 Pão integral - 2 fatias", group: "carbo" },
+              { name: "🐟 Atum com requeijão light - 1 colher de sopa, 30g", group: "proteina" },
+              { name: "🍊 Suco natural - 1 copo, 200ml", group: "fruta" }
+            ]
+          }
+        ]
+      },
+      lancheScreen: {
+        color: "#2563eb",
+        title: "Lanche da manhã",
+        options: [
+          {
+            title: "Opção 1",
+            subtitle: "🥣 Opção cremosa",
+            items: [
+              { name: "🥛 Iogurte natural - 1 unidade, 170ml", group: "laticinio" },
+              { name: "🍓 Morango - 4 unidades", group: "fruta" }
+            ]
+          },
+          {
+            title: "Opção 2",
+            subtitle: "🥭 Opção com fruta e cereal",
+            items: [
+              { name: "🥭 Manga - 1/2 unidade", group: "fruta" },
+              { name: "🌾 Aveia - 1 colher de sopa, 20g", group: "sementes" }
+            ]
+          },
+          {
+            title: "Opção 3",
+            subtitle: "💪 Opção prática",
+            items: [
+              { name: "🥤 Bebida láctea proteica - 1 unidade", group: "laticinio" }
+            ]
+          }
+        ]
+      },
+      almocoScreen: {
+        color: "#16a34a",
+        title: "Almoço",
+        options: [
+          {
+            title: "Opção 1",
+            subtitle: "🍽️ Opção tradicional",
+            items: [
+              { name: "🍚 Arroz - 6 colheres de sopa, 120g", group: "carbo" },
+              { name: "🫘 Feijão - 1 concha, 80g", group: "leguminosa" },
+              { name: "🍗 Filé de frango grelhado - 1 filé, 100g", group: "proteina" },
+              { name: "🥦 Legumes cozidos - 2 colheres de servir, 100g", group: "legumes" },
+              { name: "🥬 Verduras folhosas - à vontade", group: "folhas" },
+              { name: "🍊 Fruta rica em vitamina C - 1 unidade", group: "fruta" }
+            ]
+          },
+          {
+            title: "Opção 2",
+            subtitle: "🍗 Opção assada",
+            items: [
+              { name: "🥔 Batata inglesa assada - 2 colheres de servir, 120g", group: "carbo" },
+              { name: "🍗 Sobrecoxa de frango sem pele assada - 1 unidade", group: "proteina" },
+              { name: "🫘 Grão-de-bico - 1 colher de servir, 50g", group: "leguminosa" },
+              { name: "🥦 Legumes cozidos - 2 colheres de servir, 100g", group: "legumes" },
+              { name: "🥬 Verduras folhosas - à vontade", group: "folhas" },
+              { name: "🍊 Fruta rica em vitamina C - 1 unidade", group: "fruta" }
+            ]
+          },
+          {
+            title: "Opção 3",
+            subtitle: "🥪 Opção rápida",
+            items: [
+              { name: "🍞 Pão integral - 2 fatias", group: "carbo" },
+              { name: "🍗 Frango desfiado - 3 colheres de sopa, 100g", group: "proteina" },
+              { name: "🥦 Legumes - à vontade", group: "legumes" },
+              { name: "🥬 Verduras folhosas - à vontade", group: "folhas" },
+              { name: "🍊 Fruta rica em vitamina C - 1 unidade", group: "fruta" }
+            ]
+          }
+        ]
+      },
+      lancheTardeScreen: {
+        color: "#7c3aed",
+        title: "Lanche da tarde",
+        options: [
+          {
+            title: "Opção 1",
+            subtitle: "☕ Opção quente",
+            items: [
+              { name: "🥞 Aveioca - 1 receita", group: "carbo" },
+              { name: "🥚 Ovo - 1 unidade", group: "proteina" },
+              { name: "🍵 Chá - 1 xícara de chá, 240ml", group: "bebida" }
+            ]
+          },
+          {
+            title: "Opção 2",
+            subtitle: "🍓 Opção refrescante",
+            items: [
+              { name: "🍓 Salada de frutas - 3 colheres de servir, 200g", group: "fruta" },
+              { name: "🌱 Chia - 1 colher de sopa, 20g", group: "sementes" }
+            ]
+          },
+          {
+            title: "Opção 3",
+            subtitle: "🥪 Opção salgada",
+            items: [
+              { name: "🍞 Pão integral - 2 fatias", group: "carbo" },
+              { name: "🧀 Queijo branco - 1 fatia, 20g", group: "laticinio" },
+              { name: "🍅 Tomate - 3 fatias, 30g", group: "legumes" },
+              { name: "🥬 Rúcula - à vontade", group: "folhas" }
+            ]
+          }
+        ]
+      },
+      jantarScreen: {
+        color: "#0f766e",
+        title: "Jantar",
+        options: [
+          {
+            title: "Opção 1",
+            subtitle: "🍛 Opção tradicional",
+            items: [
+              { name: "🥔 Purê de batatas - 2 colheres de servir, 100g", group: "carbo" },
+              { name: "🟢 Ervilha - 1 colher de servir, 50g", group: "leguminosa" },
+              { name: "🥩 Carne moída, patinho - 2 colheres de servir, 100g", group: "proteina" },
+              { name: "🥦 Legumes cozidos - 2 colheres de servir, 100g", group: "legumes" },
+              { name: "🥬 Verduras folhosas - à vontade", group: "folhas" }
+            ]
+          },
+          {
+            title: "Opção 2",
+            subtitle: "🥪 Opção rápida",
+            items: [
+              { name: "🍞 Pão integral - 2 fatias", group: "carbo" },
+              { name: "🥩 Coxão mole desfiado - 5 colheres de sopa, 100g", group: "proteina" },
+              { name: "🥦 Legumes cozidos - 2 colheres de servir, 100g", group: "legumes" },
+              { name: "🥬 Verduras folhosas - à vontade", group: "folhas" }
+            ]
+          },
+          {
+            title: "Opção 3",
+            subtitle: "🌮 Opção leve",
+            items: [
+              { name: "🌮 Tapioca + chia - 4 colheres de sopa, 100g", group: "carbo" },
+              { name: "🍗 Filé de frango desfiado - 5 colheres de sopa, 100g", group: "proteina" },
+              { name: "🥦 Legumes cozidos - 2 colheres de servir, 100g", group: "legumes" },
+              { name: "🥬 Verduras folhosas - à vontade", group: "folhas" }
+            ]
+          }
+        ]
+      },
+      ceiaScreen: {
+        color: "#be185d",
+        title: "Ceia",
+        options: [
+          {
+            title: "Opção 1",
+            subtitle: "🍞 Opção leve",
+            items: [
+              { name: "🍞 Torrada magic toast - 7 unidades", group: "carbo" },
+              { name: "🧀 Requeijão - 1 colher de sopa, 30g", group: "laticinio" },
+              { name: "🍵 Chá - 1 xícara de chá, 240ml", group: "bebida" }
+            ]
+          },
+          {
+            title: "Opção 2",
+            subtitle: "🥣 Opção cremosa",
+            items: [
+              { name: "🥣 Mingau de aveia - 1 copo médio, 200ml", group: "laticinio" }
+            ]
+          },
+          {
+            title: "Opção 3",
+            subtitle: "🥑 Opção fruta",
+            items: [
+              { name: "🥑 Abacate - 3 colheres de sopa, 90g", group: "fruta" },
+              { name: "🥛 Leite em pó desnatado - 1 colher de sopa, 20g", group: "laticinio" }
+            ]
+          }
+        ]
+      }
+    };
+
+    const shoppingData = {
+      "Carboidratos": [
+        "Arroz branco","Arroz integral","Aveia","Batata doce","Batata inglesa","Cuscuz","Macarrão",
+        "Mandioquinha","Mandioca","Milho","Pão de forma","Pão francês","Pão integral","Pão sírio",
+        "Polenta","Quinoa","Tapioca","Torrada magic toast"
+      ],
+      "Frutas": [
+        "Abacate","Abacaxi","Ameixa","Banana","Caqui","Goiaba","Kiwi","Laranja","Maçã","Mamão",
+        "Manga","Melancia","Melão","Morango","Pêra","Pêssego","Uva"
+      ],
+      "Leguminosas": [
+        "Ervilha","Feijão branco","Feijão carioca","Feijão preto","Grão-de-bico","Lentilha","Soja"
+      ],
+      "Legumes e verduras": [
+        "Abobrinha","Abóbora","Acelga","Agrião","Alface","Berinjela","Brócolis","Cenoura","Chuchu",
+        "Couve","Couve-flor","Espinafre","Escarola","Pimentão","Repolho","Rúcula","Tomate","Vagem"
+      ],
+      "Laticínios": [
+        "Cottage","Iogurte desnatado","Iogurte grego","Iogurte natural","Leite desnatado",
+        "Leite em pó desnatado","Leite integral","Leite semidesnatado","Minas frescal","Muçarela",
+        "Queijo branco","Queijo coalho","Queijo prato","Requeijão","Requeijão light","Ricota"
+      ],
+      "Proteínas": [
+        "Atum","Coxão mole","Filé de frango","Filé mignon","Frango desfiado","Lagarto","Maminha",
+        "Merluza","Ovos","Patinho","Peito de frango","Pescada","Sobrecoxa de frango","Tilápia"
+      ],
+      "Sementes e cereais": [
+        "Amaranto","Chia","Gergelim","Granola","Linhaça","Semente de abóbora","Semente de girassol"
+      ],
+      "Temperos e extras": [
+        "Açafrão","Alho","Café","Canela","Cebola","Chá","Curry","Lemon pepper","Orégano","Salsinha"
+      ]
+    };
+
+    function openMeal(screenId){
+      document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+    }
+
+    function goHome(){
+      document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+      document.getElementById('home').classList.add('active');
+    }
+
+    function save(item){
+      favs.push(item);
+      localStorage.setItem('favs', JSON.stringify(favs));
+      alert('Salvo!');
+      loadFavorites();
+    }
+
+    function loadFavorites(){
+      const list = document.getElementById('list');
+      list.innerHTML = '';
+      if (favs.length === 0) {
+        const li = document.createElement('li');
+        li.innerText = 'Nenhum favorito salvo ainda.';
+        list.appendChild(li);
+        return;
+      }
+      favs.forEach(f => {
+        const li = document.createElement('li');
+        li.innerText = f;
+        list.appendChild(li);
+      });
+    }
+
+    function toggleSubs(id){
+      const box = document.getElementById(id);
+      box.classList.toggle('hidden');
+    }
+
+    function renderMealScreen(screenId){
+      const screen = document.getElementById(screenId);
+      const meal = meals[screenId];
+      if (!screen || !meal) return;
+
+      let html = `<button class="back-btn" onclick="goHome()">← Voltar</button>`;
+
+      meal.options.forEach((opt, optIndex) => {
+        html += `
+          <div class="card">
+            <h3 class="option-title" style="background:${meal.color};">${opt.title}</h3>
+            <div class="option-subtitle">${opt.subtitle}</div>
+            <ul class="details">
+              ${opt.items.map(item => `<li>${item.name}</li>`).join('')}
+            </ul>
+        `;
+
+        opt.items.forEach((item, itemIndex) => {
+          const subId = `${screenId}-opt${optIndex}-item${itemIndex}`;
+          const subs = substitutions[item.group] || [];
+          html += `
+            <div class="food-row">
+              <div class="food-title">${item.name}</div>
+              <button class="sub-btn" onclick="toggleSubs('${subId}')">Ver substituições</button>
+              <div id="${subId}" class="substitutions hidden">
+                <ul>
+                  ${subs.map(s => `<li>${s}</li>`).join('')}
+                </ul>
+                <div class="note">Trocas práticas da mesma categoria.</div>
+              </div>
+            </div>
+          `;
+        });
+
+        html += `<button onclick="save('${meal.title} - ${opt.title}')">Salvar</button></div>`;
+      });
+
+      html += `<button class="back-bottom-btn" onclick="goHome()">Voltar</button>`;
+      screen.innerHTML = html;
+    }
+
+    function renderShopping(){
+      const container = document.getElementById('shoppingContainer');
+      container.innerHTML = '';
+
+      Object.keys(shoppingData).sort().forEach(category => {
+        const title = document.createElement('div');
+        title.className = 'shopping-category';
+        title.innerText = category;
+        container.appendChild(title);
+
+        shoppingData[category].slice().sort().forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'shopping-item' + (shoppingChecks[item] ? ' checked' : '');
+          div.onclick = () => toggleShopping(item);
+
+          const checkbox = document.createElement('span');
+          checkbox.innerText = shoppingChecks[item] ? '✅' : '⬜';
+
+          const text = document.createElement('span');
+          text.innerText = item;
+
+          div.appendChild(checkbox);
+          div.appendChild(text);
+          container.appendChild(div);
+        });
+      });
+
+      renderPrintList();
+    }
+
+    function renderPrintList(){
+      const container = document.getElementById('printListContainer');
+      container.innerHTML = '';
+
+      const selectedItems = Object.keys(shoppingChecks).filter(item => shoppingChecks[item]).sort();
+
+      if (selectedItems.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'print-empty';
+        empty.innerText = 'Nenhum item marcado ainda.';
+        container.appendChild(empty);
+        return;
+      }
+
+      const ul = document.createElement('ul');
+      ul.className = 'print-list';
+
+      selectedItems.forEach(item => {
+        const li = document.createElement('li');
+        li.innerText = item;
+        ul.appendChild(li);
+      });
+
+      container.appendChild(ul);
+    }
+
+    function toggleShopping(item){
+      shoppingChecks[item] = !shoppingChecks[item];
+      localStorage.setItem('shoppingChecks', JSON.stringify(shoppingChecks));
+      renderShopping();
+    }
+
+    function clearShopping(){
+      if (!confirm('Deseja limpar todos os itens marcados da lista?')) return;
+      shoppingChecks = {};
+      localStorage.setItem('shoppingChecks', JSON.stringify(shoppingChecks));
+      renderShopping();
+    }
+
+    async function shareShoppingList(){
+      const selectedItems = Object.keys(shoppingChecks).filter(item => shoppingChecks[item]).sort();
+
+      if (selectedItems.length === 0) {
+        alert('Marque pelo menos um item antes de compartilhar.');
+        return;
+      }
+
+      const text = "Minha lista de compras:\\n\\n" + selectedItems.map(i => "• " + i).join("\\n");
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'Lista de compras',
+            text
+          });
+        } catch (e) {}
+      } else {
+        try {
+          await navigator.clipboard.writeText(text);
+          alert('Lista copiada para a área de transferência.');
+        } catch (e) {
+          alert(text);
+        }
+      }
+    }
+
+    function generateShoppingPDF(){
+      const selectedItems = Object.keys(shoppingChecks).filter(item => shoppingChecks[item]).sort();
+
+      if (selectedItems.length === 0) {
+        alert('Marque pelo menos um item antes de gerar o PDF.');
+        return;
+      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      doc.text("Lista de compras", 14, 20);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(11);
+
+      let y = 32;
+      selectedItems.forEach((item, index) => {
+        doc.text(`• ${item}`, 14, y);
+        y += 8;
+        if (y > 280) {
+          doc.addPage();
+          y = 20;
+        }
+      });
+
+      doc.save("lista-de-compras.pdf");
+    }
+
+    Object.keys(meals).forEach(renderMealScreen);
+    loadFavorites();
+    renderShopping();
+  </script>
 </body>
 </html>
