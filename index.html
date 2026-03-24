@@ -61,6 +61,12 @@ h1 {
   color: white;
   background: #14532d;
 }
+.option-subtitle {
+  font-size: 13px;
+  color: #166534;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
 .sub {
   color: #555;
   margin-bottom: 10px;
@@ -171,7 +177,7 @@ button {
     <div class="card">
       <div class="sub">Escolha a refeição que você quer consultar.</div>
       <button class="meal-button cafe" onclick="openMeal('cafeScreen')">☀️ Café da manhã</button>
-      <button class="meal-button lanche" onclick="alert('Próximo passo: montar tela completa do lanche da manhã')">🍎 Lanche da manhã</button>
+      <button class="meal-button lanche" onclick="openMeal('lancheScreen')">🍎 Lanche da manhã</button>
       <button class="meal-button almoco" onclick="alert('Próximo passo: montar tela completa do almoço')">🍽️ Almoço</button>
       <button class="meal-button lanche-tarde" onclick="alert('Próximo passo: montar tela completa do lanche da tarde')">☕ Lanche da tarde</button>
       <button class="meal-button jantar" onclick="alert('Próximo passo: montar tela completa do jantar')">🌙 Jantar</button>
@@ -185,14 +191,15 @@ button {
 
     <div class="card">
       <h3 class="option-title">Opção 1</h3>
+      <div class="option-subtitle">🍞 Opção clássica</div>
       <ul class="details">
-        <li>Pão francês - 1 unidade</li>
-        <li>Ovo - 1 unidade</li>
-        <li>Cappuccino saudável + água - 1 xícara de chá, 240ml</li>
+        <li>🍞 Pão francês - 1 unidade</li>
+        <li>🥚 Ovo - 1 unidade</li>
+        <li>☕ Cappuccino saudável + água - 1 xícara de chá, 240ml</li>
       </ul>
 
       <div class="food-row">
-        <div class="food-title">Pão francês - 1 unidade</div>
+        <div class="food-title">🍞 Pão francês - 1 unidade</div>
         <button class="sub-btn" onclick="toggleSubs('cafe1-pao')">Ver substituições</button>
         <div id="cafe1-pao" class="substitutions hidden">
           <ul>
@@ -207,7 +214,7 @@ button {
       </div>
 
       <div class="food-row">
-        <div class="food-title">Ovo - 1 unidade</div>
+        <div class="food-title">🥚 Ovo - 1 unidade</div>
         <button class="sub-btn" onclick="toggleSubs('cafe1-ovo')">Ver substituições</button>
         <div id="cafe1-ovo" class="substitutions hidden">
           <ul>
@@ -221,7 +228,7 @@ button {
       </div>
 
       <div class="food-row">
-        <div class="food-title">Cappuccino saudável + água - 1 xícara de chá, 240ml</div>
+        <div class="food-title">☕ Cappuccino saudável + água - 1 xícara de chá, 240ml</div>
         <button class="sub-btn" onclick="toggleSubs('cafe1-cappuccino')">Ver substituições</button>
         <div id="cafe1-cappuccino" class="substitutions hidden">
           <ul>
@@ -239,15 +246,16 @@ button {
 
     <div class="card">
       <h3 class="option-title">Opção 2</h3>
+      <div class="option-subtitle">🍳 Opção proteica</div>
       <ul class="details">
-        <li>Crepioca - 1 ovo + 2 colheres de sopa de tapioca</li>
-        <li>Muçarela - 1 fatia</li>
-        <li>Tomate - à vontade</li>
-        <li>Café - 1 xícara, 80ml</li>
+        <li>🥞 Crepioca - 1 ovo + 2 colheres de sopa de tapioca</li>
+        <li>🧀 Muçarela - 1 fatia</li>
+        <li>🍅 Tomate - à vontade</li>
+        <li>☕ Café - 1 xícara, 80ml</li>
       </ul>
 
       <div class="food-row">
-        <div class="food-title">Crepioca - 1 ovo + 2 colheres de sopa de tapioca</div>
+        <div class="food-title">🥞 Crepioca - 1 ovo + 2 colheres de sopa de tapioca</div>
         <button class="sub-btn" onclick="toggleSubs('cafe2-crepioca')">Ver substituições</button>
         <div id="cafe2-crepioca" class="substitutions hidden">
           <ul>
@@ -261,7 +269,7 @@ button {
       </div>
 
       <div class="food-row">
-        <div class="food-title">Muçarela - 1 fatia</div>
+        <div class="food-title">🧀 Muçarela - 1 fatia</div>
         <button class="sub-btn" onclick="toggleSubs('cafe2-mucarela')">Ver substituições</button>
         <div id="cafe2-mucarela" class="substitutions hidden">
           <ul>
@@ -275,7 +283,7 @@ button {
       </div>
 
       <div class="food-row">
-        <div class="food-title">Tomate - à vontade</div>
+        <div class="food-title">🍅 Tomate - à vontade</div>
         <button class="sub-btn" onclick="toggleSubs('cafe2-tomate')">Ver substituições</button>
         <div id="cafe2-tomate" class="substitutions hidden">
           <ul>
@@ -293,14 +301,15 @@ button {
 
     <div class="card">
       <h3 class="option-title">Opção 3</h3>
+      <div class="option-subtitle">🥤 Opção leve</div>
       <ul class="details">
-        <li>Pão integral - 2 fatias</li>
-        <li>Atum com requeijão light - 1 colher de sopa, 30g</li>
-        <li>Suco natural - 1 copo, 200ml</li>
+        <li>🍞 Pão integral - 2 fatias</li>
+        <li>🐟 Atum com requeijão light - 1 colher de sopa, 30g</li>
+        <li>🍊 Suco natural - 1 copo, 200ml</li>
       </ul>
 
       <div class="food-row">
-        <div class="food-title">Pão integral - 2 fatias</div>
+        <div class="food-title">🍞 Pão integral - 2 fatias</div>
         <button class="sub-btn" onclick="toggleSubs('cafe3-pao')">Ver substituições</button>
         <div id="cafe3-pao" class="substitutions hidden">
           <ul>
@@ -314,7 +323,7 @@ button {
       </div>
 
       <div class="food-row">
-        <div class="food-title">Atum com requeijão light - 1 colher de sopa, 30g</div>
+        <div class="food-title">🐟 Atum com requeijão light - 1 colher de sopa, 30g</div>
         <button class="sub-btn" onclick="toggleSubs('cafe3-atum')">Ver substituições</button>
         <div id="cafe3-atum" class="substitutions hidden">
           <ul>
@@ -328,7 +337,7 @@ button {
       </div>
 
       <div class="food-row">
-        <div class="food-title">Suco natural - 1 copo, 200ml</div>
+        <div class="food-title">🍊 Suco natural - 1 copo, 200ml</div>
         <button class="sub-btn" onclick="toggleSubs('cafe3-suco')">Ver substituições</button>
         <div id="cafe3-suco" class="substitutions hidden">
           <ul>
@@ -342,6 +351,116 @@ button {
       </div>
 
       <button onclick="save('Café da manhã - Opção 3')">Salvar</button>
+    </div>
+  </div>
+
+  <!-- LANCHE DA MANHÃ -->
+  <div id="lancheScreen" class="screen">
+    <button class="back-btn" onclick="goHome()">← Voltar</button>
+
+    <div class="card">
+      <h3 class="option-title" style="background:#2563eb;">Opção 1</h3>
+      <div class="option-subtitle">🥣 Opção cremosa</div>
+      <ul class="details">
+        <li>🥛 Iogurte natural - 1 unidade, 170ml</li>
+        <li>🍓 Morango - 4 unidades</li>
+      </ul>
+
+      <div class="food-row">
+        <div class="food-title">🥛 Iogurte natural - 1 unidade, 170ml</div>
+        <button class="sub-btn" onclick="toggleSubs('lanche1-iogurte')">Ver substituições</button>
+        <div id="lanche1-iogurte" class="substitutions hidden">
+          <ul>
+            <li>Iogurte grego - 1 pote, 100 a 120g</li>
+            <li>Leite desnatado - 1 copo, 200ml</li>
+            <li>Leite semidesnatado - 1 copo, 200ml</li>
+            <li>Cottage - 3 colheres de sopa cheias, 80g</li>
+            <li>Ricota - 3 colheres de sopa cheias, 80g</li>
+          </ul>
+          <div class="note">Trocas práticas dentro do grupo de laticínios.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🍓 Morango - 4 unidades</div>
+        <button class="sub-btn" onclick="toggleSubs('lanche1-morango')">Ver substituições</button>
+        <div id="lanche1-morango" class="substitutions hidden">
+          <ul>
+            <li>🥝 Kiwi - 1 unidade média ou 1 xícara de chá picada, 120g</li>
+            <li>🍈 Melão - 1 xícara de chá picado, 120g</li>
+            <li>🍎 Maçã - 1 unidade média</li>
+            <li>🍐 Pêra - 1 unidade média</li>
+            <li>🍍 Abacaxi - 1 xícara de chá picada, 120g</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de frutas.</div>
+        </div>
+      </div>
+
+      <button onclick="save('Lanche da manhã - Opção 1')">Salvar</button>
+    </div>
+
+    <div class="card">
+      <h3 class="option-title" style="background:#2563eb;">Opção 2</h3>
+      <div class="option-subtitle">🥭 Opção com fruta e cereal</div>
+      <ul class="details">
+        <li>🥭 Manga - 1/2 unidade</li>
+        <li>🌾 Aveia - 1 colher de sopa, 20g</li>
+      </ul>
+
+      <div class="food-row">
+        <div class="food-title">🥭 Manga - 1/2 unidade</div>
+        <button class="sub-btn" onclick="toggleSubs('lanche2-manga')">Ver substituições</button>
+        <div id="lanche2-manga" class="substitutions hidden">
+          <ul>
+            <li>🍎 Maçã - 1 unidade média</li>
+            <li>🥝 Kiwi - 1 unidade média</li>
+            <li>🍓 Morango - 1 xícara de chá picada, 120g</li>
+            <li>🍈 Melão - 1 xícara de chá picado, 120g</li>
+            <li>🍈 Mamão - 1 xícara de chá picado, 120g</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de frutas.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">🌾 Aveia - 1 colher de sopa, 20g</div>
+        <button class="sub-btn" onclick="toggleSubs('lanche2-aveia')">Ver substituições</button>
+        <div id="lanche2-aveia" class="substitutions hidden">
+          <ul>
+            <li>Chia - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
+            <li>Linhaça - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
+            <li>Granola - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
+            <li>Amaranto - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de sementes e cereais.</div>
+        </div>
+      </div>
+
+      <button onclick="save('Lanche da manhã - Opção 2')">Salvar</button>
+    </div>
+
+    <div class="card">
+      <h3 class="option-title" style="background:#2563eb;">Opção 3</h3>
+      <div class="option-subtitle">💪 Opção prática</div>
+      <ul class="details">
+        <li>🥤 Bebida láctea proteica - 1 unidade</li>
+      </ul>
+
+      <div class="food-row">
+        <div class="food-title">🥤 Bebida láctea proteica - 1 unidade</div>
+        <button class="sub-btn" onclick="toggleSubs('lanche3-bebida')">Ver substituições</button>
+        <div id="lanche3-bebida" class="substitutions hidden">
+          <ul>
+            <li>Iogurte natural - 1 copo, 200ml</li>
+            <li>Iogurte grego - 1 pote, 100 a 120g</li>
+            <li>Leite desnatado - 1 copo, 200ml</li>
+            <li>Cottage - 3 colheres de sopa cheias, 80g + fruta</li>
+          </ul>
+          <div class="note">Trocas mais próximas para uso no dia a dia.</div>
+        </div>
+      </div>
+
+      <button onclick="save('Lanche da manhã - Opção 3')">Salvar</button>
     </div>
   </div>
 
