@@ -2,60 +2,361 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guia Alimentar</title>
-
   <link rel="manifest" href="manifest.json" />
-
   <style>
+    * { box-sizing: border-box; }
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
       background: #f5f5f5;
-      margin: 0;
-      padding: 20px;
+      color: #111;
     }
-
-    h1 {
-      text-align: center;
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: #f7f7f7;
+      padding: 20px 16px 90px;
     }
-
-    .card {
+    .header {
       background: white;
-      padding: 16px;
-      border-radius: 12px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
     }
-
+    .header h1 {
+      margin: 0 0 6px;
+      font-size: 32px;
+    }
+    .header p {
+      margin: 0;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .meal-card, .panel, .builder-box {
+      background: white;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .meal-card h3, .panel h3, .builder-box h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+    .sub {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .buttons, .chip-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
     button {
-      padding: 10px;
-      border-radius: 8px;
       border: none;
-      background: #000;
+      border-radius: 12px;
+      padding: 10px 14px;
+      background: #111;
       color: white;
-      margin-top: 8px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: #eee;
+      color: #111;
+    }
+    .hidden {
+      display: none;
+    }
+    .tabbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px;
+    }
+    .tabbar button {
+      background: transparent;
+      color: #444;
+      padding: 8px 12px;
+      border-radius: 10px;
+    }
+    .tabbar button.active {
+      background: #111;
+      color: white;
+    }
+    .chip {
+      display: inline-block;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: #f0f0f0;
+      color: #111;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .chip.active {
+      background: #111;
+      color: white;
+    }
+    .summary {
+      background: #111;
+      color: white;
+      border-radius: 18px;
+      padding: 16px;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+    ul {
+      padding-left: 18px;
+      margin: 8px 0 0;
+    }
+    li {
+      margin-bottom: 6px;
     }
   </style>
 </head>
-
 <body>
+  <div class="app">
+    <div class="header">
+      <h1>Guia Alimentar</h1>
+      <p>Seu plano alimentar em versão app, com refeições, favoritos e montagem prática.</p>
+    </div>
 
-<h1>Guia Alimentar</h1>
+    <div id="homeTab" class="tab-content">
+      <div class="meal-card">
+        <h3>Café da manhã</h3>
+        <div class="sub">Pão francês + ovo + café</div>
+        <div class="buttons">
+          <button onclick="toggleFavorite('Café da manhã: Pão francês + ovo + café')">Salvar</button>
+        </div>
+      </div>
 
-<div class="card">
-  <h3>Café da manhã</h3>
-  <p>Pão + ovo + café</p>
-</div>
+      <div class="meal-card">
+        <h3>Almoço</h3>
+        <div class="sub">Arroz + feijão + frango + legumes + folhas + fruta</div>
+        <div class="buttons">
+          <button onclick="toggleFavorite('Almoço: Arroz + feijão + frango + legumes + folhas + fruta')">Salvar</button>
+        </div>
+      </div>
 
-<div class="card">
-  <h3>Almoço</h3>
-  <p>Arroz + feijão + frango + legumes</p>
-</div>
+      <div class="meal-card">
+        <h3>Jantar</h3>
+        <div class="sub">Purê + carne + ervilha + legumes</div>
+        <div class="buttons">
+          <button onclick="toggleFavorite('Jantar: Purê + carne + ervilha + legumes')">Salvar</button>
+        </div>
+      </div>
+    </div>
 
-<div class="card">
-  <h3>Jantar</h3>
-  <p>Proteína + legumes</p>
-</div>
+    <div id="builderTab" class="tab-content hidden">
+      <div class="builder-box">
+        <h3>Montar refeição</h3>
+        <div class="sub">Escolha os blocos abaixo para montar seu prato.</div>
 
+        <div class="panel">
+          <h3>Carboidrato</h3>
+          <div class="chip-row" id="carbs"></div>
+        </div>
+
+        <div class="panel">
+          <h3>Proteína</h3>
+          <div class="chip-row" id="proteins"></div>
+        </div>
+
+        <div class="panel">
+          <h3>Leguminosa</h3>
+          <div class="chip-row" id="beans"></div>
+        </div>
+
+        <div class="panel">
+          <h3>Legumes</h3>
+          <div class="chip-row" id="veggies"></div>
+        </div>
+
+        <div class="panel">
+          <h3>Folhas</h3>
+          <div class="chip-row" id="greens"></div>
+        </div>
+
+        <div class="panel">
+          <h3>Fruta</h3>
+          <div class="chip-row" id="fruits"></div>
+        </div>
+
+        <div class="summary" id="mealSummary">
+          Escolha os itens para montar sua refeição.
+        </div>
+
+        <div class="buttons">
+          <button onclick="saveBuiltMeal()">Salvar nos favoritos</button>
+          <button class="secondary" onclick="clearBuiltMeal()">Limpar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="favoritesTab" class="tab-content hidden">
+      <div class="panel">
+        <h3>Favoritos</h3>
+        <div class="sub">Tudo o que você salvar aparece aqui.</div>
+        <ul id="favoritesList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabbar">
+    <button id="homeBtn" class="active" onclick="showTab('home')">Hoje</button>
+    <button id="builderBtn" onclick="showTab('builder')">Montar</button>
+    <button id="favoritesBtn" onclick="showTab('favorites')">Favoritos</button>
+  </div>
+
+  <script>
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+    const options = {
+      carbs: ['Arroz', 'Batata', 'Pão integral', 'Macarrão', 'Cuscuz'],
+      proteins: ['Frango', 'Patinho', 'Tilápia', 'Ovos'],
+      beans: ['Feijão', 'Grão-de-bico', 'Lentilha', 'Ervilha'],
+      veggies: ['Brócolis', 'Cenoura', 'Abobrinha', 'Vagem'],
+      greens: ['Alface', 'Rúcula', 'Couve', 'Espinafre'],
+      fruits: ['Laranja', 'Kiwi', 'Morango', 'Abacaxi']
+    };
+
+    let selected = {
+      carbs: '',
+      proteins: '',
+      beans: '',
+      veggies: '',
+      greens: '',
+      fruits: ''
+    };
+
+    function saveFavorites() {
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      renderFavorites();
+    }
+
+    function toggleFavorite(item) {
+      if (!favorites.includes(item)) {
+        favorites.push(item);
+        saveFavorites();
+        alert('Salvo nos favoritos!');
+      }
+    }
+
+    function renderFavorites() {
+      const list = document.getElementById('favoritesList');
+      list.innerHTML = '';
+      if (favorites.length === 0) {
+        list.innerHTML = '<li>Nenhum favorito ainda.</li>';
+        return;
+      }
+      favorites.forEach((fav, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${fav} <button class="secondary" onclick="removeFavorite(${index})">Remover</button>`;
+        list.appendChild(li);
+      });
+    }
+
+    function removeFavorite(index) {
+      favorites.splice(index, 1);
+      saveFavorites();
+    }
+
+    function renderChips(groupId, values) {
+      const container = document.getElementById(groupId);
+      container.innerHTML = '';
+      values.forEach(value => {
+        const chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.innerText = value;
+        chip.onclick = () => {
+          selected[groupId] = value;
+          updateSummary();
+          renderAllChips();
+        };
+        if (selected[groupId] === value) {
+          chip.classList.add('active');
+        }
+        container.appendChild(chip);
+      });
+    }
+
+    function renderAllChips() {
+      renderChips('carbs', options.carbs);
+      renderChips('proteins', options.proteins);
+      renderChips('beans', options.beans);
+      renderChips('veggies', options.veggies);
+      renderChips('greens', options.greens);
+      renderChips('fruits', options.fruits);
+    }
+
+    function updateSummary() {
+      const parts = Object.values(selected).filter(Boolean);
+      document.getElementById('mealSummary').innerText =
+        parts.length ? parts.join(' + ') : 'Escolha os itens para montar sua refeição.';
+    }
+
+    function clearBuiltMeal() {
+      selected = {
+        carbs: '',
+        proteins: '',
+        beans: '',
+        veggies: '',
+        greens: '',
+        fruits: ''
+      };
+      updateSummary();
+      renderAllChips();
+    }
+
+    function saveBuiltMeal() {
+      const parts = Object.values(selected).filter(Boolean);
+      if (!parts.length) {
+        alert('Monte uma refeição antes de salvar.');
+        return;
+      }
+      const meal = 'Montagem: ' + parts.join(' + ');
+      toggleFavorite(meal);
+    }
+
+    function showTab(tab) {
+      document.getElementById('homeTab').classList.add('hidden');
+      document.getElementById('builderTab').classList.add('hidden');
+      document.getElementById('favoritesTab').classList.add('hidden');
+
+      document.getElementById('homeBtn').classList.remove('active');
+      document.getElementById('builderBtn').classList.remove('active');
+      document.getElementById('favoritesBtn').classList.remove('active');
+
+      if (tab === 'home') {
+        document.getElementById('homeTab').classList.remove('hidden');
+        document.getElementById('homeBtn').classList.add('active');
+      }
+      if (tab === 'builder') {
+        document.getElementById('builderTab').classList.remove('hidden');
+        document.getElementById('builderBtn').classList.add('active');
+      }
+      if (tab === 'favorites') {
+        document.getElementById('favoritesTab').classList.remove('hidden');
+        document.getElementById('favoritesBtn').classList.add('active');
+      }
+    }
+
+    renderAllChips();
+    updateSummary();
+    renderFavorites();
+  </script>
 </body>
 </html>
