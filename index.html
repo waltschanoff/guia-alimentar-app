@@ -4,50 +4,51 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guia Alimentar</title>
-
 <link rel="manifest" href="manifest.json">
-
 <style>
 body {
   margin: 0;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   background: #f5f5f5;
 }
-
 .app {
   max-width: 480px;
   margin: auto;
   padding: 20px 15px 90px;
 }
-
 .card {
   background: white;
   padding: 15px;
   border-radius: 15px;
   margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-
 h1 {
   margin-bottom: 20px;
 }
-
 h3 {
   margin: 0 0 8px;
 }
-
 .sub {
   color: #555;
   margin-bottom: 10px;
 }
-
+.details {
+  margin: 10px 0;
+  padding-left: 18px;
+  color: #222;
+}
+.details li {
+  margin-bottom: 6px;
+}
 button {
   padding: 10px;
   border: none;
   border-radius: 10px;
   background: black;
   color: white;
+  cursor: pointer;
 }
-
 .tabs {
   position: fixed;
   bottom: 0;
@@ -59,28 +60,21 @@ button {
   padding: 10px;
   border-top: 1px solid #ddd;
 }
-
 .tab-btn {
   background: none;
   color: #444;
 }
-
-.active {
-  font-weight: bold;
-}
-
 .hidden {
   display: none;
 }
-
 .chip {
   padding: 8px 10px;
   background: #eee;
   border-radius: 20px;
   margin: 5px;
   display: inline-block;
+  cursor: pointer;
 }
-
 .summary {
   background: black;
   color: white;
@@ -90,139 +84,159 @@ button {
 }
 </style>
 </head>
-
 <body>
 
 <div class="app">
+  <h1>Guia Alimentar</h1>
 
-<h1>Guia Alimentar</h1>
+  <div id="home">
+    <div class="card">
+      <h3>Café da manhã</h3>
+      <div class="sub">Opções com quantidade</div>
+      <ul class="details">
+        <li>Pão francês - 1 unidade</li>
+        <li>Ovo - 1 unidade</li>
+        <li>Cappuccino saudável + água - 1 xícara de chá, 240ml</li>
+      </ul>
+      <button onclick="save('Café da manhã')">Salvar</button>
+    </div>
 
-<!-- HOME -->
-<div id="home">
+    <div class="card">
+      <h3>Lanche da manhã</h3>
+      <div class="sub">Opções com quantidade</div>
+      <ul class="details">
+        <li>Iogurte natural - 1 unidade, 170ml</li>
+        <li>Morango - 4 unidades</li>
+        <li>OU Manga - 1/2 unidade</li>
+        <li>Aveia - 1 colher de sopa, 20g</li>
+      </ul>
+      <button onclick="save('Lanche da manhã')">Salvar</button>
+    </div>
 
-<div class="card">
-<h3>Café da manhã</h3>
-<div class="sub">Pão + ovo + café</div>
-<button onclick="save('Café da manhã')">Salvar</button>
+    <div class="card">
+      <h3>Almoço</h3>
+      <div class="sub">Opção base com quantidade</div>
+      <ul class="details">
+        <li>Arroz - 6 colheres de sopa, 120g</li>
+        <li>Feijão - 1 concha, 80g</li>
+        <li>Filé de frango grelhado - 1 filé, 100g</li>
+        <li>Legumes cozidos - 2 colheres de servir, 100g</li>
+        <li>Verduras folhosas - à vontade</li>
+        <li>Fruta rica em vitamina C - 1 unidade</li>
+      </ul>
+      <button onclick="save('Almoço')">Salvar</button>
+    </div>
+
+    <div class="card">
+      <h3>Lanche da tarde</h3>
+      <div class="sub">Opções com quantidade</div>
+      <ul class="details">
+        <li>Aveioca - 1 receita</li>
+        <li>Ovo - 1 unidade</li>
+        <li>Chá - 1 xícara de chá, 240ml</li>
+      </ul>
+      <button onclick="save('Lanche da tarde')">Salvar</button>
+    </div>
+
+    <div class="card">
+      <h3>Jantar</h3>
+      <div class="sub">Opção base com quantidade</div>
+      <ul class="details">
+        <li>Purê de batatas - 2 colheres de servir, 100g</li>
+        <li>Ervilha - 1 colher de servir, 50g</li>
+        <li>Carne moída, patinho - 2 colheres de servir, 100g</li>
+        <li>Legumes cozidos - 2 colheres de servir, 100g</li>
+        <li>Verduras folhosas - à vontade</li>
+      </ul>
+      <button onclick="save('Jantar')">Salvar</button>
+    </div>
+
+    <div class="card">
+      <h3>Ceia</h3>
+      <div class="sub">Opções com quantidade</div>
+      <ul class="details">
+        <li>Torrada magic toast - 7 unidades</li>
+        <li>Requeijão - 1 colher de sopa, 30g</li>
+        <li>Chá - 1 xícara de chá, 240ml</li>
+      </ul>
+      <button onclick="save('Ceia')">Salvar</button>
+    </div>
+  </div>
+
+  <div id="builder" class="hidden">
+    <div class="card">
+      <h3>Montar refeição</h3>
+      <div>
+        <div class="chip" onclick="select('Arroz - 6 colheres')">Arroz</div>
+        <div class="chip" onclick="select('Frango - 100g')">Frango</div>
+        <div class="chip" onclick="select('Feijão - 1 concha')">Feijão</div>
+        <div class="chip" onclick="select('Brócolis - à vontade')">Brócolis</div>
+        <div class="chip" onclick="select('Alface - à vontade')">Alface</div>
+        <div class="chip" onclick="select('Laranja - 1 unidade')">Laranja</div>
+      </div>
+      <div class="summary" id="summary">Monte sua refeição</div>
+      <button onclick="saveMeal()">Salvar</button>
+    </div>
+  </div>
+
+  <div id="fav" class="hidden">
+    <div class="card">
+      <h3>Favoritos</h3>
+      <ul id="list"></ul>
+    </div>
+  </div>
 </div>
 
-<div class="card">
-<h3>Lanche da manhã</h3>
-<div class="sub">Iogurte + fruta OU aveia</div>
-<button onclick="save('Lanche manhã')">Salvar</button>
-</div>
-
-<div class="card">
-<h3>Almoço</h3>
-<div class="sub">Arroz + feijão + proteína + legumes + folhas + fruta</div>
-<button onclick="save('Almoço')">Salvar</button>
-</div>
-
-<div class="card">
-<h3>Lanche da tarde</h3>
-<div class="sub">Pão integral + proteína OU aveioca</div>
-<button onclick="save('Lanche tarde')">Salvar</button>
-</div>
-
-<div class="card">
-<h3>Jantar</h3>
-<div class="sub">Proteína + legumes + carboidrato</div>
-<button onclick="save('Jantar')">Salvar</button>
-</div>
-
-<div class="card">
-<h3>Ceia</h3>
-<div class="sub">Opção leve (iogurte, fruta, aveia)</div>
-<button onclick="save('Ceia')">Salvar</button>
-</div>
-
-</div>
-
-<!-- BUILDER -->
-<div id="builder" class="hidden">
-
-<div class="card">
-<h3>Montar refeição</h3>
-
-<div>
-<div class="chip" onclick="select('Arroz')">Arroz</div>
-<div class="chip" onclick="select('Frango')">Frango</div>
-<div class="chip" onclick="select('Feijão')">Feijão</div>
-<div class="chip" onclick="select('Brócolis')">Brócolis</div>
-<div class="chip" onclick="select('Alface')">Alface</div>
-</div>
-
-<div class="summary" id="summary">
-Monte sua refeição
-</div>
-
-<button onclick="saveMeal()">Salvar</button>
-
-</div>
-
-</div>
-
-<!-- FAVORITOS -->
-<div id="fav" class="hidden">
-<div class="card">
-<h3>Favoritos</h3>
-<ul id="list"></ul>
-</div>
-</div>
-
-</div>
-
-<!-- MENU -->
 <div class="tabs">
-<button class="tab-btn active" onclick="show('home')">Hoje</button>
-<button class="tab-btn" onclick="show('builder')">Montar</button>
-<button class="tab-btn" onclick="show('fav')">Favoritos</button>
+  <button class="tab-btn" onclick="show('home')">Hoje</button>
+  <button class="tab-btn" onclick="show('builder')">Montar</button>
+  <button class="tab-btn" onclick="show('fav')">Favoritos</button>
 </div>
 
 <script>
-
 let selected = [];
 let favs = JSON.parse(localStorage.getItem('favs') || '[]');
 
 function show(tab){
-document.getElementById('home').classList.add('hidden');
-document.getElementById('builder').classList.add('hidden');
-document.getElementById('fav').classList.add('hidden');
-
-document.getElementById(tab).classList.remove('hidden');
+  document.getElementById('home').classList.add('hidden');
+  document.getElementById('builder').classList.add('hidden');
+  document.getElementById('fav').classList.add('hidden');
+  document.getElementById(tab).classList.remove('hidden');
 }
 
 function select(item){
-selected.push(item);
-document.getElementById('summary').innerText = selected.join(' + ');
+  if (!selected.includes(item)) {
+    selected.push(item);
+  }
+  document.getElementById('summary').innerText = selected.join(' + ');
 }
 
 function saveMeal(){
-if(selected.length === 0) return;
-favs.push(selected.join(' + '));
-localStorage.setItem('favs', JSON.stringify(favs));
-alert('Salvo!');
+  if(selected.length === 0) return;
+  favs.push(selected.join(' + '));
+  localStorage.setItem('favs', JSON.stringify(favs));
+  alert('Salvo!');
+  load();
 }
 
 function save(item){
-favs.push(item);
-localStorage.setItem('favs', JSON.stringify(favs));
-alert('Salvo!');
+  favs.push(item);
+  localStorage.setItem('favs', JSON.stringify(favs));
+  alert('Salvo!');
+  load();
 }
 
 function load(){
-let list = document.getElementById('list');
-list.innerHTML = '';
-
-favs.forEach(f=>{
-let li = document.createElement('li');
-li.innerText = f;
-list.appendChild(li);
-});
+  let list = document.getElementById('list');
+  list.innerHTML = '';
+  favs.forEach(f => {
+    let li = document.createElement('li');
+    li.innerText = f;
+    list.appendChild(li);
+  });
 }
 
 load();
-
 </script>
 
 </body>
