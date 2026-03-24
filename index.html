@@ -28,20 +28,39 @@ h1 {
   margin-bottom: 20px;
   color: #14532d;
 }
-.meal-title {
+.screen {
+  display: none;
+}
+.screen.active {
+  display: block;
+}
+.meal-button {
+  width: 100%;
+  text-align: left;
+  padding: 16px;
+  border: none;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.cafe { background: #d97706; }
+.lanche { background: #2563eb; }
+.almoco { background: #16a34a; }
+.lanche-tarde { background: #7c3aed; }
+.jantar { background: #0f766e; }
+.ceia { background: #be185d; }
+
+.option-title {
   margin: 0 0 10px;
   padding: 10px 12px;
   border-radius: 12px;
-  font-size: 20px;
-  color: #fff;
+  font-size: 18px;
+  color: white;
+  background: #14532d;
 }
-.meal-cafe { background: #d97706; }
-.meal-lanche { background: #2563eb; }
-.meal-almoco { background: #16a34a; }
-.meal-lanche-tarde { background: #7c3aed; }
-.meal-jantar { background: #0f766e; }
-.meal-ceia { background: #be185d; }
-
 .sub {
   color: #555;
   margin-bottom: 10px;
@@ -55,12 +74,16 @@ h1 {
   margin-bottom: 6px;
 }
 button {
-  padding: 10px;
+  padding: 10px 12px;
   border: none;
   border-radius: 10px;
   background: #16a34a;
   color: white;
   cursor: pointer;
+}
+.back-btn {
+  background: #111;
+  margin-bottom: 14px;
 }
 .tabs {
   position: fixed;
@@ -132,6 +155,10 @@ button {
   color: #666;
   margin-top: 6px;
 }
+.placeholder {
+  color: #666;
+  font-size: 14px;
+}
 </style>
 </head>
 <body>
@@ -139,10 +166,25 @@ button {
 <div class="app">
   <h1>Guia Alimentar</h1>
 
-  <div id="home">
+  <!-- TELA INICIAL -->
+  <div id="home" class="screen active">
     <div class="card">
-      <h3 class="meal-title meal-cafe">Café da manhã</h3>
-      <div class="sub">Opção base com quantidade</div>
+      <div class="sub">Escolha a refeição que você quer consultar.</div>
+      <button class="meal-button cafe" onclick="openMeal('cafeScreen')">☀️ Café da manhã</button>
+      <button class="meal-button lanche" onclick="alert('Próximo passo: montar tela completa do lanche da manhã')">🍎 Lanche da manhã</button>
+      <button class="meal-button almoco" onclick="alert('Próximo passo: montar tela completa do almoço')">🍽️ Almoço</button>
+      <button class="meal-button lanche-tarde" onclick="alert('Próximo passo: montar tela completa do lanche da tarde')">☕ Lanche da tarde</button>
+      <button class="meal-button jantar" onclick="alert('Próximo passo: montar tela completa do jantar')">🌙 Jantar</button>
+      <button class="meal-button ceia" onclick="alert('Próximo passo: montar tela completa da ceia')">🌜 Ceia</button>
+    </div>
+  </div>
+
+  <!-- CAFÉ DA MANHÃ -->
+  <div id="cafeScreen" class="screen">
+    <button class="back-btn" onclick="goHome()">← Voltar</button>
+
+    <div class="card">
+      <h3 class="option-title">Opção 1</h3>
       <ul class="details">
         <li>Pão francês - 1 unidade</li>
         <li>Ovo - 1 unidade</li>
@@ -151,24 +193,23 @@ button {
 
       <div class="food-row">
         <div class="food-title">Pão francês - 1 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-pao')">Ver substituições</button>
-        <div id="subs-pao" class="substitutions hidden">
+        <button class="sub-btn" onclick="toggleSubs('cafe1-pao')">Ver substituições</button>
+        <div id="cafe1-pao" class="substitutions hidden">
           <ul>
             <li>Pão integral - 2 fatias</li>
             <li>Pão de forma - 2 fatias</li>
             <li>Pão sírio pequeno - 1 unidade</li>
             <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Tapioca - porção equivalente</li>
             <li>Batata inglesa - 1 unidade média ou 120 a 130g</li>
           </ul>
-          <div class="note">Trocas mais práticas do grupo de carboidratos e pães.</div>
+          <div class="note">Trocas práticas do grupo de carboidratos.</div>
         </div>
       </div>
 
       <div class="food-row">
         <div class="food-title">Ovo - 1 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-ovo')">Ver substituições</button>
-        <div id="subs-ovo" class="substitutions hidden">
+        <button class="sub-btn" onclick="toggleSubs('cafe1-ovo')">Ver substituições</button>
+        <div id="cafe1-ovo" class="substitutions hidden">
           <ul>
             <li>Ovos - 2 unidades médias, 100g</li>
             <li>Peito de frango - 1 filé médio, 100 a 120g</li>
@@ -181,403 +222,133 @@ button {
 
       <div class="food-row">
         <div class="food-title">Cappuccino saudável + água - 1 xícara de chá, 240ml</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-cappuccino')">Ver substituições</button>
-        <div id="subs-cappuccino" class="substitutions hidden">
+        <button class="sub-btn" onclick="toggleSubs('cafe1-cappuccino')">Ver substituições</button>
+        <div id="cafe1-cappuccino" class="substitutions hidden">
           <ul>
             <li>Leite desnatado - 1 copo, 200ml</li>
             <li>Leite semidesnatado - 1 copo, 200ml</li>
             <li>Iogurte natural - 1 copo, 200ml</li>
             <li>Iogurte grego - 1 pote, 100 a 120g</li>
           </ul>
-          <div class="note">Trocas mais próximas no grupo de laticínios. A água continua livre.</div>
+          <div class="note">Trocas mais próximas no grupo de laticínios.</div>
         </div>
       </div>
 
-      <button onclick="save('Café da manhã')">Salvar</button>
+      <button onclick="save('Café da manhã - Opção 1')">Salvar</button>
     </div>
 
     <div class="card">
-      <h3 class="meal-title meal-lanche">Lanche da manhã</h3>
-      <div class="sub">Opções com quantidade</div>
+      <h3 class="option-title">Opção 2</h3>
       <ul class="details">
-        <li>Opção 1: Iogurte natural - 1 unidade, 170ml + Morango - 4 unidades</li>
-        <li>Opção 2: Manga - 1/2 unidade + Aveia - 1 colher de sopa, 20g</li>
-        <li>Opção 3: Bebida láctea proteica - 1 unidade</li>
+        <li>Crepioca - 1 ovo + 2 colheres de sopa de tapioca</li>
+        <li>Muçarela - 1 fatia</li>
+        <li>Tomate - à vontade</li>
+        <li>Café - 1 xícara, 80ml</li>
       </ul>
 
       <div class="food-row">
-        <div class="food-title">Iogurte natural - 1 unidade, 170ml</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-iogurte')">Ver substituições</button>
-        <div id="subs-iogurte" class="substitutions hidden">
+        <div class="food-title">Crepioca - 1 ovo + 2 colheres de sopa de tapioca</div>
+        <button class="sub-btn" onclick="toggleSubs('cafe2-crepioca')">Ver substituições</button>
+        <div id="cafe2-crepioca" class="substitutions hidden">
           <ul>
-            <li>Iogurte grego - 1 pote, 100 a 120g</li>
-            <li>Leite desnatado - 1 copo, 200ml</li>
-            <li>Leite semidesnatado - 1 copo, 200ml</li>
-            <li>Cottage - 3 colheres de sopa cheias, 80g</li>
+            <li>Pão integral - 2 fatias + ovo</li>
+            <li>Pão francês - 1 unidade + ovo</li>
+            <li>Cuscuz - 4 a 5 colheres de sopa cheias + ovo</li>
+            <li>Tapioca - porção equivalente + ovo</li>
+          </ul>
+          <div class="note">Trocas práticas mantendo base + proteína.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">Muçarela - 1 fatia</div>
+        <button class="sub-btn" onclick="toggleSubs('cafe2-mucarela')">Ver substituições</button>
+        <div id="cafe2-mucarela" class="substitutions hidden">
+          <ul>
             <li>Ricota - 3 colheres de sopa cheias, 80g</li>
-          </ul>
-          <div class="note">Trocas práticas dentro do grupo de laticínios.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Morango - 4 unidades</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-morango')">Ver substituições</button>
-        <div id="subs-morango" class="substitutions hidden">
-          <ul>
-            <li>Kiwi - 1 unidade média ou 1 xícara de chá picada, 120g</li>
-            <li>Mamão - 1 unidade média ou 1 xícara de chá picada, 120g</li>
-            <li>Maçã - 1 unidade média ou 1 xícara de chá picada, 120g</li>
-            <li>Pêra - 1 unidade média ou 1 xícara de chá picada, 120g</li>
-            <li>Melão - 1 xícara de chá picado, 120g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de frutas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Manga - 1/2 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-manga')">Ver substituições</button>
-        <div id="subs-manga" class="substitutions hidden">
-          <ul>
-            <li>Mamão - 1 unidade média ou 1 xícara de chá picada, 120g</li>
-            <li>Kiwi - 1 unidade média ou 1 xícara de chá picada, 120g</li>
-            <li>Morango - 1 xícara de chá picada, 120g</li>
-            <li>Maçã - 1 unidade média</li>
-            <li>Melão - 1 xícara de chá picado, 120g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de frutas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Aveia - 1 colher de sopa, 20g</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-aveia')">Ver substituições</button>
-        <div id="subs-aveia" class="substitutions hidden">
-          <ul>
-            <li>Chia - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
-            <li>Linhaça - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
-            <li>Granola - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
-            <li>Amaranto - 1 a 2 colheres de sopa cheias, 15 a 20g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de sementes e cereais.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Bebida láctea proteica - 1 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-bebida')">Ver substituições</button>
-        <div id="subs-bebida" class="substitutions hidden">
-          <ul>
-            <li>Iogurte natural - 1 copo, 200ml</li>
-            <li>Iogurte grego - 1 pote, 100 a 120g</li>
-            <li>Leite desnatado - 1 copo, 200ml</li>
-            <li>Cottage - 3 colheres de sopa cheias, 80g + fruta</li>
-          </ul>
-          <div class="note">Trocas mais próximas para uso no dia a dia.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Lanche da manhã')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="meal-title meal-almoco">Almoço</h3>
-      <div class="sub">Opção base com quantidade</div>
-      <ul class="details">
-        <li>Arroz - 6 colheres de sopa, 120g</li>
-        <li>Feijão - 1 concha, 80g</li>
-        <li>Filé de frango grelhado - 1 filé, 100g</li>
-        <li>Legumes cozidos - 2 colheres de servir, 100g</li>
-        <li>Verduras folhosas - à vontade</li>
-        <li>Fruta rica em vitamina C - 1 unidade</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">Arroz - 6 colheres de sopa, 120g</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-arroz')">Ver substituições</button>
-        <div id="subs-arroz" class="substitutions hidden">
-          <ul>
-            <li>Macarrão - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Batata inglesa - 1 unidade média ou 120 a 130g</li>
-            <li>Batata doce - 1 unidade média ou 120 a 130g</li>
-            <li>Pão integral - 2 fatias</li>
-          </ul>
-          <div class="note">Trocas mais práticas do grupo de carboidratos.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Feijão - 1 concha, 80g</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-feijao')">Ver substituições</button>
-        <div id="subs-feijao" class="substitutions hidden">
-          <ul>
-            <li>Lentilha - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-            <li>Grão-de-bico - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-            <li>Ervilha - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-            <li>Feijão branco - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de leguminosas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Filé de frango grelhado - 1 filé, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-frango')">Ver substituições</button>
-        <div id="subs-frango" class="substitutions hidden">
-          <ul>
-            <li>Patinho - 1 filé médio ou palma da mão, 100 a 120g</li>
-            <li>Tilápia - 1 filé médio, 100 a 120g</li>
-            <li>Merluza - 1 filé médio, 100 a 120g</li>
-            <li>Ovos - 2 unidades médias, 100g</li>
-          </ul>
-          <div class="note">Trocas diretas do grupo de proteínas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Legumes cozidos - 2 colheres de servir, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-legumes')">Ver substituições</button>
-        <div id="subs-legumes" class="substitutions hidden">
-          <ul>
-            <li>Brócolis - 80 a 100g cozidos</li>
-            <li>Cenoura - 80 a 100g cozidos</li>
-            <li>Abobrinha - 80 a 100g cozidos</li>
-            <li>Vagem - 80 a 100g cozidos</li>
-            <li>Chuchu - 80 a 100g cozidos</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de legumes.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Verduras folhosas - à vontade</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-folhas')">Ver substituições</button>
-        <div id="subs-folhas" class="substitutions hidden">
-          <ul>
-            <li>Alface - prato cheio</li>
-            <li>Rúcula - prato cheio</li>
-            <li>Couve - prato cheio</li>
-            <li>Espinafre - prato cheio</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de folhas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Fruta rica em vitamina C - 1 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-fruta')">Ver substituições</button>
-        <div id="subs-fruta" class="substitutions hidden">
-          <ul>
-            <li>Laranja - 1 unidade</li>
-            <li>Kiwi - 1 unidade</li>
-            <li>Morango - 1 xícara de chá picada, 120g</li>
-            <li>Abacaxi - 1 xícara de chá picada, 120g</li>
-            <li>Mamão - 1 xícara de chá picada, 120g</li>
-          </ul>
-          <div class="note">Trocas práticas de fruta rica em vitamina C.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Almoço')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="meal-title meal-lanche-tarde">Lanche da tarde</h3>
-      <div class="sub">Opção base com quantidade</div>
-      <ul class="details">
-        <li>Aveioca - 1 receita</li>
-        <li>Ovo - 1 unidade</li>
-        <li>Chá - 1 xícara de chá, 240ml</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">Aveioca - 1 receita</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-aveioca')">Ver substituições</button>
-        <div id="subs-aveioca" class="substitutions hidden">
-          <ul>
-            <li>Pão integral - 2 fatias</li>
-            <li>Pão francês - 1 unidade</li>
-            <li>Crepioca - porção equivalente</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-          </ul>
-          <div class="note">Trocas mais práticas da base do lanche.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Ovo - 1 unidade</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-ovo-tarde')">Ver substituições</button>
-        <div id="subs-ovo-tarde" class="substitutions hidden">
-          <ul>
-            <li>Ovos - 2 unidades médias, 100g</li>
-            <li>Peito de frango - 1 filé médio, 100 a 120g</li>
-            <li>Tilápia - 1 filé médio, 100 a 120g</li>
-            <li>Patinho - 1 filé médio ou palma da mão, 100 a 120g</li>
-          </ul>
-          <div class="note">Trocas diretas do grupo de proteínas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Chá - 1 xícara de chá, 240ml</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-cha-tarde')">Ver substituições</button>
-        <div id="subs-cha-tarde" class="substitutions hidden">
-          <ul>
-            <li>Café sem açúcar - 1 xícara</li>
-            <li>Água - livre</li>
-            <li>Cappuccino saudável - 1 xícara, conforme preparo</li>
-          </ul>
-          <div class="note">Opções práticas de bebida para o dia a dia.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Lanche da tarde')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="meal-title meal-jantar">Jantar</h3>
-      <div class="sub">Opção base com quantidade</div>
-      <ul class="details">
-        <li>Purê de batatas - 2 colheres de servir, 100g</li>
-        <li>Ervilha - 1 colher de servir, 50g</li>
-        <li>Carne moída, patinho - 2 colheres de servir, 100g</li>
-        <li>Legumes cozidos - 2 colheres de servir, 100g</li>
-        <li>Verduras folhosas - à vontade</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">Purê de batatas - 2 colheres de servir, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-pure')">Ver substituições</button>
-        <div id="subs-pure" class="substitutions hidden">
-          <ul>
-            <li>Arroz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Macarrão - 4 a 5 colheres de sopa cheias, 100g</li>
-            <li>Mandioca - 1 unidade média ou 120 a 130g</li>
-            <li>Pão integral - 2 fatias</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de carboidratos.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Ervilha - 1 colher de servir, 50g</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-ervilha')">Ver substituições</button>
-        <div id="subs-ervilha" class="substitutions hidden">
-          <ul>
-            <li>Feijão - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-            <li>Lentilha - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-            <li>Grão-de-bico - 1 concha média ou 4 colheres de sopa cheias, 100g</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de leguminosas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Carne moída, patinho - 2 colheres de servir, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-carne')">Ver substituições</button>
-        <div id="subs-carne" class="substitutions hidden">
-          <ul>
-            <li>Peito de frango - 1 filé médio, 100 a 120g</li>
-            <li>Tilápia - 1 filé médio, 100 a 120g</li>
-            <li>Merluza - 1 filé médio, 100 a 120g</li>
-            <li>Ovos - 2 unidades médias, 100g</li>
-          </ul>
-          <div class="note">Trocas diretas do grupo de proteínas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Legumes cozidos - 2 colheres de servir, 100g</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-legumes-jantar')">Ver substituições</button>
-        <div id="subs-legumes-jantar" class="substitutions hidden">
-          <ul>
-            <li>Brócolis - 80 a 100g cozidos</li>
-            <li>Abobrinha - 80 a 100g cozidos</li>
-            <li>Cenoura - 80 a 100g cozidos</li>
-            <li>Chuchu - 80 a 100g cozidos</li>
-            <li>Vagem - 80 a 100g cozidos</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de legumes.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Verduras folhosas - à vontade</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-folhas-jantar')">Ver substituições</button>
-        <div id="subs-folhas-jantar" class="substitutions hidden">
-          <ul>
-            <li>Alface - prato cheio</li>
-            <li>Rúcula - prato cheio</li>
-            <li>Couve - prato cheio</li>
-            <li>Espinafre - prato cheio</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de folhas.</div>
-        </div>
-      </div>
-
-      <button onclick="save('Jantar')">Salvar</button>
-    </div>
-
-    <div class="card">
-      <h3 class="meal-title meal-ceia">Ceia</h3>
-      <div class="sub">Opção base com quantidade</div>
-      <ul class="details">
-        <li>Torrada magic toast - 7 unidades</li>
-        <li>Requeijão - 1 colher de sopa, 30g</li>
-        <li>Chá - 1 xícara de chá, 240ml</li>
-      </ul>
-
-      <div class="food-row">
-        <div class="food-title">Torrada magic toast - 7 unidades</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-torrada')">Ver substituições</button>
-        <div id="subs-torrada" class="substitutions hidden">
-          <ul>
-            <li>Pão integral - 2 fatias</li>
-            <li>Pão de forma - 2 fatias</li>
-            <li>Pão francês - 1 unidade</li>
-            <li>Pão sírio pequeno - 1 unidade</li>
-          </ul>
-          <div class="note">Trocas práticas do grupo de pães e torradas.</div>
-        </div>
-      </div>
-
-      <div class="food-row">
-        <div class="food-title">Requeijão - 1 colher de sopa, 30g</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-requeijao')">Ver substituições</button>
-        <div id="subs-requeijao" class="substitutions hidden">
-          <ul>
-            <li>Requeijão light - 1 colher de sopa</li>
             <li>Cottage - 3 colheres de sopa cheias, 80g</li>
-            <li>Ricota - 3 colheres de sopa cheias, 80g</li>
             <li>Minas frescal - porção equivalente</li>
+            <li>Queijo coalho - 1 fatia média, 30g</li>
           </ul>
           <div class="note">Trocas práticas do grupo de laticínios.</div>
         </div>
       </div>
 
       <div class="food-row">
-        <div class="food-title">Chá - 1 xícara de chá, 240ml</div>
-        <button class="sub-btn" onclick="toggleSubs('subs-cha-ceia')">Ver substituições</button>
-        <div id="subs-cha-ceia" class="substitutions hidden">
+        <div class="food-title">Tomate - à vontade</div>
+        <button class="sub-btn" onclick="toggleSubs('cafe2-tomate')">Ver substituições</button>
+        <div id="cafe2-tomate" class="substitutions hidden">
           <ul>
-            <li>Água - livre</li>
-            <li>Café sem açúcar - 1 xícara</li>
-            <li>Leite morno desnatado - 1 copo, 200ml</li>
+            <li>Cenoura - 80 a 100g</li>
+            <li>Abobrinha - 80 a 100g</li>
+            <li>Brócolis - 80 a 100g</li>
+            <li>Pimentão - 80 a 100g</li>
           </ul>
-          <div class="note">Trocas práticas de bebida para a noite.</div>
+          <div class="note">Trocas práticas do grupo de legumes.</div>
         </div>
       </div>
 
-      <button onclick="save('Ceia')">Salvar</button>
+      <button onclick="save('Café da manhã - Opção 2')">Salvar</button>
+    </div>
+
+    <div class="card">
+      <h3 class="option-title">Opção 3</h3>
+      <ul class="details">
+        <li>Pão integral - 2 fatias</li>
+        <li>Atum com requeijão light - 1 colher de sopa, 30g</li>
+        <li>Suco natural - 1 copo, 200ml</li>
+      </ul>
+
+      <div class="food-row">
+        <div class="food-title">Pão integral - 2 fatias</div>
+        <button class="sub-btn" onclick="toggleSubs('cafe3-pao')">Ver substituições</button>
+        <div id="cafe3-pao" class="substitutions hidden">
+          <ul>
+            <li>Pão francês - 1 unidade</li>
+            <li>Pão sírio pequeno - 1 unidade</li>
+            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g</li>
+            <li>Batata inglesa - 1 unidade média ou 120 a 130g</li>
+          </ul>
+          <div class="note">Trocas práticas do grupo de carboidratos.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">Atum com requeijão light - 1 colher de sopa, 30g</div>
+        <button class="sub-btn" onclick="toggleSubs('cafe3-atum')">Ver substituições</button>
+        <div id="cafe3-atum" class="substitutions hidden">
+          <ul>
+            <li>Frango desfiado com requeijão light - porção equivalente</li>
+            <li>Ricota temperada - porção equivalente</li>
+            <li>Cottage com frango - porção equivalente</li>
+            <li>Ovos mexidos com requeijão light - porção equivalente</li>
+          </ul>
+          <div class="note">Trocas práticas para recheio/proteína.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">Suco natural - 1 copo, 200ml</div>
+        <button class="sub-btn" onclick="toggleSubs('cafe3-suco')">Ver substituições</button>
+        <div id="cafe3-suco" class="substitutions hidden">
+          <ul>
+            <li>Laranja - 1 unidade</li>
+            <li>Maçã - 1 unidade</li>
+            <li>Mamão - 1 xícara de chá picada, 120g</li>
+            <li>Melão - 1 xícara de chá picada, 120g</li>
+          </ul>
+          <div class="note">No plano, pode ser trocado por fruta equivalente.</div>
+        </div>
+      </div>
+
+      <button onclick="save('Café da manhã - Opção 3')">Salvar</button>
     </div>
   </div>
 
-  <div id="builder" class="hidden">
+  <!-- MONTAR -->
+  <div id="builder" class="screen">
     <div class="card">
-      <h3 class="meal-title meal-almoco">Montar refeição</h3>
+      <h3 class="option-title" style="background:#14532d;">Montar refeição</h3>
       <div>
         <div class="chip" onclick="select('Arroz - 6 colheres')">Arroz</div>
         <div class="chip" onclick="select('Frango - 100g')">Frango</div>
@@ -591,9 +362,10 @@ button {
     </div>
   </div>
 
-  <div id="fav" class="hidden">
+  <!-- FAVORITOS -->
+  <div id="fav" class="screen">
     <div class="card">
-      <h3 class="meal-title meal-lanche">Favoritos</h3>
+      <h3 class="option-title" style="background:#2563eb;">Favoritos</h3>
       <ul id="list"></ul>
     </div>
   </div>
@@ -610,10 +382,18 @@ let selected = [];
 let favs = JSON.parse(localStorage.getItem('favs') || '[]');
 
 function show(tab){
-  document.getElementById('home').classList.add('hidden');
-  document.getElementById('builder').classList.add('hidden');
-  document.getElementById('fav').classList.add('hidden');
-  document.getElementById(tab).classList.remove('hidden');
+  document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+}
+
+function openMeal(screenId){
+  document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+}
+
+function goHome(){
+  document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+  document.getElementById('home').classList.add('active');
 }
 
 function select(item){
