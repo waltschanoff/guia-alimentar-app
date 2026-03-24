@@ -82,6 +82,43 @@ button {
   border-radius: 15px;
   margin-top: 10px;
 }
+.food-row {
+  margin: 10px 0;
+  padding: 10px;
+  background: #fafafa;
+  border-radius: 12px;
+  border: 1px solid #eee;
+}
+.food-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.sub-btn {
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+.substitutions {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f1f1f1;
+  border-radius: 12px;
+}
+.substitutions ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+.substitutions li {
+  margin-bottom: 6px;
+}
+.note {
+  font-size: 12px;
+  color: #666;
+  margin-top: 6px;
+}
 </style>
 </head>
 <body>
@@ -124,6 +161,121 @@ button {
         <li>Verduras folhosas - à vontade</li>
         <li>Fruta rica em vitamina C - 1 unidade</li>
       </ul>
+
+      <div class="food-row">
+        <div class="food-title">Arroz - 6 colheres de sopa, 120g</div>
+        <button class="sub-btn" onclick="toggleSubs('subs-arroz')">Ver substituições</button>
+        <div id="subs-arroz" class="substitutions hidden">
+          <ul>
+            <li>Arroz integral - 4 a 5 colheres de sopa cheias, 100g cozidos</li>
+            <li>Macarrão - 4 a 5 colheres de sopa cheias, 100g cozidos</li>
+            <li>Cuscuz - 4 a 5 colheres de sopa cheias, 100g cozidos</li>
+            <li>Polenta - 4 a 5 colheres de sopa cheias, 100g cozidos</li>
+            <li>Quinoa - 4 a 5 colheres de sopa cheias, 100g cozidos</li>
+            <li>Batata inglesa - 1 unidade média ou 120 a 130g cozidos</li>
+            <li>Batata doce - 1 unidade média ou 120 a 130g cozidos</li>
+            <li>Mandioca - 1 unidade média ou 120 a 130g cozidos</li>
+            <li>Mandioquinha - 1 unidade média ou 120 a 130g cozidos</li>
+            <li>Pão francês - 1 unidade</li>
+            <li>Pão integral - 2 fatias</li>
+          </ul>
+          <div class="note">Equivalência do grupo de carboidratos.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">Feijão - 1 concha, 80g</div>
+        <button class="sub-btn" onclick="toggleSubs('subs-feijao')">Ver substituições</button>
+        <div id="subs-feijao" class="substitutions hidden">
+          <ul>
+            <li>Feijão preto - 1 concha média ou 4 colheres de sopa cheias, 100g cozidos</li>
+            <li>Feijão branco - 1 concha média ou 4 colheres de sopa cheias, 100g cozidos</li>
+            <li>Feijão carioca - 1 concha média ou 4 colheres de sopa cheias, 100g cozidos</li>
+            <li>Ervilha - 1 concha média ou 4 colheres de sopa cheias, 100g cozidos</li>
+            <li>Grão-de-bico - 1 concha média ou 4 colheres de sopa cheias, 100g cozidos</li>
+            <li>Lentilha - 1 concha média ou 4 colheres de sopa cheias, 100g cozidos</li>
+            <li>Soja - 1 concha média ou 4 colheres de sopa cheias, 100g cozidos</li>
+          </ul>
+          <div class="note">Equivalência do grupo de leguminosas.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">Filé de frango grelhado - 1 filé, 100g</div>
+        <button class="sub-btn" onclick="toggleSubs('subs-frango')">Ver substituições</button>
+        <div id="subs-frango" class="substitutions hidden">
+          <ul>
+            <li>Patinho - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+            <li>Maminha - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+            <li>Filé mignon - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+            <li>Coxão mole - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+            <li>Tilápia - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+            <li>Pescada - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+            <li>Merluza - 1 filé médio ou 1 palma da mão, 100 a 120g</li>
+            <li>Ovos - 2 unidades médias, 100g</li>
+            <li>Sobrecoxa de frango sem pele - 1 unidade pequena, 100 a 120g</li>
+          </ul>
+          <div class="note">Equivalência do grupo de proteínas.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">Legumes cozidos - 2 colheres de servir, 100g</div>
+        <button class="sub-btn" onclick="toggleSubs('subs-legumes')">Ver substituições</button>
+        <div id="subs-legumes" class="substitutions hidden">
+          <ul>
+            <li>Brócolis - 1 concha média ou 1 xícara de chá cheia, 80 a 100g cozidos</li>
+            <li>Couve-flor - 1 concha média ou 1 xícara de chá cheia, 80 a 100g cozidos</li>
+            <li>Vagem - 1 concha média ou 1 xícara de chá cheia, 80 a 100g cozidos</li>
+            <li>Chuchu - 1 concha média ou 1 xícara de chá cheia, 80 a 100g cozidos</li>
+            <li>Berinjela - 1 concha média ou 1 xícara de chá cheia, 80 a 100g cozidos</li>
+            <li>Beterraba - 1 concha média ou 1 xícara de chá cheia, 80 a 100g cozidos</li>
+            <li>Cenoura - 1 concha média ou 1 xícara de chá cheia, 80 a 100g cozidos</li>
+            <li>Abóbora - 1 concha média ou 1 xícara de chá cheia, 80 a 100g cozidos</li>
+            <li>Abobrinha - 1 concha média ou 1 xícara de chá cheia, 80 a 100g cozidos</li>
+            <li>Repolho - 1 concha média ou 1 xícara de chá cheia, 80 a 100g cozidos</li>
+          </ul>
+          <div class="note">Equivalência do grupo de legumes.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">Verduras folhosas - à vontade</div>
+        <button class="sub-btn" onclick="toggleSubs('subs-folhas')">Ver substituições</button>
+        <div id="subs-folhas" class="substitutions hidden">
+          <ul>
+            <li>Alface - 1 prato cheio ou 2 xícaras de chá bem cheias, 80 a 100g cruas</li>
+            <li>Rúcula - 1 prato cheio ou 2 xícaras de chá bem cheias, 80 a 100g cruas</li>
+            <li>Agrião - 1 prato cheio ou 2 xícaras de chá bem cheias, 80 a 100g cruas</li>
+            <li>Escarola - 1 prato cheio ou 2 xícaras de chá bem cheias, 80 a 100g cruas</li>
+            <li>Acelga - 1 prato cheio ou 2 xícaras de chá bem cheias, 80 a 100g cruas</li>
+            <li>Couve - 1 prato cheio ou 2 xícaras de chá bem cheias, 80 a 100g cruas</li>
+            <li>Espinafre - 1 prato cheio ou 2 xícaras de chá bem cheias, 80 a 100g cruas</li>
+          </ul>
+          <div class="note">Equivalência do grupo de verduras folhosas.</div>
+        </div>
+      </div>
+
+      <div class="food-row">
+        <div class="food-title">Fruta rica em vitamina C - 1 unidade</div>
+        <button class="sub-btn" onclick="toggleSubs('subs-fruta')">Ver substituições</button>
+        <div id="subs-fruta" class="substitutions hidden">
+          <ul>
+            <li>Acerola - 1 unidade média ou 1 xícara de chá picada, 120g</li>
+            <li>Caju - 1 unidade média ou 1 xícara de chá picada, 120g</li>
+            <li>Mexerica - 1 unidade média ou 1 xícara de chá picada, 120g</li>
+            <li>Goiaba - 1 unidade média ou 1 xícara de chá picada, 120g</li>
+            <li>Mamão - 1 unidade média ou 1 xícara de chá picada, 120g</li>
+            <li>Kiwi - 1 unidade média ou 1 xícara de chá picada, 120g</li>
+            <li>Manga - 1 unidade média ou 1 xícara de chá picada, 120g</li>
+            <li>Morango - 1 unidade média ou 1 xícara de chá picada, 120g</li>
+            <li>Laranja - 1 unidade média ou 1 xícara de chá picada, 120g</li>
+            <li>Abacaxi - 1 unidade média ou 1 xícara de chá picada, 120g</li>
+          </ul>
+          <div class="note">Vitamina C ajuda na absorção de nutrientes como ferro.</div>
+        </div>
+      </div>
+
       <button onclick="save('Almoço')">Salvar</button>
     </div>
 
@@ -234,6 +386,11 @@ function load(){
     li.innerText = f;
     list.appendChild(li);
   });
+}
+
+function toggleSubs(id){
+  const box = document.getElementById(id);
+  box.classList.toggle('hidden');
 }
 
 load();
