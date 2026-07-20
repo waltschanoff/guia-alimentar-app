@@ -397,55 +397,152 @@
     let favs = JSON.parse(localStorage.getItem('favs') || '[]');
     let shoppingChecks = JSON.parse(localStorage.getItem('shoppingChecks') || '{}');
 
-        const substitutions = {
+    const substitutions = {
       carbo: [
-        "Arroz integral ou branco • 4 a 5 colheres de sopa cheias (100 g)",
-        "Macarrão • 4 a 5 colheres de sopa cheias (100 g)",
-        "Cuscuz • 4 a 5 colheres de sopa cheias (100 g)",
-        "Polenta • 4 a 5 colheres de sopa cheias (100 g)",
-        "Quinoa • 4 a 5 colheres de sopa cheias (100 g)",
-        "Batata inglesa, doce, mandioca, mandioquinha ou milho • 120–130 g",
-        "Pão francês, sírio pequeno ou de forma • 1 unidade",
-        "Pão integral • 2 fatias"
+        "Arroz branco - 4 a 5 colheres de sopa cheias (100g)",
+        "Arroz integral - 4 a 5 colheres de sopa cheias (100g)",
+        "Macarrão - 4 a 5 colheres de sopa cheias (100g)",
+        "Cuscuz - 4 a 5 colheres de sopa cheias (100g)",
+        "Polenta - 4 a 5 colheres de sopa cheias (100g)",
+        "Quinoa - 4 a 5 colheres de sopa cheias (100g)",
+        "Batata inglesa - 1 unidade média ou 120-130g",
+        "Batata doce - 1 unidade média ou 120-130g",
+        "Mandioca - 1 unidade média ou 120-130g",
+        "Mandioquinha - 1 unidade média ou 120-130g",
+        "Milho - 1 unidade média ou 120-130g",
+        "Pão francês - 1 unidade",
+        "Pão integral - 2 fatias",
+        "Pão sírio pequeno - 1 unidade",
+        "Pão de forma - 1 unidade"
       ],
-      leguminosa:[
-        "Feijão preto, branco ou carioca • 100 g",
-        "Ervilha • 100 g",
-        "Grão-de-bico • 100 g",
-        "Lentilha • 100 g",
-        "Soja • 100 g"
+      proteina: [
+        "Ovos - 2 unidades médias (100g)",
+        "Patinho - 1 filé médio ou 1 palma da mão (100-120g)",
+        "Maminha - 1 filé médio ou 1 palma da mão (100-120g)",
+        "Filé mignon - 1 filé médio ou 1 palma da mão (100-120g)",
+        "Coxão mole - 1 filé médio ou 1 palma da mão (100-120g)",
+        "Coxão duro - 1 filé médio ou 1 palma da mão (100-120g)",
+        "Lagarto - 1 filé médio ou 1 palma da mão (100-120g)",
+        "Músculo - 1 filé médio ou 1 palma da mão (100-120g)",
+        "Peito de frango - 1 filé médio ou 1 coxa e 1 sobrecoxa pequenas (100-120g)",
+        "Tilápia - 1 filé médio (100-120g)",
+        "Pescada - 1 filé médio (100-120g)",
+        "Merluza - 1 filé médio (100-120g)",
+        "Dourado - 1 filé médio (100-120g)",
+        "Namorado - 1 filé médio (100-120g)",
+        "Badejo - 1 filé médio (100-120g)",
+        "Cação - 1 filé médio (100-120g)",
+        "Bacalhau - 1 filé médio (100-120g)",
+        "Bonito - 1 filé médio (100-120g)",
+        "Carne suína magra (lombo ou pernil) - 100-120g"
       ],
-      proteina:[
-        "Patinho, maminha, filé mignon, coxão mole, lagarto, músculo • 100–120 g",
-        "Peito, coxa ou sobrecoxa de frango sem pele • 100–120 g",
-        "Tilápia, pescada, merluza, dourado, badejo, cação, bacalhau ou bonito • 100–120 g",
-        "Lombo ou pernil suíno magro • 100–120 g",
-        "Ovos • 2 unidades"
+      laticinio: [
+        "Leite desnatado - 1 copo (200 ml)",
+        "Leite semidesnatado - 1 copo (200 ml)",
+        "Leite integral - 1 copo (200 ml)",
+        "Iogurte natural tradicional - 1 copo (200 ml)",
+        "Iogurte natural desnatado - 1 copo (200 ml)",
+        "Iogurte grego - 1 pote (100-120g)",
+        "Ricota - 3 colheres de sopa cheias (80g)",
+        "Cottage - 3 colheres de sopa cheias (80g)",
+        "Queijo muçarela - 1 fatia média (30g)",
+        "Queijo prato - 1 fatia média (30g)",
+        "Queijo coalho - 1 fatia média (30g)",
+        "Queijo minas frescal - Porção magra equivalente"
       ],
-      laticinio:[
-        "Leite integral, semi ou desnatado • 200 ml",
-        "Iogurte natural/desnatado • 200 ml",
-        "Iogurte grego • 100–120 g",
-        "Ricota ou cottage • 80 g",
-        "Muçarela, prato ou coalho • 1 fatia (30 g)"
+      fruta: [
+        "Abacate - 1 unidade média ou 1 xícara picada (120g)",
+        "Abacaxi - 1 unidade média ou 1 xícara picada (120g)",
+        "Ameixa - 1 unidade média ou 1 xícara picada (120g)",
+        "Banana - 1 unidade média ou 1 xícara picada (120g)",
+        "Caqui - 1 unidade média ou 1 xícara picada (120g)",
+        "Carambola - 1 unidade média ou 1 xícara picada (120g)",
+        "Goiaba - 1 unidade média ou 1 xícara picada (120g)",
+        "Figo - 1 unidade média ou 1 xícara picada (120g)",
+        "Fruta do conde (pinha) - 1 unidade média ou 1 xícara picada (120g)",
+        "Laranja - 1 unidade média ou 1 xícara picada (120g)",
+        "Maçã - 1 unidade média ou 1 xícara picada (120g)",
+        "Jabuticaba - 1 unidade média ou 1 xícara picada (120g)",
+        "Jaca - 1 unidade média ou 1 xícara picada (120g)",
+        "Kiwi - 1 unidade média ou 1 xícara picada (120g)",
+        "Mamão - 1 unidade média ou 1 xícara picada (120g)",
+        "Melancia - 1 unidade média ou 1 xícara picada (120g)",
+        "Melão - 1 unidade média ou 1 xícara picada (120g)",
+        "Morango - 1 unidade média ou 1 xícara picada (120g)",
+        "Nectarina - 1 unidade média ou 1 xícara picada (120g)",
+        "Pêra - 1 unidade média ou 1 xícara picada (120g)",
+        "Pêssego - 1 unidade média ou 1 xícara picada (120g)",
+        "Uva - 1 unidade média ou 1 xícara picada (120g)"
       ],
-      folhas:[
-        "Alface, rúcula, agrião, escarola, acelga, repolho, couve, espinafre, chicória, almeirão, catalonha ou folha de uva • à vontade"
+      vitaminaC: [
+        "Acerola - 1 unidade média ou 1 xícara picada (120g)",
+        "Caju - 1 unidade média ou 1 xícara picada (120g)",
+        "Mexerica - 1 unidade média ou 1 xícara picada (120g)",
+        "Goiaba - 1 unidade média ou 1 xícara picada (120g)",
+        "Mamão - 1 unidade média ou 1 xícara picada (120g)",
+        "Kiwi - 1 unidade média ou 1 xícara picada (120g)",
+        "Manga - 1 unidade média ou 1 xícara picada (120g)",
+        "Morango - 1 unidade média ou 1 xícara picada (120g)",
+        "Laranja - 1 unidade média ou 1 xícara picada (120g)",
+        "Limão - À vontade",
+        "Abacaxi - 1 unidade média ou 1 xícara picada (120g)"
       ],
-      legumes:[
-        "Brócolis, couve-flor, vagem, chuchu, berinjela, beterraba, cenoura, palmito, broto de feijão, rabanete, tomate, pimentão, abóbora, abobrinha ou repolho • 80–100 g"
+      legumes: [
+        "Brócolis - 1 concha média ou 1 xícara de chá cheia (80-100g)",
+        "Couve-flor - 1 concha média ou 1 xícara de chá cheia (80-100g)",
+        "Couve - 1 concha média ou 1 xícara de chá cheia (80-100g)",
+        "Vagem - 1 concha média ou 1 xícara de chá cheia (80-100g)",
+        "Chuchu - 1 concha média or 1 xícara de chá cheia (80-100g)",
+        "Berinjela - 1 concha média ou 1 xícara de chá cheia (80-100g)",
+        "Beterraba - 1 concha média ou 1 xícara de chá cheia (80-100g)",
+        "Cenoura - 1 concha média ou 1 xícara de chá cheia (80-100g)",
+        "Palmito - 1 concha média ou 1 xícara de chá cheia (80-100g)",
+        "Broto de feijão - 1 concha média ou 1 xícara de chá cheia (80-100g)",
+        "Rabanete - 1 concha média ou 1 xícara de chá cheia (80-100g)",
+        "Tomate - À vontade",
+        "Pimentão - 1 concha média ou 1 xícara de chá cheia (80-100g)",
+        "Abóbora - 1 concha média ou 1 xícara de chá cheia (80-100g)",
+        "Abobrinha - 1 concha média ou 1 xícara de chá cheia (80-100g)",
+        "Repolho - 1 concha média ou 1 xícara de chá cheia (80-100g)"
       ],
-      fruta:[
-        "Abacate, abacaxi, ameixa, banana, caqui, carambola, goiaba, figo, pinha, laranja, maçã, jabuticaba, jaca, kiwi, mamão, melancia, melão, morango, nectarina, pêra, pêssego ou uva • 120 g"
+      folhas: [
+        "Alface - 1 prato cheio ou 2 xícaras de chá cheias (80-100g)",
+        "Rúcula - 1 prato cheio ou 2 xícaras de chá cheias (80-100g)",
+        "Agrião - 1 prato cheio ou 2 xícaras de chá cheias (80-100g)",
+        "Escarola - 1 prato cheio ou 2 xícaras de chá cheias (80-100g)",
+        "Acelga - 1 prato cheio ou 2 xícaras de chá cheias (80-100g)",
+        "Repolho - 1 prato cheio ou 2 xícaras de chá cheias (80-100g)",
+        "Couve - 1 prato cheio ou 2 xícaras de chá cheias (80-100g)",
+        "Espinafre - 1 prato cheio ou 2 xícaras de chá cheias (80-100g)",
+        "Chicória - 1 prato cheio ou 2 xícaras de chá cheias (80-100g)",
+        "Almeirão - 1 prato cheio ou 2 xícaras de chá cheias (80-100g)",
+        "Catalonha - 1 prato cheio ou 2 xícaras de chá cheias (80-100g)",
+        "Folha de uva - 1 prato cheio ou 2 xícaras de chá cheias (80-100g)"
       ],
-      sementes:[
-        "Amaranto, chia, linhaça, quinoa, granola, aveia, sementes de abóbora, girassol ou gergelim • 15–20 g"
+      leguminosa: [
+        "Feijão preto - 1 concha média ou 4 colheres de sopa cheias (100g)",
+        "Feijão branco - 1 concha média ou 4 colheres de sopa cheias (100g)",
+        "Feijão carioca - 1 concha média ou 4 colheres de sopa cheias (100g)",
+        "Ervilha - 1 concha média ou 4 colheres de sopa cheias (100g)",
+        "Grão-de-bico - 1 concha média ou 4 colheres de sopa cheias (100g)",
+        "Lentilha - 1 concha média ou 4 colheres de sopa cheias (100g)",
+        "Soja - 1 concha média ou 4 colheres de sopa cheias (100g)"
       ],
-      bebida:[
-        "Água à vontade",
-        "Café sem açúcar",
-        "Chá sem açúcar",
-        "Cappuccino saudável"
+      sementes: [
+        "Amaranto - 1 a 2 colheres de sopa cheias (15-20g)",
+        "Chia - 1 a 2 colheres de sopa cheias (15-20g)",
+        "Linhaça - 1 a 2 colheres de sopa cheias (15-20g)",
+        "Quinoa - 1 a 2 colheres de sopa cheias (15-20g)",
+        "Granola - 1 a 2 colheres de sopa cheias (15-20g)",
+        "Aveia - 1 a 2 colheres de sopa cheias (15-20g)",
+        "Semente de abóbora - 1 a 2 colheres de sopa cheias (15-20g)",
+        "Semente de girassol - 1 a 2 colheres de sopa cheias (15-20g)",
+        "Gergelim - 1 a 2 colheres de sopa cheias (15-20g)"
+      ],
+      bebida: [
+        "Chá - Livre",
+        "Café sem açúcar - Livre",
+        "Água - Mínimo 3 litros por dia"
       ]
     };
 
@@ -455,231 +552,226 @@
         title: "Café da manhã",
         options: [
           {
-            title: "Opção 1",
-            subtitle: "🍞 Opção clássica",
+            title: "Opção 1 - Pão francês",
+            subtitle: "🍞 Tradicional balanceado",
             items: [
               { name: "🍞 Pão francês - 1 unidade", group: "carbo" },
               { name: "🥚 Ovo - 1 unidade", group: "proteina" },
-              { name: "☕ Cappuccino saudável - 1 xícara (240 ml)", group: "bebida" }
+              { name: "☕ Cappuccino saudável + água - 1 xícara de chá, 240ml", group: "laticinio" }
             ]
           },
           {
-            title: "Opção 2",
-            subtitle: "🍳 Opção proteica",
+            title: "Opção 2 - Crepioca",
+            subtitle: "🍳 Prática e proteica",
             items: [
-              { name: "🥞 Crepioca (1 ovo + 2 colheres de sopa de tapioca)", group: "carbo" },
+              { name: "🥞 Crepioca - 1 ovo + 2 colheres de sopa de tapioca", group: "carbo" },
               { name: "🧀 Muçarela - 1 fatia", group: "laticinio" },
-              { name: "🍅 Tomate - à vontade", group: "legumes" },
-              { name: "☕ Café sem açúcar - 1 xícara (80 ml)", group: "bebida" }
+              { name: "🍅 Tomate - À vontade", group: "legumes" },
+              { name: "☕ Café - 1 xícara de café, 80ml", group: "bebida" }
             ]
           },
           {
-            title: "Opção 3",
-            subtitle: "🥪 Opção prática",
+            title: "Opção 3 - Pão integral",
+            subtitle: "🥤 Fibra e saciedade",
             items: [
               { name: "🍞 Pão integral - 2 fatias", group: "carbo" },
-              { name: "🐟 Patê de atum com requeijão light - 30 g", group: "proteina" },
-              { name: "🥤 Suco natural - 1 copo (200 ml)", group: "fruta" }
+              { name: "🐟 Atum com requeijão light - 1 colher de sopa, 30g", group: "proteina" },
+              { name: "🍊 Suco natural - 1 copo, 200ml", group: "vitaminaC" }
             ]
           }
         ]
-      }
+      },
       lancheScreen: {
         color: "#2563eb",
         title: "Lanche da manhã",
         options: [
           {
-            title: "Opção 1",
-            subtitle: "🥣 Iogurte + fruta",
+            title: "Opção 1 - Iogurte natural",
+            subtitle: "🥣 Combinação probiótica",
             items: [
-              { name: "🥛 Iogurte natural - 1 unidade (170 ml)", group: "laticinio" },
+              { name: "🥛 Iogurte natural - 1 unidade, 170ml", group: "laticinio" },
               { name: "🍓 Morango - 4 unidades", group: "fruta" }
             ]
           },
           {
-            title: "Opção 2",
-            subtitle: "🥭 Fruta + cereal",
+            title: "Opção 2 - Manga",
+            subtitle: "🌾 Cereal com fruta",
             items: [
-              { name: "🥭 Manga - 1/2 unidade", group: "fruta" },
-              { name: "🌾 Aveia - 1 colher de sopa (20 g)", group: "sementes" }
+              { name: "🥭 Manga - 1/2 unidade", group: "vitaminaC" },
+              { name: "🌾 Aveia - 1 colher de sopa, 20g", group: "sementes" }
             ]
           },
           {
-            title: "Opção 3",
-            subtitle: "💪 Prática",
+            title: "Opção 3 - Bebida láctea",
+            subtitle: "💪 Proteína rápida",
             items: [
               { name: "🥤 Bebida láctea proteica - 1 unidade", group: "laticinio" }
             ]
           }
         ]
-      }
+      },
       almocoScreen: {
         color: "#16a34a",
         title: "Almoço",
         options: [
           {
-            title: "Opção 1",
-            subtitle: "🍽️ Tradicional",
+            title: "Opção 1 - Arroz",
+            subtitle: "🍽️ Prato clássico completo",
             items: [
-              { name:"🍚 Arroz - 4 a 5 colheres de sopa (100 g)", group:"carbo"},
-              { name:"🫘 Feijão - 1 concha média (100 g)", group:"leguminosa"},
-              { name:"🍗 Peito de frango grelhado - 100 a 120 g", group:"proteina"},
-              { name:"🥦 Legumes - 80 a 100 g", group:"legumes"},
-              { name:"🥬 Folhas - à vontade", group:"folhas"},
-              { name:"🍊 Fruta rica em vitamina C - 1 unidade", group:"fruta"}
+              { name: "🍚 Arroz - 4 colheres de sopa, 80g", group: "carbo" },
+              { name: "🫘 Feijão - 1 concha pequena, 50g", group: "leguminosa" },
+              { name: "🍗 Filé de frango grelhado - 1 filé, 120g", group: "proteina" },
+              { name: "🥦 Legumes cozidos - 2 colheres de servir, 100g", group: "legumes" },
+              { name: "🥬 Verduras folhosas - À vontade", group: "folhas" },
+              { name: "🍊 Fruta rica em vitamina C - 1 unidade", group: "vitaminaC" }
             ]
           },
           {
-            title:"Opção 2",
-            subtitle:"🥔 Tubérculo + frango",
-            items:[
-              {name:"🥔 Batata inglesa ou doce - 120 a 130 g",group:"carbo"},
-              {name:"🍗 Sobrecoxa sem pele - 100 a 120 g",group:"proteina"},
-              {name:"🫘 Grão-de-bico - 1 concha média (100 g)",group:"leguminosa"},
-              {name:"🥦 Legumes - 80 a 100 g",group:"legumes"},
-              {name:"🥬 Folhas - à vontade",group:"folhas"},
-              {name:"🍊 Fruta rica em vitamina C - 1 unidade",group:"fruta"}
+            title: "Opção 2 - Batata-inglesa assada",
+            subtitle: "🍗 Assado nutritivo",
+            items: [
+              { name: "🥔 Batata-inglesa assada - 1 colher de servir, 80g", group: "carbo" },
+              { name: "🍗 Sobrecoxa de frango sem pele assada - 1 unidade", group: "proteina" },
+              { name: "🫘 Grão-de-bico - 1 colher de servir, 50g", group: "leguminosa" },
+              { name: "🥦 Legumes cozidos - 2 colheres de servir, 100g", group: "legumes" },
+              { name: "🥬 Verduras folhosas - À vontade", group: "folhas" },
+              { name: "🍊 Fruta rica em vitamina C - 1 unidade", group: "vitaminaC" }
             ]
           },
           {
-            title:"Opção 3",
-            subtitle:"🥪 Sanduíche",
-            items:[
-              {name:"🍞 Pão integral - 2 fatias",group:"carbo"},
-              {name:"🍗 Frango desfiado - 100 g",group:"proteina"},
-              {name:"🥦 Legumes - à vontade",group:"legumes"},
-              {name:"🥬 Folhas - à vontade",group:"folhas"},
-              {name:"🍊 Fruta rica em vitamina C - 1 unidade",group:"fruta"}
+            title: "Opção 3 - Pão integral",
+            subtitle: "🥪 Lanche de almoço prático",
+            items: [
+              { name: "🍞 Pão integral - 2 fatias", group: "carbo" },
+              { name: "🍗 Frango desfiado - 4 colheres de sopa, 120g", group: "proteina" },
+              { name: "🥦 Legumes - À vontade", group: "legumes" },
+              { name: "🥬 Verduras folhosas - À vontade", group: "folhas" },
+              { name: "🍊 Fruta rica em vitamina C - 1 unidade", group: "vitaminaC" }
             ]
           }
         ]
-      }
+      },
       lancheTardeScreen: {
         color: "#7c3aed",
         title: "Lanche da tarde",
         options: [
           {
-            title:"Opção 1",
-            subtitle:"🥞 Aveioca",
-            items:[
-              {name:"🥞 Aveioca - 1 receita",group:"carbo"},
-              {name:"🥚 Ovo - 1 unidade",group:"proteina"},
-              {name:"🍵 Chá sem açúcar - 1 xícara",group:"bebida"}
+            title: "Opção 1 - Iogurte zero",
+            subtitle: "🥣 Combinação leve com crocância",
+            items: [
+              { name: "🥛 Iogurte zero - 1 copo médio, 200ml", group: "laticinio" },
+              { name: "🍌 Banana - 1 unidade", group: "fruta" },
+              { name: "🌾 Granola sem açúcar - 1 colher de sopa rasa, 10g", group: "sementes" }
             ]
           },
           {
-            title:"Opção 2",
-            subtitle:"🍓 Frutas",
-            items:[
-              {name:"🍓 Salada de frutas - 200 g",group:"fruta"},
-              {name:"🌱 Chia - 1 colher de sopa",group:"sementes"}
+            title: "Opção 2 - Salada de frutas",
+            subtitle: "🍓 Refrescante proteico",
+            items: [
+              { name: "🍓 Salada de frutas - 1 copo médio, 200ml", group: "fruta" },
+              { name: "🥤 Bebida láctea proteica - 1 unidade", group: "laticinio" }
             ]
           },
           {
-            title:"Opção 3",
-            subtitle:"🥪 Sanduíche",
-            items:[
-              {name:"🍞 Pão integral - 2 fatias",group:"carbo"},
-              {name:"🧀 Queijo branco - 1 fatia",group:"laticinio"},
-              {name:"🍅 Tomate - à vontade",group:"legumes"},
-              {name:"🥬 Rúcula - à vontade",group:"folhas"}
+            title: "Opção 3 - Pão integral",
+            subtitle: "🥪 Sanduíche com chá",
+            items: [
+              { name: "🍞 Pão integral - 2 fatias", group: "carbo" },
+              { name: "🧀 Queijo branco - 1 fatia, 20g", group: "laticinio" },
+              { name: "🍵 Chá - 1 xícara de chá, 220ml", group: "bebida" }
             ]
           }
         ]
-      }
+      },
       jantarScreen: {
         color: "#0f766e",
         title: "Jantar",
         options: [
           {
-            title:"Opção 1",
-            subtitle:"🍛 Tradicional",
-            items:[
-              {name:"🥔 Purê de batata - 100 g",group:"carbo"},
-              {name:"🟢 Ervilha - 1 concha média (100 g)",group:"leguminosa"},
-              {name:"🥩 Patinho moído - 100 a 120 g",group:"proteina"},
-              {name:"🥦 Legumes - 80 a 100 g",group:"legumes"},
-              {name:"🥬 Folhas - à vontade",group:"folhas"}
+            title: "Opção 1 - Purê de batatas",
+            subtitle: "🍛 Conforto tradicional",
+            items: [
+              { name: "🥔 Purê de batatas - 4 colheres de sopa, 80g", group: "carbo" },
+              { name: "🟢 Ervilha - 1 colher de servir, 50g", group: "leguminosa" },
+              { name: "🥩 Carne moída (patinho) - 3 colheres de servir, 120g", group: "proteina" },
+              { name: "🥦 Legumes cozidos - 2 colheres de servir, 100g", group: "legumes" },
+              { name: "🥬 Verduras folhosas - À vontade", group: "folhas" }
             ]
           },
           {
-            title:"Opção 2",
-            subtitle:"🥪 Sanduíche",
-            items:[
-              {name:"🍞 Pão integral - 2 fatias",group:"carbo"},
-              {name:"🥩 Coxão mole desfiado - 100 g",group:"proteina"},
-              {name:"🥦 Legumes - 80 a 100 g",group:"legumes"},
-              {name:"🥬 Folhas - à vontade",group:"folhas"}
+            title: "Opção 2 - Pão integral",
+            subtitle: "🥪 Sanduíche substancial",
+            items: [
+              { name: "🍞 Pão integral - 2 fatias", group: "carbo" },
+              { name: "🥩 Coxão mole desfiado - 6 colheres de sopa, 120g", group: "proteina" },
+              { name: "🥦 Legumes cozidos - 2 colheres de servir, 100g", group: "legumes" },
+              { name: "🥬 Verduras folhosas - À vontade", group: "folhas" }
             ]
           },
           {
-            title:"Opção 3",
-            subtitle:"🌮 Tapioca",
-            items:[
-              {name:"🌮 Tapioca com chia - 100 g",group:"carbo"},
-              {name:"🍗 Frango desfiado - 100 g",group:"proteina"},
-              {name:"🥦 Legumes - 80 a 100 g",group:"legumes"},
-              {name:"🥬 Folhas - à vontade",group:"folhas"}
+            title: "Opção 3 - Tapioca + chia",
+            subtitle: "🌮 Leve e funcional",
+            items: [
+              { name: "🌮 Tapioca + chia - 4 colheres de sopa, 80g + 20g", group: "carbo" },
+              { name: "🍗 Frango desfiado - 6 colheres de sopa, 120g", group: "proteina" },
+              { name: "🥦 Legumes cozidos - 2 colheres de servir, 100g", group: "legumes" },
+              { name: "🥬 Verduras folhosas - À vontade", group: "folhas" }
             ]
           }
         ]
-      }
+      },
       ceiaScreen: {
         color: "#be185d",
         title: "Ceia",
         options: [
           {
-            title:"Opção 1",
-            subtitle:"🍞 Torradas",
-            items:[
-              {name:"🍞 Torrada Magic Toast - 7 unidades",group:"carbo"},
-              {name:"🧀 Requeijão - 1 colher de sopa (30 g)",group:"laticinio"},
-              {name:"🍵 Chá sem açúcar - 1 xícara",group:"bebida"}
-            ]
-          },
-          {
-            title:"Opção 2",
-            subtitle:"🥣 Mingau",
-            items:[
-              {name:"🥣 Mingau de aveia - 1 copo (200 ml)",group:"laticinio"}
-            ]
-          },
-          {
-            title:"Opção 3",
-            subtitle:"🥑 Abacate",
-            items:[
-              {name:"🥑 Abacate - 3 colheres de sopa (90 g)",group:"fruta"},
-              {name:"🥛 Leite em pó desnatado - 1 colher de sopa (20 g)",group:"laticinio"}
+            title: "Opção Única",
+            subtitle: "🍓 Fruta finalizadora",
+            items: [
+              { name: "🍎 Fruta fresca permitida - 1 porção, 120g", group: "fruta" }
             ]
           }
         ]
       }
     };
 
-        const shoppingData = {
-      "Carboidratos":[
-        "Arroz branco","Arroz integral","Batata doce","Batata inglesa","Cuscuz","Macarrão","Mandioquinha","Mandioca","Milho","Pão de forma","Pão francês","Pão integral","Pão sírio","Polenta","Quinoa","Tapioca"
+    const shoppingData = {
+      "Carboidratos": [
+        "Arroz branco", "Arroz integral", "Aveia", "Batata doce", "Batata inglesa", "Cuscuz", "Macarrão",
+        "Mandioca", "Mandioquinha", "Milho", "Pão de forma", "Pão francês", "Pão integral", "Pão sírio",
+        "Polenta", "Quinoa", "Tapioca"
       ],
-      "Leguminosas":[
-        "Ervilha","Feijão branco","Feijão carioca","Feijão preto","Grão-de-bico","Lentilha","Soja"
+      "Frutas": [
+        "Abacate", "Abacaxi", "Acerola", "Ameixa", "Banana", "Caju", "Caqui", "Carambola", "Figo", 
+        "Fruta do conde (pinha)", "Goiaba", "Jabuticaba", "Jaca", "Kiwi", "Laranja", "Limão", "Maçã", 
+        "Mamão", "Manga", "Melancia", "Melão", "Mexerica", "Morango", "Nectarina", "Pêra", "Pêssego", "Uva"
       ],
-      "Proteínas":[
-        "Bacalhau","Badejo","Bonito","Cação","Coxão duro","Coxão mole","Dourado","Filé mignon","Lagarto","Lombo suíno","Maminha","Merluza","Músculo","Namorado","Ovos","Peito de frango","Pernil suíno","Pescada","Sobrecoxa","Tilápia"
+      "Leguminosas": [
+        "Ervilha", "Feijão branco", "Feijão carioca", "Feijão preto", "Grão-de-bico", "Lentilha", "Soja"
       ],
-      "Laticínios":[
-        "Cottage","Iogurte desnatado","Iogurte grego","Iogurte natural","Leite desnatado","Leite integral","Leite semidesnatado","Minas frescal","Muçarela","Queijo coalho","Queijo prato","Ricota","Requeijão light"
+      "Legumes e verduras": [
+        "Abóbora", "Abobrinha", "Acelga", "Agrião", "Alface", "Almeirão", "Berinjela", "Beterraba", 
+        "Brócolis", "Broto de feijão", "Catalonha", "Cenoura", "Chuchu", "Chicória", "Couve", "Couve-flor", 
+        "Escarola", "Espinafre", "Folha de uva", "Palmito", "Pimentão", "Rabanete", "Repolho", "Rúcula", "Tomate", "Vagem"
       ],
-      "Frutas":[
-        "Abacate","Abacaxi","Ameixa","Banana","Caqui","Carambola","Figo","Goiaba","Jabuticaba","Jaca","Kiwi","Laranja","Maçã","Mamão","Melancia","Melão","Morango","Nectarina","Pêra","Pêssego","Pinha","Uva"
+      "Laticínios": [
+        "Bebida láctea proteica", "Cottage", "Iogurte desnatado", "Iogurte grego", "Iogurte natural desnatado", 
+        "Iogurte natural tradicional", "Iogurte zero", "Leite desnatado", "Leite em pó desnatado", "Leite integral", 
+        "Leite semidesnatado", "Minas frescal", "Muçarela", "Queijo branco", "Queijo coalho", "Queijo prato", "Requeijão light"
       ],
-      "Verduras e legumes":[
-        "Abóbora","Abobrinha","Acelga","Agrião","Alface","Almeirão","Berinjela","Beterraba","Brócolis","Broto de feijão","Catalonha","Cenoura","Chuchu","Chicória","Couve","Couve-flor","Escarola","Espinafre","Folha de uva","Palmito","Pimentão","Rabanete","Repolho","Rúcula","Tomate","Vagem"
+      "Proteínas": [
+        "Atum", "Bacalhau", "Badejo", "Bonito", "Cação", "Carne suína magra (lombo/pernil)", "Coxão duro", 
+        "Coxão mole", "Dourado", "Filé mignon", "Frango desfiado", "Lagarto", "Maminha", "Merluza", 
+        "Músculo", "Ovos", "Patinho", "Peito de frango", "Pescada", "Sobrecoxa de frango", "Tilápia"
       ],
-      "Oleaginosas e sementes":[
-        "Amaranto","Amêndoa","Amendoim","Avelã","Castanha de caju","Castanha-do-Pará","Chia","Gergelim","Granola","Linhaça","Macadâmia","Nozes","Pistache","Semente de abóbora","Semente de girassol"
+      "Sementes e cereais": [
+        "Amaranto", "Chia", "Gergelim", "Granola sem açúcar", "Linhaça"
       ],
-      "Temperos":[
-        "Açafrão","Alecrim","Alho","Cebolinha","Cebola","Chimichurri","Coentro","Colorau","Cominho","Curry","Lemon pepper","Louro","Manjericão","Mostarda","Noz-moscada","Orégano","Páprica","Pimenta calabresa","Pimenta-do-reino","Salsa","Salsinha","Tempero baiano","Tomilho"
+      "Temperos e extras": [
+        "Açafrão", "Alecrim", "Alho", "Café sem açúcar", "Canela", "Cebola", "Cebolinha", "Chá", "Chimichurri", 
+        "Coentro", "Colorau", "Curry", "Lemon pepper", "Louro", "Manjericão", "Mostarda", "Noz-moscada", 
+        "Orégano", "Páprica", "Pimenta calabresa", "Pimenta-do-reino", "Salsa", "Salsinha", "Sálvia", 
+        "Tempero baiano", "Tomilho"
       ]
     };
 
