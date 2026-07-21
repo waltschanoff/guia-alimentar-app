@@ -744,19 +744,19 @@
         </div>
         <div class="checklist-grid">
           <div class="check-item" onclick="toggleTask('cafe')">
-            <span id="chk-cafe">⬜</span> ☀️ Café da manhã
+            <span id="chk-cafe">⬜</span> ☀️ Café da manhã (9h)
           </div>
           <div class="check-item" onclick="toggleTask('lancheM')">
             <span id="chk-lancheM">⬜</span> 🍎 Lanche da manhã
           </div>
           <div class="check-item" onclick="toggleTask('almoco')">
-            <span id="chk-almoco">⬜</span> 🍽️ Almoço
+            <span id="chk-almoco">⬜</span> 🍽️ Almoço (13h)
           </div>
           <div class="check-item" onclick="toggleTask('lancheT')">
-            <span id="chk-lancheT">⬜</span> ☕ Lanche da tarde
+            <span id="chk-lancheT">⬜</span> ☕ Lanche da tarde (17h)
           </div>
           <div class="check-item" onclick="toggleTask('jantar')">
-            <span id="chk-jantar">⬜</span> 🌙 Jantar
+            <span id="chk-jantar">⬜</span> 🌙 Jantar (21h)
           </div>
           <div class="check-item" onclick="toggleTask('ceia')">
             <span id="chk-ceia">⬜</span> 🌜 Ceia
@@ -859,7 +859,7 @@
 
       <div class="card">
         <h3 class="option-title" style="background:#0284c7;">🔔 Notificações e Lembretes</h3>
-        <div class="sub">Receba alertas para beber água e não esquecer as refeições.</div>
+        <div class="sub">Receba alertas para beber água (das 9h às 21h) e não esquecer as refeições (9h, 13h, 17h e 21h).</div>
         <button style="width:100%; background:#0284c7; padding:12px; font-weight:bold;" onclick="requestNotificationPermission()">🔔 Ativar Lembretes no Navegador</button>
       </div>
 
@@ -1151,6 +1151,7 @@
     let semaglutidaHistory = JSON.parse(localStorage.getItem('semaglutidaHistory') || localStorage.getItem('mounjaroHistory') || '[]');
     let weeklyPlan = JSON.parse(localStorage.getItem('weeklyPlan') || '{}');
     let streakDays = parseInt(localStorage.getItem('streakDays') || '1');
+    let notifiedHours = JSON.parse(localStorage.getItem('notifiedHours') || '{}');
 
     const quotes = [
       '"Pequenas escolhas diárias constroem grandes resultados."',
@@ -1641,12 +1642,56 @@
       renderRecipes('all');
       updateAssistantUI();
       calculateMeasure();
+
+      // Iniciar Agendador de Notificações
+      setInterval(checkScheduledNotifications, 60000);
+      checkScheduledNotifications();
     }
 
     function toggleTheme() {
       document.body.classList.toggle('dark-mode');
       const isDark = document.body.classList.contains('dark-mode');
       localStorage.setItem('themeDark', isDark);
+    }
+
+    // SCHEDULER NOTIFICATIONS
+    function checkScheduledNotifications() {
+      if (!("Notification" in window) || Notification.permission !== "granted") return;
+
+      const now = new Date();
+      const dateKey = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+
+      if (minutes !== 0) return; // Dispara apenas no início da hora
+
+      const hourKey = `${dateKey}-${hours}`;
+      if (notifiedHours[hourKey]) return; // Evita notificar duas vezes a mesma hora
+
+      // Horários de Refeição
+      if (hours === 9) {
+        sendNotification("☀️ Hora do Café da Manhã (9h)", "Não se esqueça de registrar sua refeição e manter o foco no plano!");
+      } else if (hours === 13) {
+        sendNotification("🍽️ Hora do Almoço (13h)", "Monte seu prato ideal: 50% vegetais, 25% proteínas e 25% carboidratos.");
+      } else if (hours === 17) {
+        sendNotification("☕ Hora do Lanche da Tarde (17h)", "Que tal uma pausa saudável para manter a energia?");
+      } else if (hours === 21) {
+        sendNotification("🌙 Hora do Jantar (21h)", "Sua última refeição principal do dia. Bom apetite!");
+      }
+
+      // Lembrete de Água de 2 em 2 horas a partir das 9h (9h, 11h, 13h, 15h, 17h, 19h, 21h)
+      if (hours >= 9 && hours <= 21 && (hours % 2 !== 0)) {
+        if (waterAmount < 3000) {
+          sendNotification("💧 Lembrete de Hidratação", "Hora de beber um copo d'água! Mantenha sua meta de 3L em dia.");
+        }
+      }
+
+      notifiedHours[hourKey] = true;
+      localStorage.setItem('notifiedHours', JSON.stringify(notifiedHours));
+    }
+
+    function sendNotification(title, body) {
+      new Notification(title, { body, icon: '/icon-192.png' });
     }
 
     // CONVERTER FUNCTION
@@ -1676,7 +1721,7 @@
       Notification.requestPermission().then(permission => {
         if (permission === "granted") {
           new Notification("Lembretes Ativados! 🌿", {
-            body: "Você receberá avisos importantes para hidratação e refeições."
+            body: "Avisos configurados para refeições (9h, 13h, 17h, 21h) e água a cada 2h (a partir das 9h)."
           });
         } else {
           alert("Permissão de notificação negada.");
