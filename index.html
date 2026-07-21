@@ -172,7 +172,7 @@
     .check-item.checked {
       text-decoration: line-through;
       color: var(--text-muted);
-      opacity: 0.7;
+      opacity: 0.6;
     }
 
     /* Water Widget */
@@ -305,7 +305,7 @@
     .receitas-btn { background: #ea580c; }
     .orientacoes-btn { background: #0284c7; }
     .peso-btn { background: #059669; }
-    .mounjaro-btn { background: #7e22ce; }
+    .semaglutida-btn { background: #7e22ce; }
     .plan-btn { background: #0284c7; }
     .idea-btn { background: #d97706; }
     .stats-btn { background: #0284c7; }
@@ -638,8 +638,8 @@
       font-size: 14px;
     }
 
-    /* Mounjaro Card Styles */
-    .mounjaro-next-card {
+    /* Semaglutida Card Styles */
+    .semaglutida-next-card {
       background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
       border: 1px solid #d8b4fe;
       padding: 14px;
@@ -648,20 +648,20 @@
       color: #0f172a;
     }
 
-    .mounjaro-next-title {
+    .semaglutida-next-title {
       font-size: 13px;
       font-weight: 700;
       color: #6b21a8;
     }
 
-    .mounjaro-next-val {
+    .semaglutida-next-val {
       font-size: 20px;
       font-weight: 800;
       color: #581c87;
       margin: 4px 0;
     }
 
-    .mounjaro-next-spot {
+    .semaglutida-next-spot {
       font-size: 13px;
       color: #7e22ce;
       font-weight: 600;
@@ -689,6 +689,15 @@
     .assistant-text {
       font-size: 13px;
       line-height: 1.4;
+    }
+
+    /* Converter Card */
+    .converter-box {
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-top: 10px;
     }
 
     @media print {
@@ -780,7 +789,7 @@
         <div class="sub">Recursos Rápidos:</div>
         <button class="action-button idea-btn" onclick="openMeal('ideasScreen')">🎲 Estou sem ideias para hoje</button>
         <button class="action-button plan-btn" onclick="openMeal('planningScreen')">📅 Planejar a Semana</button>
-        <button class="action-button mounjaro-btn" onclick="openMeal('mounjaroScreen')">💉 Controle do Mounjaro</button>
+        <button class="action-button semaglutida-btn" onclick="openMeal('semaglutidaScreen')">💉 Controle da Semaglutida</button>
         <button class="action-button peso-btn" onclick="openMeal('weightScreen')">⚖️ Controle de Peso</button>
         <button class="action-button stats-btn" onclick="openMeal('statsScreen')">📊 Estatísticas & Assistente</button>
 
@@ -821,8 +830,8 @@
             <div class="stat-label">Sequência (Streak)</div>
           </div>
           <div class="stat-box">
-            <div class="stat-val" id="mounjaroTotalVal">0</div>
-            <div class="stat-label">Aplicações Mounjaro</div>
+            <div class="stat-val" id="semaglutidaTotalVal">0</div>
+            <div class="stat-label">Aplicações Semaglutida</div>
           </div>
         </div>
 
@@ -832,7 +841,7 @@
       <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
     </div>
 
-    <!-- TELA BACKUP -->
+    <!-- TELA BACKUP & NOTIFICAÇÕES -->
     <div id="backupScreen" class="screen">
       <button class="back-btn" onclick="goHome()">← Voltar</button>
 
@@ -846,6 +855,12 @@
           <label>Restaurar de arquivo:</label>
           <input type="file" id="importFileInput" accept=".json" class="form-control" onchange="importBackupData(event)" />
         </div>
+      </div>
+
+      <div class="card">
+        <h3 class="option-title" style="background:#0284c7;">🔔 Notificações e Lembretes</h3>
+        <div class="sub">Receba alertas para beber água e não esquecer as refeições.</div>
+        <button style="width:100%; background:#0284c7; padding:12px; font-weight:bold;" onclick="requestNotificationPermission()">🔔 Ativar Lembretes no Navegador</button>
       </div>
 
       <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
@@ -885,56 +900,57 @@
         <h3 class="option-title" style="background:#0284c7;">📅 Cardápio Semanal</h3>
         <div class="sub">Defina suas refeições para a semana e gere a lista de compras automática.</div>
 
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px;">
-          <button style="background:#0284c7;" onclick="autoGenerateWeekPlan()">✨ Sortear Semana Toda</button>
-          <button style="background:#0f766e;" onclick="generateAutoShoppingFromPlan()">🛒 Gerar Lista de Compras</button>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+          <button style="background:#0284c7;" onclick="autoGenerateWeekPlan()">✨ Sortear Semana</button>
+          <button style="background:#0f766e;" onclick="generateAutoShoppingFromPlan()">🛒 Gerar Lista</button>
         </div>
+
+        <button style="width:100%; background:#ea580c; font-weight:bold; margin-bottom:14px;" onclick="generateWeeklyPlanPDF()">🖨️ Exportar PDF para Geladeira</button>
 
         <div id="weeklyPlanContainer"></div>
       </div>
       <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
     </div>
 
-    <!-- TELA MOUNJARO -->
-    <div id="mounjaroScreen" class="screen">
+    <!-- TELA SEMAGLUTIDA -->
+    <div id="semaglutidaScreen" class="screen">
       <button class="back-btn" onclick="goHome()">← Voltar</button>
 
       <div class="card">
-        <h3 class="option-title" style="background:#7e22ce;">💉 Controle do Mounjaro</h3>
+        <h3 class="option-title" style="background:#7e22ce;">💉 Controle da Semaglutida</h3>
 
-        <div class="mounjaro-next-card">
-          <div class="mounjaro-next-title">PRÓXIMA APLICAÇÃO</div>
-          <div class="mounjaro-next-val" id="mounjaroNextDateText">--/--</div>
-          <div class="mounjaro-next-spot" id="mounjaroNextSpotText">Local sugerido: Abdômen direito</div>
+        <div class="semaglutida-next-card">
+          <div class="semaglutida-next-title">PRÓXIMA APLICAÇÃO</div>
+          <div class="semaglutida-next-val" id="semaglutidaNextDateText">--/--</div>
+          <div class="semaglutida-next-spot" id="semaglutidaNextSpotText">Local sugerido: Abdômen direito</div>
         </div>
 
         <div class="sub"><strong>Registrar Aplicação:</strong></div>
         
         <div class="form-group">
           <label>Dose (mg):</label>
-          <select id="mjDose" class="form-control">
-            <option value="2.5 mg">2,5 mg</option>
-            <option value="5.0 mg">5,0 mg</option>
-            <option value="7.5 mg">7,5 mg</option>
-            <option value="10.0 mg">10,0 mg</option>
-            <option value="12.5 mg">12,5 mg</option>
-            <option value="15.0 mg">15,0 mg</option>
+          <select id="sgDose" class="form-control">
+            <option value="0.25 mg">0,25 mg</option>
+            <option value="0.5 mg">0,50 mg</option>
+            <option value="1.0 mg">1,0 mg</option>
+            <option value="1.7 mg">1,7 mg</option>
+            <option value="2.4 mg">2,4 mg</option>
           </select>
         </div>
 
         <div class="form-group">
           <label>Data:</label>
-          <input type="date" id="mjDate" class="form-control" />
+          <input type="date" id="sgDate" class="form-control" />
         </div>
 
         <div class="form-group">
           <label>Horário:</label>
-          <input type="time" id="mjTime" class="form-control" />
+          <input type="time" id="sgTime" class="form-control" />
         </div>
 
         <div class="form-group">
           <label>Local de Aplicação:</label>
-          <select id="mjSpot" class="form-control">
+          <select id="sgSpot" class="form-control">
             <option value="Abdômen direito">Abdômen direito</option>
             <option value="Abdômen esquerdo">Abdômen esquerdo</option>
             <option value="Coxa direita">Coxa direita</option>
@@ -944,10 +960,10 @@
           </select>
         </div>
 
-        <button style="width:100%; background:#7e22ce; font-weight:bold; padding:12px; font-size:15px;" onclick="registerMounjaro()">Salvar Aplicação</button>
+        <button style="width:100%; background:#7e22ce; font-weight:bold; padding:12px; font-size:15px;" onclick="registerSemaglutida()">Salvar Aplicação</button>
 
         <div class="sub" style="margin-top:20px;"><strong>Histórico de Aplicações</strong></div>
-        <ul id="mounjaroHistoryList" class="weight-history-list"></ul>
+        <ul id="semaglutidaHistoryList" class="weight-history-list"></ul>
       </div>
 
       <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
@@ -1021,24 +1037,37 @@
       </div>
 
       <div class="card">
+        <h3 class="option-title" style="background:#d97706;">🧮 Conversor de Medidas Caseiras</h3>
+        <div class="sub">Calcule gramas ou mililitros rapidamente:</div>
+        
+        <div class="converter-box">
+          <div class="form-group">
+            <label>Selecione a medida:</label>
+            <select id="calcMeasureType" class="form-control" onchange="calculateMeasure()">
+              <option value="colherSopa">Colher de Sopa (~15g/ml)</option>
+              <option value="colherSobremesa">Colher de Sobremesa (~10g/ml)</option>
+              <option value="colherCha">Colher de Chá (~5g/ml)</option>
+              <option value="xicaraCha">Xícara de Chá (~240ml)</option>
+              <option value="copoRequeijao">Copo de Requeijão (~200ml)</option>
+              <option value="copoAmericano">Copo Americano (~190ml)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Quantidade:</label>
+            <input type="number" id="calcMeasureQty" value="1" min="0.5" step="0.5" class="form-control" oninput="calculateMeasure()" />
+          </div>
+          <div style="font-size:16px; font-weight:800; color:var(--primary-light); margin-top:8px; text-align:center;" id="calcMeasureResult">
+            Resultado: ~15 g / ml
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
         <h3 class="option-title" style="background:#be185d;">🍕 Refeição Livre (Flexível)</h3>
         <p style="font-size:14px; line-height:1.5;">
           Você tem direito a <strong>1 refeição livre na semana</strong>.<br><br>
           <em>Lembre-se:</em> é apenas <u>uma refeição</u>, não o dia inteiro nem o final de semana todo. Escolha a refeição que mais gosta, aproveite com consciência e retorne ao plano!
         </p>
-      </div>
-
-      <div class="card">
-        <h3 class="option-title" style="background:#475569;">🥄 Medidas Caseiras de Referência</h3>
-        <ul class="details">
-          <li><strong>1 Copo de Requeijão:</strong> ~200ml</li>
-          <li><strong>1 Copo Americano:</strong> ~190ml</li>
-          <li><strong>1 Xícara de Chá:</strong> ~240ml</li>
-          <li><strong>1 Xícara de Café:</strong> ~80ml</li>
-          <li><strong>1 Colher de Sopa:</strong> ~15g / 15ml</li>
-          <li><strong>1 Colher de Sobremesa:</strong> ~10g / 10ml</li>
-          <li><strong>1 Colher de Chá:</strong> ~5g / 5ml</li>
-        </ul>
       </div>
 
       <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
@@ -1119,7 +1148,7 @@
     let waterAmount = parseInt(localStorage.getItem('waterAmount') || '0');
     let dailyTasks = JSON.parse(localStorage.getItem('dailyTasks') || '{}');
     let weightHistory = JSON.parse(localStorage.getItem('weightHistory') || '[{"date":"20/07","weight":78.9}]');
-    let mounjaroHistory = JSON.parse(localStorage.getItem('mounjaroHistory') || '[]');
+    let semaglutidaHistory = JSON.parse(localStorage.getItem('semaglutidaHistory') || localStorage.getItem('mounjaroHistory') || '[]');
     let weeklyPlan = JSON.parse(localStorage.getItem('weeklyPlan') || '{}');
     let streakDays = parseInt(localStorage.getItem('streakDays') || '1');
 
@@ -1607,10 +1636,11 @@
       updateWaterUI();
       updateTasksUI();
       updateWeightUI();
-      updateMounjaroUI();
+      updateSemaglutidaUI();
       renderWeeklyPlanUI();
       renderRecipes('all');
       updateAssistantUI();
+      calculateMeasure();
     }
 
     function toggleTheme() {
@@ -1619,10 +1649,45 @@
       localStorage.setItem('themeDark', isDark);
     }
 
+    // CONVERTER FUNCTION
+    function calculateMeasure() {
+      const type = document.getElementById('calcMeasureType').value;
+      const qty = parseFloat(document.getElementById('calcMeasureQty').value) || 1;
+      
+      const factorMap = {
+        colherSopa: 15,
+        colherSobremesa: 10,
+        colherCha: 5,
+        xicaraCha: 240,
+        copoRequeijao: 200,
+        copoAmericano: 190
+      };
+
+      const val = (factorMap[type] || 15) * qty;
+      document.getElementById('calcMeasureResult').innerText = `Resultado: ~${val} g / ml`;
+    }
+
+    // NOTIFICATION PERMISSION
+    function requestNotificationPermission() {
+      if (!("Notification" in window)) {
+        alert("Seu navegador não suporta notificações de área de trabalho.");
+        return;
+      }
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+          new Notification("Lembretes Ativados! 🌿", {
+            body: "Você receberá avisos importantes para hidratação e refeições."
+          });
+        } else {
+          alert("Permissão de notificação negada.");
+        }
+      });
+    }
+
     // ASSISTANT & STATS
     function updateAssistantUI() {
       document.getElementById('streakVal').innerText = `${streakDays} dias`;
-      document.getElementById('mounjaroTotalVal').innerText = `${mounjaroHistory.length}`;
+      document.getElementById('semaglutidaTotalVal').innerText = `${semaglutidaHistory.length}`;
 
       const latestWeight = weightHistory.length > 0 ? weightHistory[weightHistory.length - 1].weight : 78.9;
       const initialWeight = weightHistory.length > 0 ? weightHistory[0].weight : 78.9;
@@ -1653,7 +1718,7 @@
 
       const latestWeight = weightHistory.length > 0 ? weightHistory[weightHistory.length - 1].weight : 78.9;
       doc.text(`Peso Atual: ${latestWeight} kg (Meta: 65.0 kg)`, 14, 46);
-      doc.text(`Aplicaçoes de Mounjaro: ${mounjaroHistory.length} registradas`, 14, 54);
+      doc.text(`Aplicaçoes de Semaglutida: ${semaglutidaHistory.length} registradas`, 14, 54);
 
       let y = 68;
       doc.setFont("helvetica", "bold");
@@ -1669,10 +1734,49 @@
       doc.save("relatorio-nutricional-gisele.pdf");
     }
 
+    function generateWeeklyPlanPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      doc.text("Cardapio Semanal - Gisele Lopes Waltschanoff", 14, 20);
+
+      let y = 32;
+
+      weekDays.forEach(day => {
+        const dayPlan = weeklyPlan[day] || {};
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(12);
+        doc.text(`📌 ${day}`, 14, y);
+        y += 6;
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+
+        Object.keys(meals).forEach(mKey => {
+          const m = meals[mKey];
+          const selectedIdx = dayPlan[mKey] !== undefined ? dayPlan[mKey] : 0;
+          const option = m.options[selectedIdx];
+          const optTitle = option ? option.title : "Opção 1";
+          doc.text(`• ${m.title}: ${optTitle}`, 18, y);
+          y += 5;
+        });
+
+        y += 4;
+        if (y > 270) {
+          doc.addPage();
+          y = 20;
+        }
+      });
+
+      doc.save("cardapio-semanal-geladeira.pdf");
+    }
+
     // BACKUP & RESTORE
     function exportBackupData() {
       const data = {
-        favs, shoppingChecks, waterAmount, dailyTasks, weightHistory, mounjaroHistory, weeklyPlan, streakDays
+        favs, shoppingChecks, waterAmount, dailyTasks, weightHistory, semaglutidaHistory, weeklyPlan, streakDays
       };
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const a = document.createElement('a');
@@ -1694,7 +1798,7 @@
           if (data.waterAmount) localStorage.setItem('waterAmount', data.waterAmount.toString());
           if (data.dailyTasks) localStorage.setItem('dailyTasks', JSON.stringify(data.dailyTasks));
           if (data.weightHistory) localStorage.setItem('weightHistory', JSON.stringify(data.weightHistory));
-          if (data.mounjaroHistory) localStorage.setItem('mounjaroHistory', JSON.stringify(data.mounjaroHistory));
+          if (data.semaglutidaHistory) localStorage.setItem('semaglutidaHistory', JSON.stringify(data.semaglutidaHistory));
           if (data.weeklyPlan) localStorage.setItem('weeklyPlan', JSON.stringify(data.weeklyPlan));
 
           alert('Backup restaurado com sucesso! O aplicativo será recarregado.');
@@ -1737,57 +1841,57 @@
       renderRecipes(cat);
     }
 
-    // MOUNJARO FUNCTIONS
-    function registerMounjaro() {
-      const dose = document.getElementById('mjDose').value;
-      const dateVal = document.getElementById('mjDate').value;
-      const timeVal = document.getElementById('mjTime').value;
-      const spotVal = document.getElementById('mjSpot').value;
+    // SEMAGLUTIDA FUNCTIONS
+    function registerSemaglutida() {
+      const dose = document.getElementById('sgDose').value;
+      const dateVal = document.getElementById('sgDate').value;
+      const timeVal = document.getElementById('sgTime').value;
+      const spotVal = document.getElementById('sgSpot').value;
 
       if (!dateVal) {
         alert('Selecione a data da aplicação.');
         return;
       }
 
-      mounjaroHistory.push({
+      semaglutidaHistory.push({
         dose,
         date: dateVal,
         time: timeVal || '12:00',
         spot: spotVal
       });
 
-      localStorage.setItem('mounjaroHistory', JSON.stringify(mounjaroHistory));
-      updateMounjaroUI();
+      localStorage.setItem('semaglutidaHistory', JSON.stringify(semaglutidaHistory));
+      updateSemaglutidaUI();
       updateAssistantUI();
-      alert('Aplicação do Mounjaro registrada com sucesso!');
+      alert('Aplicação de Semaglutida registrada com sucesso!');
     }
 
-    function updateMounjaroUI() {
-      const listEl = document.getElementById('mounjaroHistoryList');
+    function updateSemaglutidaUI() {
+      const listEl = document.getElementById('semaglutidaHistoryList');
       if (!listEl) return;
       listEl.innerHTML = '';
 
-      if (mounjaroHistory.length === 0) {
-        document.getElementById('mounjaroNextSpotText').innerText = "Local sugerido: Abdômen direito";
-        document.getElementById('mounjaroNextDateText').innerText = "Pendente de registro";
+      if (semaglutidaHistory.length === 0) {
+        document.getElementById('semaglutidaNextSpotText').innerText = "Local sugerido: Abdômen direito";
+        document.getElementById('semaglutidaNextDateText').innerText = "Pendente de registro";
         return;
       }
 
-      mounjaroHistory.sort((a,b) => new Date(a.date) - new Date(b.date));
+      semaglutidaHistory.sort((a,b) => new Date(a.date) - new Date(b.date));
 
-      const lastApp = mounjaroHistory[mounjaroHistory.length - 1];
+      const lastApp = semaglutidaHistory[semaglutidaHistory.length - 1];
       const lastDate = new Date(lastApp.date + 'T' + lastApp.time);
       const nextDate = new Date(lastDate);
       nextDate.setDate(nextDate.getDate() + 7);
 
       const dateFormatted = `${String(nextDate.getDate()).padStart(2,'0')}/${String(nextDate.getMonth()+1).padStart(2,'0')}`;
-      document.getElementById('mounjaroNextDateText').innerText = dateFormatted;
+      document.getElementById('semaglutidaNextDateText').innerText = dateFormatted;
 
       const lastSpotIdx = spotRotation.indexOf(lastApp.spot);
       const nextSpotIdx = (lastSpotIdx + 1) % spotRotation.length;
-      document.getElementById('mounjaroNextSpotText').innerText = `Local sugerido: ${spotRotation[nextSpotIdx]}`;
+      document.getElementById('semaglutidaNextSpotText').innerText = `Local sugerido: ${spotRotation[nextSpotIdx]}`;
 
-      mounjaroHistory.slice().reverse().forEach((item) => {
+      semaglutidaHistory.slice().reverse().forEach((item) => {
         const d = new Date(item.date + 'T' + item.time);
         const dtStr = `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')} às ${item.time}`;
         const li = document.createElement('li');
