@@ -4,77 +4,263 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guia Alimentar</title>
-  <meta name="theme-color" content="#2f855a" />
+  <meta name="theme-color" content="#14532d" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="/favicon.ico" />
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <style>
+    :root {
+      --primary: #14532d;
+      --primary-light: #16a34a;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #222;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
     }
+
     .app {
       max-width: 480px;
       margin: auto;
-      padding: 20px 15px 40px;
+      padding: 16px 16px 40px;
     }
+
     .card {
-      background: white;
-      padding: 15px;
-      border-radius: 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      background: var(--card-bg);
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
     h1 {
-      margin-bottom: 20px;
-      color: #14532d;
+      margin: 0 0 16px;
+      font-size: 24px;
+      color: var(--primary);
+      font-weight: 800;
+      letter-spacing: -0.5px;
     }
+
     .screen {
       display: none;
     }
+
     .screen.active {
       display: block;
     }
+
+    /* Header & Greeting */
+    .greeting-card {
+      background: linear-gradient(135deg, #14532d 0%, #166534 100%);
+      color: white;
+      border: none;
+    }
+
+    .greeting-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .greeting-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .greeting-date {
+      font-size: 13px;
+      opacity: 0.85;
+      text-transform: capitalize;
+    }
+
+    .quote-box {
+      font-size: 13px;
+      opacity: 0.95;
+      font-style: italic;
+      line-height: 1.4;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Progress Widget */
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .progress-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-main);
+    }
+
+    .progress-val {
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--primary-light);
+    }
+
+    .progress-bar-bg {
+      background: #e2e8f0;
+      height: 10px;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .progress-bar-fill {
+      background: var(--primary-light);
+      height: 100%;
+      width: 0%;
+      transition: width 0.4s ease;
+      border-radius: 5px;
+    }
+
+    .checklist-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      background: #f8fafc;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 14px;
+      user-select: none;
+    }
+
+    .check-item.checked {
+      text-decoration: line-through;
+      color: var(--text-muted);
+      background: #f1f5f9;
+    }
+
+    /* Water Widget */
+    .water-card {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border: 1px solid #bfdbfe;
+    }
+
+    .water-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .water-title {
+      font-weight: 700;
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .water-status {
+      font-weight: 800;
+      color: #2563eb;
+      font-size: 18px;
+    }
+
+    .water-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .water-btn {
+      padding: 10px;
+      border: none;
+      border-radius: var(--radius-md);
+      background: #2563eb;
+      color: white;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .water-btn.undo {
+      background: #94a3b8;
+    }
+
+    .water-alert {
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #166534;
+      text-align: center;
+    }
+
+    /* Buttons & Nav */
     .meal-button {
       width: 100%;
       text-align: left;
-      padding: 16px;
+      padding: 16px 18px;
       border: none;
-      border-radius: 16px;
-      margin-bottom: 12px;
+      border-radius: var(--radius-md);
+      margin-bottom: 10px;
       color: white;
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 16px;
+      font-weight: 700;
       cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
+
     .action-button {
       width: 100%;
       text-align: center;
       padding: 14px;
       border: none;
-      border-radius: 14px;
-      margin-bottom: 12px;
+      border-radius: var(--radius-md);
+      margin-bottom: 10px;
       color: white;
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
     }
+
     .mini-button {
       width: 100%;
       text-align: center;
       padding: 12px;
       border: none;
-      border-radius: 12px;
+      border-radius: var(--radius-md);
       margin-bottom: 10px;
       color: white;
-      font-size: 15px;
-      font-weight: bold;
+      font-size: 14px;
+      font-weight: 700;
       cursor: pointer;
     }
+
     .cafe { background: #d97706; }
     .lanche { background: #2563eb; }
     .almoco { background: #16a34a; }
@@ -84,154 +270,284 @@
     .favoritos-btn { background: #1d4ed8; }
     .compras-btn { background: #0f766e; }
     .receitas-btn { background: #ea580c; }
+    .orientacoes-btn { background: #0284c7; }
+    .peso-btn { background: #059669; }
 
     .option-title {
       margin: 0 0 10px;
       padding: 10px 12px;
-      border-radius: 12px;
-      font-size: 18px;
+      border-radius: var(--radius-md);
+      font-size: 17px;
       color: white;
-      background: #14532d;
+      background: var(--primary);
     }
+
     .option-subtitle {
       font-size: 13px;
       color: #166534;
-      font-weight: bold;
+      font-weight: 700;
       margin-bottom: 8px;
     }
+
     .sub {
-      color: #555;
+      color: var(--text-muted);
       margin-bottom: 10px;
+      font-size: 14px;
     }
+
     .details {
       margin: 10px 0;
       padding-left: 18px;
-      color: #222;
+      color: var(--text-main);
     }
+
     .details li {
       margin-bottom: 6px;
     }
+
     button {
-      padding: 10px 12px;
+      padding: 10px 14px;
       border: none;
-      border-radius: 10px;
-      background: #16a34a;
+      border-radius: var(--radius-md);
+      background: var(--primary-light);
       color: white;
+      font-weight: 600;
       cursor: pointer;
     }
+
     .back-btn {
-      background: #111;
+      background: #0f172a;
       margin-bottom: 14px;
     }
+
     .back-bottom-btn {
       width: 100%;
       background: #dc2626;
       margin-top: 16px;
+      padding: 14px;
+      font-weight: 700;
     }
+
     .hidden {
       display: none;
     }
+
     .food-row {
       margin: 10px 0;
-      padding: 10px;
-      background: #fafafa;
-      border-radius: 12px;
-      border: 1px solid #eee;
+      padding: 12px;
+      background: #f8fafc;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
     }
+
     .food-title {
-      font-weight: bold;
+      font-weight: 700;
       margin-bottom: 8px;
+      font-size: 14px;
     }
+
     .sub-btn {
-      background: #111;
+      background: #0f172a;
       color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: var(--radius-md);
       padding: 8px 12px;
-      font-size: 13px;
+      font-size: 12px;
     }
+
     .substitutions {
       margin-top: 10px;
       padding: 10px;
       background: #f1f5f9;
-      border-radius: 12px;
+      border-radius: var(--radius-md);
     }
+
     .substitutions ul {
       margin: 8px 0 0;
       padding-left: 18px;
+      font-size: 13px;
     }
+
     .substitutions li {
       margin-bottom: 6px;
     }
+
     .note {
       font-size: 12px;
-      color: #666;
+      color: var(--text-muted);
       margin-top: 6px;
     }
+
     .fav-list, .print-list {
       padding-left: 18px;
     }
+
     .fav-list li, .print-list li {
       margin-bottom: 8px;
     }
+
     .shopping-category {
       margin-top: 14px;
       padding: 10px 12px;
-      border-radius: 12px;
-      background: #e5e7eb;
-      font-weight: bold;
+      border-radius: var(--radius-md);
+      background: #e2e8f0;
+      font-weight: 700;
+      font-size: 14px;
     }
+
     .shopping-item {
       display: flex;
       align-items: center;
       gap: 8px;
       margin: 8px 0;
       padding: 8px 10px;
-      background: #fafafa;
-      border-radius: 10px;
+      background: #f8fafc;
+      border-radius: var(--radius-md);
       cursor: pointer;
+      font-size: 14px;
     }
+
     .shopping-item.checked {
       text-decoration: line-through;
-      color: #888;
+      color: var(--text-muted);
       background: #ecfdf5;
     }
+
     .small-note {
       font-size: 12px;
-      color: #666;
+      color: var(--text-muted);
       margin-top: 8px;
     }
+
     hr.soft {
       border: none;
-      border-top: 1px solid #eee;
-      margin: 14px 0;
+      border-top: 1px solid var(--border-color);
+      margin: 16px 0;
     }
+
     .print-card {
       background: #fff7ed;
       border: 1px dashed #fb923c;
     }
+
     .print-empty {
       color: #777;
       font-style: italic;
     }
+
     .recipe-card {
       background: #fffaf5;
       border: 1px solid #fed7aa;
     }
+
     .recipe-title {
       margin: 0 0 8px;
       color: #9a3412;
       font-size: 18px;
     }
+
     .shopping-actions {
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px;
       margin: 12px 0 4px;
     }
+
     .clear-btn { background: #b91c1c; }
     .share-btn { background: #2563eb; }
     .pdf-btn { background: #7c3aed; }
+
+    /* Weight Management Styles */
+    .weight-input-group {
+      display: flex;
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .weight-input {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 16px;
+      outline: none;
+    }
+
+    .weight-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .stat-box {
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      text-align: center;
+    }
+
+    .stat-val {
+      font-size: 20px;
+      font-weight: 800;
+      color: #059669;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    canvas#weightChart {
+      width: 100%;
+      height: 180px;
+      margin: 10px 0;
+    }
+
+    .weight-history-list {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+    }
+
+    .weight-history-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 14px;
+    }
+
+    /* Nutritional Info Section Styles */
+    .plate-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin: 12px 0;
+    }
+
+    .plate-title {
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 8px;
+    }
+
+    .plate-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .plate-part {
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #dcfce7;
+      font-size: 13px;
+    }
 
     @media print {
       body * {
@@ -253,26 +569,178 @@
 </head>
 <body>
   <div class="app">
-    <h1>Guia Alimentar</h1>
 
-    <!-- HOME -->
+    <!-- HOME / DASHBOARD -->
     <div id="home" class="screen active">
-      <div class="card">
-        <div class="sub">Escolha a refeição que você quer consultar.</div>
+      <!-- Card Saudação -->
+      <div class="card greeting-card">
+        <div class="greeting-header">
+          <div class="greeting-title" id="greetingText">Bom dia, Gisele 🌿</div>
+        </div>
+        <div class="greeting-date" id="currentDateText">Segunda-feira, 20 de Julho</div>
+        <div class="quote-box" id="quoteText">"Pequenas escolhas diárias constroem grandes resultados."</div>
+      </div>
 
-        <button class="meal-button cafe" onclick="openMeal('cafeScreen')">☀️ Café da manhã</button>
-        <button class="meal-button lanche" onclick="openMeal('lancheScreen')">🍎 Lanche da manhã</button>
-        <button class="meal-button almoco" onclick="openMeal('almocoScreen')">🍽️ Almoço</button>
-        <button class="meal-button lanche-tarde" onclick="openMeal('lancheTardeScreen')">☕ Lanche da tarde</button>
-        <button class="meal-button jantar" onclick="openMeal('jantarScreen')">🌙 Jantar</button>
-        <button class="meal-button ceia" onclick="openMeal('ceiaScreen')">🌜 Ceia</button>
+      <!-- Card Progresso Diário -->
+      <div class="card">
+        <div class="progress-header">
+          <div class="progress-title">Progresso de Hoje</div>
+          <div class="progress-val" id="progressVal">0%</div>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+        <div class="checklist-grid">
+          <div class="check-item" onclick="toggleTask('cafe')">
+            <span id="chk-cafe">⬜</span> ☀️ Café da manhã
+          </div>
+          <div class="check-item" onclick="toggleTask('lancheM')">
+            <span id="chk-lancheM">⬜</span> 🍎 Lanche da manhã
+          </div>
+          <div class="check-item" onclick="toggleTask('almoco')">
+            <span id="chk-almoco">⬜</span> 🍽️ Almoço
+          </div>
+          <div class="check-item" onclick="toggleTask('lancheT')">
+            <span id="chk-lancheT">⬜</span> ☕ Lanche da tarde
+          </div>
+          <div class="check-item" onclick="toggleTask('jantar')">
+            <span id="chk-jantar">⬜</span> 🌙 Jantar
+          </div>
+          <div class="check-item" onclick="toggleTask('ceia')">
+            <span id="chk-ceia">⬜</span> 🌜 Ceia
+          </div>
+          <div class="check-item" onclick="toggleTask('aguaTask')">
+            <span id="chk-aguaTask">⬜</span> 💧 Meta de Água
+          </div>
+          <div class="check-item" onclick="toggleTask('pesoTask')">
+            <span id="chk-pesoTask">⬜</span> ⚖️ Registro de Peso
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Água -->
+      <div class="card water-card">
+        <div class="water-header">
+          <div class="water-title">💧 Controle de Água</div>
+          <div class="water-status" id="waterStatusText">0,0 L / 3,0 L</div>
+        </div>
+        <div class="water-btns">
+          <button class="water-btn" onclick="addWater(250)">+250 ml</button>
+          <button class="water-btn" onclick="addWater(500)">+500 ml</button>
+          <button class="water-btn undo" onclick="undoWater()">Desfazer</button>
+        </div>
+        <div id="waterAlert" class="water-alert hidden">🎉 Meta de água atingida! Parabéns!</div>
+      </div>
+
+      <!-- Menu Principal de Refeições -->
+      <div class="card">
+        <div class="sub">Consultar plano alimentar:</div>
+        <button class="meal-button cafe" onclick="openMeal('cafeScreen')"><span>☀️ Café da manhã</span> <span>›</span></button>
+        <button class="meal-button lanche" onclick="openMeal('lancheScreen')"><span>🍎 Lanche da manhã</span> <span>›</span></button>
+        <button class="meal-button almoco" onclick="openMeal('almocoScreen')"><span>🍽️ Almoço</span> <span>›</span></button>
+        <button class="meal-button lanche-tarde" onclick="openMeal('lancheTardeScreen')"><span>☕ Lanche da tarde</span> <span>›</span></button>
+        <button class="meal-button jantar" onclick="openMeal('jantarScreen')"><span>🌙 Jantar</span> <span>›</span></button>
+        <button class="meal-button ceia" onclick="openMeal('ceiaScreen')"><span>🌜 Ceia</span> <span>›</span></button>
 
         <hr class="soft">
 
+        <button class="action-button peso-btn" onclick="openMeal('weightScreen')">⚖️ Controle de Peso</button>
+        <button class="action-button orientacoes-btn" onclick="openMeal('orientacoesScreen')">🍊 Orientações da Nutri</button>
         <button class="action-button favoritos-btn" onclick="openMeal('favScreen')">⭐ Favoritos</button>
         <button class="action-button compras-btn" onclick="openMeal('shoppingScreen')">🛒 Lista de compras</button>
         <button class="action-button receitas-btn" onclick="openMeal('recipesScreen')">📖 Receitas</button>
       </div>
+    </div>
+
+    <!-- TELA PESO -->
+    <div id="weightScreen" class="screen">
+      <button class="back-btn" onclick="goHome()">← Voltar</button>
+      <div class="card">
+        <h3 class="option-title" style="background:#059669;">⚖️ Acompanhamento de Peso</h3>
+        
+        <div class="weight-stats">
+          <div class="stat-box">
+            <div class="stat-val" id="currentWeightVal">78.9 kg</div>
+            <div class="stat-label">Peso Atual</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="weightRemainingVal">13.9 kg</div>
+            <div class="stat-label">Faltam p/ Meta (65kg)</div>
+          </div>
+        </div>
+
+        <div class="sub">Registrar novo peso:</div>
+        <div class="weight-input-group">
+          <input type="number" step="0.1" id="weightInput" class="weight-input" placeholder="Ex: 78.5" />
+          <button onclick="registerWeight()">Salvar</button>
+        </div>
+
+        <div class="sub" style="margin-top: 16px;"><strong>Evolução do Peso</strong></div>
+        <canvas id="weightChart"></canvas>
+
+        <div class="sub" style="margin-top: 16px;"><strong>Histórico</strong></div>
+        <ul id="weightHistoryList" class="weight-history-list"></ul>
+      </div>
+      <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
+    </div>
+
+    <!-- TELA ORIENTAÇÕES -->
+    <div id="orientacoesScreen" class="screen">
+      <button class="back-btn" onclick="goHome()">← Voltar</button>
+
+      <div class="card">
+        <h3 class="option-title" style="background:#0284c7;">🍊 Orientações Nutricionais</h3>
+        <div class="sub">Recomendações gerais da Nutricionista Juliana Freitas</div>
+        <ul class="details">
+          <li><strong>Hidratação:</strong> Beba no mínimo 3 litros de água por dia (35ml por kg de peso).</li>
+          <li><strong>Rotina:</strong> Não pule refeições e não fique mais de 3 horas sem se alimentar.</li>
+          <li><strong>Açúcares:</strong> Evite consumir açúcares. Se necessário, prefira adoçantes naturais (stevia, xilitol ou eritritol).</li>
+          <li><strong>Mastigação:</strong> Coma devagar, mastigando bem os alimentos (pelo menos 20 vezes cada garfada).</li>
+          <li><strong>Líquidos:</strong> Evite ingerir líquidos junto com as refeições (prefira 30 minutos antes ou depois).</li>
+          <li><strong>Atenção Plena:</strong> Durante as refeições, não use celular ou TV. Coma sentado à mesa.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="option-title" style="background:#16a34a;">🍽️ O Prato Ideal</h3>
+        <div class="plate-box">
+          <div class="plate-title">Divisão Recomendada:</div>
+          <div class="plate-grid">
+            <div class="plate-part" style="grid-column: span 2; background:#dcfce7;">
+              <strong>50% Vegetais</strong><br>Crus e cozidos
+            </div>
+            <div class="plate-part" style="background:#fef3c7;">
+              <strong>25% Carboidratos</strong><br>De preferência integrais
+            </div>
+            <div class="plate-part" style="background:#e0f2fe;">
+              <strong>25% Proteínas</strong><br>Animal e vegetal
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="option-title" style="background:#be185d;">🍕 Refeição Livre (Flexível)</h3>
+        <p style="font-size:14px; line-height:1.5;">
+          Você tem direito a <strong>1 refeição livre na semana</strong>.<br><br>
+          <em>Lembre-se:</em> é apenas <u>uma refeição</u>, não o dia inteiro nem o final de semana todo. Escolha a refeição que mais gosta, aproveite com consciência e retorne ao plano!
+        </p>
+      </div>
+
+      <div class="card">
+        <h3 class="option-title" style="background:#475569;">🥄 Medidas Caseiras de Referência</h3>
+        <ul class="details">
+          <li><strong>1 Copo de Requeijão:</strong> ~200ml</li>
+          <li><strong>1 Copo Americano:</strong> ~190ml</li>
+          <li><strong>1 Xícara de Chá:</strong> ~240ml</li>
+          <li><strong>1 Xícara de Café:</strong> ~80ml</li>
+          <li><strong>1 Colher de Sopa:</strong> ~15g / 15ml</li>
+          <li><strong>1 Colher de Sobremesa:</strong> ~10g / 10ml</li>
+          <li><strong>1 Colher de Chá:</strong> ~5g / 5ml</li>
+        </ul>
+      </div>
+
+      <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
     </div>
 
     <!-- FAVORITOS -->
@@ -396,6 +864,17 @@
   <script>
     let favs = JSON.parse(localStorage.getItem('favs') || '[]');
     let shoppingChecks = JSON.parse(localStorage.getItem('shoppingChecks') || '{}');
+    let waterAmount = parseInt(localStorage.getItem('waterAmount') || '0');
+    let dailyTasks = JSON.parse(localStorage.getItem('dailyTasks') || '{}');
+    let weightHistory = JSON.parse(localStorage.getItem('weightHistory') || '[{"date":"20/07","weight":78.9}]');
+
+    const quotes = [
+      '"Pequenas escolhas diárias constroem grandes resultados."',
+      '"A disciplina é a ponte entre seus objetivos e suas realizações."',
+      '"Cuide do seu corpo, ele é o único lugar que você tem para viver."',
+      '"Foco no processo, o resultado é consequência."',
+      '"Cada refeição é uma oportunidade de nutrir sua saúde."'
+    ];
 
     const substitutions = {
       carbo: [
@@ -801,9 +1280,226 @@
       ]
     };
 
+    // INIT DASHBOARD DATA
+    function initDashboard() {
+      const now = new Date();
+      const hours = now.getHours();
+      let greeting = "Bom dia, Gisele 🌿";
+      if (hours >= 12 && hours < 18) greeting = "Boa tarde, Gisele 🌿";
+      else if (hours >= 18 || hours < 5) greeting = "Boa noite, Gisele 🌿";
+
+      document.getElementById('greetingText').innerText = greeting;
+
+      const options = { weekday: 'long', day: 'numeric', month: 'long' };
+      const dateStr = now.toLocaleDateString('pt-BR', options);
+      document.getElementById('currentDateText').innerText = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById('quoteText').innerText = randomQuote;
+
+      updateWaterUI();
+      updateTasksUI();
+      updateWeightUI();
+    }
+
+    // WATER WIDGET FUNCTIONS
+    function addWater(amount) {
+      waterAmount += amount;
+      if (waterAmount >= 3000) {
+        dailyTasks['aguaTask'] = true;
+      }
+      saveWaterData();
+    }
+
+    function undoWater() {
+      if (waterAmount > 0) {
+        waterAmount = Math.max(0, waterAmount - 250);
+        if (waterAmount < 3000) {
+          dailyTasks['aguaTask'] = false;
+        }
+        saveWaterData();
+      }
+    }
+
+    function saveWaterData() {
+      localStorage.setItem('waterAmount', waterAmount.toString());
+      localStorage.setItem('dailyTasks', JSON.stringify(dailyTasks));
+      updateWaterUI();
+      updateTasksUI();
+    }
+
+    function updateWaterUI() {
+      const liters = (waterAmount / 1000).toFixed(2).replace('.', ',');
+      document.getElementById('waterStatusText').innerText = `${liters} L / 3,0 L`;
+      
+      const alertBox = document.getElementById('waterAlert');
+      if (waterAmount >= 3000) {
+        alertBox.classList.remove('hidden');
+      } else {
+        alertBox.classList.add('hidden');
+      }
+    }
+
+    // TASK CHECKLIST FUNCTIONS
+    function toggleTask(taskId) {
+      dailyTasks[taskId] = !dailyTasks[taskId];
+      localStorage.setItem('dailyTasks', JSON.stringify(dailyTasks));
+      updateTasksUI();
+    }
+
+    function updateTasksUI() {
+      const tasks = ['cafe', 'lancheM', 'almoco', 'lancheT', 'jantar', 'ceia', 'aguaTask', 'pesoTask'];
+      let completedCount = 0;
+
+      tasks.forEach(t => {
+        const isDone = !!dailyTasks[t];
+        if (isDone) completedCount++;
+        const el = document.getElementById(`chk-${t}`);
+        if (el) {
+          el.innerText = isDone ? '✅' : '⬜';
+          el.parentElement.classList.toggle('checked', isDone);
+        }
+      });
+
+      const percentage = Math.round((completedCount / tasks.length) * 100);
+      document.getElementById('progressVal').innerText = `${percentage}%`;
+      document.getElementById('progressBarFill').style.width = `${percentage}%`;
+    }
+
+    // WEIGHT FUNCTIONS
+    function registerWeight() {
+      const input = document.getElementById('weightInput');
+      const val = parseFloat(input.value);
+      if (isNaN(val) || val <= 0) {
+        alert('Por favor, insira um valor de peso válido.');
+        return;
+      }
+
+      const now = new Date();
+      const dateStr = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}`;
+      
+      weightHistory.push({ date: dateStr, weight: val });
+      localStorage.setItem('weightHistory', JSON.stringify(weightHistory));
+      
+      dailyTasks['pesoTask'] = true;
+      localStorage.setItem('dailyTasks', JSON.stringify(dailyTasks));
+
+      input.value = '';
+      updateWeightUI();
+      updateTasksUI();
+      alert('Peso registrado com sucesso!');
+    }
+
+    function deleteWeight(index) {
+      if (confirm('Deseja excluir este registro de peso?')) {
+        weightHistory.splice(index, 1);
+        localStorage.setItem('weightHistory', JSON.stringify(weightHistory));
+        updateWeightUI();
+      }
+    }
+
+    function updateWeightUI() {
+      if (weightHistory.length === 0) return;
+
+      const latest = weightHistory[weightHistory.length - 1].weight;
+      document.getElementById('currentWeightVal').innerText = `${latest.toFixed(1)} kg`;
+
+      const target = 65.0;
+      const remaining = Math.max(0, latest - target);
+      document.getElementById('weightRemainingVal').innerText = `${remaining.toFixed(1)} kg`;
+
+      // Render History List
+      const listEl = document.getElementById('weightHistoryList');
+      listEl.innerHTML = '';
+      weightHistory.slice().reverse().forEach((item, index) => {
+        const realIndex = weightHistory.length - 1 - index;
+        const li = document.createElement('li');
+        li.className = 'weight-history-item';
+        li.innerHTML = `
+          <span>📅 ${item.date}</span>
+          <span><strong>${item.weight.toFixed(1)} kg</strong></span>
+          <span style="color:#dc2626; cursor:pointer;" onclick="deleteWeight(${realIndex})">✕</span>
+        `;
+        listEl.appendChild(li);
+      });
+
+      renderWeightChart();
+    }
+
+    function renderWeightChart() {
+      const canvas = document.getElementById('weightChart');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      // Adjust canvas resolution
+      canvas.width = canvas.parentElement.clientWidth - 40;
+      canvas.height = 180;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (weightHistory.length < 2) {
+        ctx.fillStyle = '#64748b';
+        ctx.font = '12px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Registre ao menos 2 pesos para ver o gráfico.', canvas.width / 2, canvas.height / 2);
+        return;
+      }
+
+      const padding = 30;
+      const weights = weightHistory.map(w => w.weight);
+      const minWeight = Math.min(...weights) - 1;
+      const maxWeight = Math.max(...weights) + 1;
+
+      const getX = (i) => padding + (i * (canvas.width - 2 * padding)) / (weightHistory.length - 1);
+      const getY = (w) => canvas.height - padding - ((w - minWeight) * (canvas.height - 2 * padding)) / (maxWeight - minWeight);
+
+      // Draw Grid Lines
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(padding, getY(minWeight));
+      ctx.lineTo(canvas.width - padding, getY(minWeight));
+      ctx.moveTo(padding, getY(maxWeight));
+      ctx.lineTo(canvas.width - padding, getY(maxWeight));
+      ctx.stroke();
+
+      // Draw Chart Line
+      ctx.strokeStyle = '#059669';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      weightHistory.forEach((pt, i) => {
+        const x = getX(i);
+        const y = getY(pt.weight);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      // Draw Points & Labels
+      weightHistory.forEach((pt, i) => {
+        const x = getX(i);
+        const y = getY(pt.weight);
+
+        ctx.fillStyle = '#059669';
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(`${pt.weight}kg`, x, y - 10);
+        ctx.fillText(pt.date, x, canvas.height - 10);
+      });
+    }
+
+    // BASE APP NAVIGATION & MEALS
     function openMeal(screenId){
       document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
       document.getElementById(screenId).classList.add('active');
+      if (screenId === 'weightScreen') {
+        setTimeout(renderWeightChart, 100);
+      }
     }
 
     function goHome(){
@@ -1007,9 +1703,11 @@
       doc.save("lista-de-compras.pdf");
     }
 
+    // INITIALIZATION
     Object.keys(meals).forEach(renderMealScreen);
     loadFavorites();
     renderShopping();
+    initDashboard();
   </script>
 </body>
 </html>
