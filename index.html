@@ -272,6 +272,9 @@
     .receitas-btn { background: #ea580c; }
     .orientacoes-btn { background: #0284c7; }
     .peso-btn { background: #059669; }
+    .mounjaro-btn { background: #7e22ce; }
+    .plan-btn { background: #0284c7; }
+    .idea-btn { background: #d97706; }
 
     .option-title {
       margin: 0 0 10px;
@@ -457,7 +460,29 @@
     .share-btn { background: #2563eb; }
     .pdf-btn { background: #7c3aed; }
 
-    /* Weight Management Styles */
+    /* Weight & Form Styles */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .form-control {
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      outline: none;
+      background: #fff;
+    }
+
     .weight-input-group {
       display: flex;
       gap: 10px;
@@ -520,33 +545,61 @@
       font-size: 14px;
     }
 
-    /* Nutritional Info Section Styles */
-    .plate-box {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-radius: var(--radius-md);
+    /* Mounjaro Card Styles */
+    .mounjaro-next-card {
+      background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+      border: 1px solid #d8b4fe;
       padding: 14px;
-      margin: 12px 0;
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
     }
 
-    .plate-title {
+    .mounjaro-next-title {
+      font-size: 13px;
       font-weight: 700;
-      color: #166534;
+      color: #6b21a8;
+    }
+
+    .mounjaro-next-val {
+      font-size: 20px;
+      font-weight: 800;
+      color: #581c87;
+      margin: 4px 0;
+    }
+
+    .mounjaro-next-spot {
+      font-size: 13px;
+      color: #7e22ce;
+      font-weight: 600;
+    }
+
+    /* Planning & Weekly Styles */
+    .day-plan-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .day-plan-title {
+      font-weight: 800;
+      color: var(--primary);
       margin-bottom: 8px;
     }
 
-    .plate-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
+    .idea-box {
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-top: 10px;
     }
 
-    .plate-part {
-      background: white;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #dcfce7;
-      font-size: 13px;
+    .idea-title {
+      font-weight: 800;
+      color: #b45309;
+      margin-bottom: 6px;
     }
 
     @media print {
@@ -632,8 +685,15 @@
         <div id="waterAlert" class="water-alert hidden">🎉 Meta de água atingida! Parabéns!</div>
       </div>
 
-      <!-- Menu Principal de Refeições -->
+      <!-- Menu Principal de Recursos -->
       <div class="card">
+        <div class="sub">Recursos Rápidos:</div>
+        <button class="action-button idea-btn" onclick="openMeal('ideasScreen')">🎲 Estou sem ideias para hoje</button>
+        <button class="action-button plan-btn" onclick="openMeal('planningScreen')">📅 Planejar a Semana</button>
+        <button class="action-button mounjaro-btn" onclick="openMeal('mounjaroScreen')">💉 Controle do Mounjaro</button>
+        <button class="action-button peso-btn" onclick="openMeal('weightScreen')">⚖️ Controle de Peso</button>
+
+        <hr class="soft">
         <div class="sub">Consultar plano alimentar:</div>
         <button class="meal-button cafe" onclick="openMeal('cafeScreen')"><span>☀️ Café da manhã</span> <span>›</span></button>
         <button class="meal-button lanche" onclick="openMeal('lancheScreen')"><span>🍎 Lanche da manhã</span> <span>›</span></button>
@@ -644,12 +704,113 @@
 
         <hr class="soft">
 
-        <button class="action-button peso-btn" onclick="openMeal('weightScreen')">⚖️ Controle de Peso</button>
         <button class="action-button orientacoes-btn" onclick="openMeal('orientacoesScreen')">🍊 Orientações da Nutri</button>
         <button class="action-button favoritos-btn" onclick="openMeal('favScreen')">⭐ Favoritos</button>
         <button class="action-button compras-btn" onclick="openMeal('shoppingScreen')">🛒 Lista de compras</button>
         <button class="action-button receitas-btn" onclick="openMeal('recipesScreen')">📖 Receitas</button>
       </div>
+    </div>
+
+    <!-- TELA ESTOU SEM IDEIAS -->
+    <div id="ideasScreen" class="screen">
+      <button class="back-btn" onclick="goHome()">← Voltar</button>
+      <div class="card">
+        <h3 class="option-title" style="background:#d97706;">🎲 Gerador de Ideias</h3>
+        <div class="sub">Deixe o aplicativo escolher suas refeições de acordo com o plano da nutricionista!</div>
+
+        <div class="form-group">
+          <label>O que deseja gerar?</label>
+          <select id="ideaTypeSelect" class="form-control">
+            <option value="fullDay">O Dia Todo Completo</option>
+            <option value="cafeScreen">Apenas Café da Manhã</option>
+            <option value="lancheScreen">Apenas Lanche da Manhã</option>
+            <option value="almocoScreen">Apenas Almoço</option>
+            <option value="lancheTardeScreen">Apenas Lanche da Tarde</option>
+            <option value="jantarScreen">Apenas Jantar</option>
+            <option value="ceiaScreen">Apenas Ceia</option>
+          </select>
+        </div>
+
+        <button style="width:100%; font-size:16px; padding:12px; background:#d97706; font-weight:bold;" onclick="generateIdeas()">🎲 Sortear Opções</button>
+
+        <div id="ideaResultContainer"></div>
+      </div>
+      <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
+    </div>
+
+    <!-- TELA PLANEJAMENTO SEMANAL -->
+    <div id="planningScreen" class="screen">
+      <button class="back-btn" onclick="goHome()">← Voltar</button>
+      <div class="card">
+        <h3 class="option-title" style="background:#0284c7;">📅 Cardápio Semanal</h3>
+        <div class="sub">Defina suas refeições para a semana e gere a lista de compras automática.</div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px;">
+          <button style="background:#0284c7;" onclick="autoGenerateWeekPlan()">✨ Sortear Semana Toda</button>
+          <button style="background:#0f766e;" onclick="generateAutoShoppingFromPlan()">🛒 Gerar Lista de Compras</button>
+        </div>
+
+        <div id="weeklyPlanContainer"></div>
+      </div>
+      <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
+    </div>
+
+    <!-- TELA MOUNJARO -->
+    <div id="mounjaroScreen" class="screen">
+      <button class="back-btn" onclick="goHome()">← Voltar</button>
+
+      <div class="card">
+        <h3 class="option-title" style="background:#7e22ce;">💉 Controle do Mounjaro</h3>
+
+        <div class="mounjaro-next-card">
+          <div class="mounjaro-next-title">PRÓXIMA APLICAÇÃO</div>
+          <div class="mounjaro-next-val" id="mounjaroNextDateText">--/--</div>
+          <div class="mounjaro-next-spot" id="mounjaroNextSpotText">Local sugerido: Abdômen direito</div>
+        </div>
+
+        <div class="sub"><strong>Registrar Aplicação:</strong></div>
+        
+        <div class="form-group">
+          <label>Dose (mg):</label>
+          <select id="mjDose" class="form-control">
+            <option value="2.5 mg">2,5 mg</option>
+            <option value="5.0 mg">5,0 mg</option>
+            <option value="7.5 mg">7,5 mg</option>
+            <option value="10.0 mg">10,0 mg</option>
+            <option value="12.5 mg">12,5 mg</option>
+            <option value="15.0 mg">15,0 mg</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Data:</label>
+          <input type="date" id="mjDate" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label>Horário:</label>
+          <input type="time" id="mjTime" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label>Local de Aplicação:</label>
+          <select id="mjSpot" class="form-control">
+            <option value="Abdômen direito">Abdômen direito</option>
+            <option value="Abdômen esquerdo">Abdômen esquerdo</option>
+            <option value="Coxa direita">Coxa direita</option>
+            <option value="Coxa esquerda">Coxa esquerda</option>
+            <option value="Braço direito">Braço direito</option>
+            <option value="Braço esquerdo">Braço esquerdo</option>
+          </select>
+        </div>
+
+        <button style="width:100%; background:#7e22ce; font-weight:bold; padding:12px; font-size:15px;" onclick="registerMounjaro()">Salvar Aplicação</button>
+
+        <div class="sub" style="margin-top:20px;"><strong>Histórico de Aplicações</strong></div>
+        <ul id="mounjaroHistoryList" class="weight-history-list"></ul>
+      </div>
+
+      <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
     </div>
 
     <!-- TELA PESO -->
@@ -703,16 +864,16 @@
 
       <div class="card">
         <h3 class="option-title" style="background:#16a34a;">🍽️ O Prato Ideal</h3>
-        <div class="plate-box">
-          <div class="plate-title">Divisão Recomendada:</div>
-          <div class="plate-grid">
-            <div class="plate-part" style="grid-column: span 2; background:#dcfce7;">
+        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:14px; padding:14px; margin:12px 0;">
+          <div style="font-weight:700; color:#166534; margin-bottom:8px;">Divisão Recomendada:</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div style="grid-column: span 2; background:white; padding:10px; border-radius:10px; border:1px solid #dcfce7; font-size:13px;">
               <strong>50% Vegetais</strong><br>Crus e cozidos
             </div>
-            <div class="plate-part" style="background:#fef3c7;">
+            <div style="background:white; padding:10px; border-radius:10px; border:1px solid #dcfce7; font-size:13px;">
               <strong>25% Carboidratos</strong><br>De preferência integrais
             </div>
-            <div class="plate-part" style="background:#e0f2fe;">
+            <div style="background:white; padding:10px; border-radius:10px; border:1px solid #dcfce7; font-size:13px;">
               <strong>25% Proteínas</strong><br>Animal e vegetal
             </div>
           </div>
@@ -762,7 +923,7 @@
 
         <div class="shopping-actions">
           <button class="mini-button clear-btn" onclick="clearShopping()">🧹 Limpar lista</button>
-          <button class="mini-button share-btn" onclick="shareShoppingList()">📤 Compartilhar lista</button>
+          <button class="mini-button share-btn" onclick="shareShoppingList()">📤 Compartilhar WhatsApp</button>
           <button class="mini-button pdf-btn" onclick="generateShoppingPDF()">📄 Gerar PDF</button>
         </div>
 
@@ -867,6 +1028,8 @@
     let waterAmount = parseInt(localStorage.getItem('waterAmount') || '0');
     let dailyTasks = JSON.parse(localStorage.getItem('dailyTasks') || '{}');
     let weightHistory = JSON.parse(localStorage.getItem('weightHistory') || '[{"date":"20/07","weight":78.9}]');
+    let mounjaroHistory = JSON.parse(localStorage.getItem('mounjaroHistory') || '[]');
+    let weeklyPlan = JSON.parse(localStorage.getItem('weeklyPlan') || '{}');
 
     const quotes = [
       '"Pequenas escolhas diárias constroem grandes resultados."',
@@ -875,6 +1038,12 @@
       '"Foco no processo, o resultado é consequência."',
       '"Cada refeição é uma oportunidade de nutrir sua saúde."'
     ];
+
+    const spotRotation = [
+      "Abdômen direito", "Abdômen esquerdo", "Coxa direita", "Coxa esquerda"
+    ];
+
+    const weekDays = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
 
     const substitutions = {
       carbo: [
@@ -1300,6 +1469,198 @@
       updateWaterUI();
       updateTasksUI();
       updateWeightUI();
+      updateMounjaroUI();
+      renderWeeklyPlanUI();
+    }
+
+    // MOUNJARO FUNCTIONS
+    function registerMounjaro() {
+      const dose = document.getElementById('mjDose').value;
+      const dateVal = document.getElementById('mjDate').value;
+      const timeVal = document.getElementById('mjTime').value;
+      const spotVal = document.getElementById('mjSpot').value;
+
+      if (!dateVal) {
+        alert('Selecione a data da aplicação.');
+        return;
+      }
+
+      mounjaroHistory.push({
+        dose,
+        date: dateVal,
+        time: timeVal || '12:00',
+        spot: spotVal
+      });
+
+      localStorage.setItem('mounjaroHistory', JSON.stringify(mounjaroHistory));
+      updateMounjaroUI();
+      alert('Aplicação do Mounjaro registrada com sucesso!');
+    }
+
+    function updateMounjaroUI() {
+      const listEl = document.getElementById('mounjaroHistoryList');
+      listEl.innerHTML = '';
+
+      if (mounjaroHistory.length === 0) {
+        // Default Next Spot Suggestion
+        document.getElementById('mounjaroNextSpotText').innerText = "Local sugerido: Abdômen direito";
+        document.getElementById('mounjaroNextDateText').innerText = "Pendente de registro";
+        return;
+      }
+
+      // Sort by date
+      mounjaroHistory.sort((a,b) => new Date(a.date) - new Date(b.date));
+
+      const lastApp = mounjaroHistory[mounjaroHistory.length - 1];
+      const lastDate = new Date(lastApp.date + 'T' + lastApp.time);
+      const nextDate = new Date(lastDate);
+      nextDate.setDate(nextDate.getDate() + 7);
+
+      const dateFormatted = `${String(nextDate.getDate()).padStart(2,'0')}/${String(nextDate.getMonth()+1).padStart(2,'0')}`;
+      document.getElementById('mounjaroNextDateText').innerText = dateFormatted;
+
+      // Calculate Next Spot Rotation
+      const lastSpotIdx = spotRotation.indexOf(lastApp.spot);
+      const nextSpotIdx = (lastSpotIdx + 1) % spotRotation.length;
+      document.getElementById('mounjaroNextSpotText').innerText = `Local sugerido: ${spotRotation[nextSpotIdx]}`;
+
+      // History Render
+      mounjaroHistory.slice().reverse().forEach((item, index) => {
+        const d = new Date(item.date + 'T' + item.time);
+        const dtStr = `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')} às ${item.time}`;
+        const li = document.createElement('li');
+        li.className = 'weight-history-item';
+        li.innerHTML = `
+          <span>📅 ${dtStr}<br><small style="color:#64748b;">${item.spot}</small></span>
+          <span><strong>${item.dose}</strong></span>
+        `;
+        listEl.appendChild(li);
+      });
+    }
+
+    // IDEAS GENERATOR
+    function generateIdeas() {
+      const type = document.getElementById('ideaTypeSelect').value;
+      const container = document.getElementById('ideaResultContainer');
+      container.innerHTML = '';
+
+      if (type === 'fullDay') {
+        let html = '<div style="margin-top:14px;">';
+        Object.keys(meals).forEach(mKey => {
+          const m = meals[mKey];
+          const randomOpt = m.options[Math.floor(Math.random() * m.options.length)];
+          html += `
+            <div class="idea-box">
+              <div class="idea-title">${m.title}</div>
+              <div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${randomOpt.title}</div>
+              <ul style="margin:4px 0 0; padding-left:18px; font-size:13px;">
+                ${randomOpt.items.map(i => `<li>${i.name}</li>`).join('')}
+              </ul>
+            </div>
+          `;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+      } else {
+        const m = meals[type];
+        const randomOpt = m.options[Math.floor(Math.random() * m.options.length)];
+        container.innerHTML = `
+          <div class="idea-box">
+            <div class="idea-title">${m.title}</div>
+            <div style="font-weight:bold; font-size:15px; margin-bottom:6px;">${randomOpt.title}</div>
+            <ul style="margin:4px 0 0; padding-left:18px; font-size:14px;">
+              ${randomOpt.items.map(i => `<li>${i.name}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+      }
+    }
+
+    // WEEKLY PLANNER & AUTO SHOPPING
+    function renderWeeklyPlanUI() {
+      const container = document.getElementById('weeklyPlanContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      weekDays.forEach(day => {
+        const dayPlan = weeklyPlan[day] || {};
+        const div = document.createElement('div');
+        div.className = 'day-plan-card';
+
+        let inner = `<div class="day-plan-title">📌 ${day}</div>`;
+        Object.keys(meals).forEach(mKey => {
+          const m = meals[mKey];
+          const selectedIdx = dayPlan[mKey] !== undefined ? dayPlan[mKey] : 0;
+          inner += `
+            <div style="margin-bottom:8px;">
+              <span style="font-size:12px; font-weight:bold; color:#64748b;">${m.title}:</span>
+              <select class="form-control" style="padding:6px; font-size:12px; margin-top:2px;" onchange="updateDayPlan('${day}', '${mKey}', this.value)">
+                ${m.options.map((opt, idx) => `<option value="${idx}" ${idx == selectedIdx ? 'selected' : ''}>${opt.title}</option>`).join('')}
+              </select>
+            </div>
+          `;
+        });
+
+        div.innerHTML = inner;
+        container.appendChild(div);
+      });
+    }
+
+    function updateDayPlan(day, mealKey, optionIdx) {
+      if (!weeklyPlan[day]) weeklyPlan[day] = {};
+      weeklyPlan[day][mealKey] = parseInt(optionIdx);
+      localStorage.setItem('weeklyPlan', JSON.stringify(weeklyPlan));
+    }
+
+    function autoGenerateWeekPlan() {
+      weekDays.forEach(day => {
+        weeklyPlan[day] = {};
+        Object.keys(meals).forEach(mKey => {
+          const randomIdx = Math.floor(Math.random() * meals[mKey].options.length);
+          weeklyPlan[day][mKey] = randomIdx;
+        });
+      });
+      localStorage.setItem('weeklyPlan', JSON.stringify(weeklyPlan));
+      renderWeeklyPlanUI();
+      alert('Cardápio da semana sorteado com sucesso!');
+    }
+
+    function generateAutoShoppingFromPlan() {
+      // Clear current checks
+      shoppingChecks = {};
+
+      const itemsToMark = new Set();
+
+      weekDays.forEach(day => {
+        const dayPlan = weeklyPlan[day] || {};
+        Object.keys(meals).forEach(mKey => {
+          const m = meals[mKey];
+          const selectedIdx = dayPlan[mKey] !== undefined ? dayPlan[mKey] : 0;
+          const option = m.options[selectedIdx];
+          
+          if (option) {
+            option.items.forEach(it => {
+              // Match item with shopping database
+              Object.keys(shoppingData).forEach(cat => {
+                shoppingData[cat].forEach(sItem => {
+                  if (it.name.toLowerCase().includes(sItem.toLowerCase())) {
+                    itemsToMark.add(sItem);
+                  }
+                });
+              });
+            });
+          }
+        });
+      });
+
+      itemsToMark.forEach(item => {
+        shoppingChecks[item] = true;
+      });
+
+      localStorage.setItem('shoppingChecks', JSON.stringify(shoppingChecks));
+      alert(`Lista de compras gerada! ${itemsToMark.size} itens foram marcados automaticamente.`);
+      openMeal('shoppingScreen');
+      renderShopping();
     }
 
     // WATER WIDGET FUNCTIONS
