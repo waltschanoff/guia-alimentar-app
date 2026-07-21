@@ -25,12 +25,23 @@
       --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
     }
 
+    body.dark-mode {
+      --primary: #22c55e;
+      --primary-light: #16a34a;
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+    }
+
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background: var(--bg-color);
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .app {
@@ -128,6 +139,10 @@
       margin-bottom: 14px;
     }
 
+    body.dark-mode .progress-bar-bg {
+      background: #334155;
+    }
+
     .progress-bar-fill {
       background: var(--primary-light);
       height: 100%;
@@ -147,7 +162,7 @@
       align-items: center;
       gap: 10px;
       padding: 8px 10px;
-      background: #f8fafc;
+      background: var(--bg-color);
       border-radius: var(--radius-md);
       cursor: pointer;
       font-size: 14px;
@@ -157,13 +172,19 @@
     .check-item.checked {
       text-decoration: line-through;
       color: var(--text-muted);
-      background: #f1f5f9;
+      opacity: 0.7;
     }
 
     /* Water Widget */
     .water-card {
       background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
       border: 1px solid #bfdbfe;
+    }
+
+    body.dark-mode .water-card {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+      border: 1px solid #1d4ed8;
+      color: white;
     }
 
     .water-header {
@@ -181,10 +202,18 @@
       gap: 6px;
     }
 
+    body.dark-mode .water-title {
+      color: #93c5fd;
+    }
+
     .water-status {
       font-weight: 800;
       color: #2563eb;
       font-size: 18px;
+    }
+
+    body.dark-mode .water-status {
+      color: #bfdbfe;
     }
 
     .water-btns {
@@ -215,6 +244,10 @@
       font-weight: bold;
       color: #166534;
       text-align: center;
+    }
+
+    body.dark-mode .water-alert {
+      color: #86efac;
     }
 
     /* Buttons & Nav */
@@ -275,6 +308,8 @@
     .mounjaro-btn { background: #7e22ce; }
     .plan-btn { background: #0284c7; }
     .idea-btn { background: #d97706; }
+    .stats-btn { background: #0284c7; }
+    .backup-btn { background: #475569; }
 
     .option-title {
       margin: 0 0 10px;
@@ -287,7 +322,7 @@
 
     .option-subtitle {
       font-size: 13px;
-      color: #166534;
+      color: var(--primary-light);
       font-weight: 700;
       margin-bottom: 8px;
     }
@@ -320,7 +355,12 @@
 
     .back-btn {
       background: #0f172a;
+      color: white;
       margin-bottom: 14px;
+    }
+
+    body.dark-mode .back-btn {
+      background: #334155;
     }
 
     .back-bottom-btn {
@@ -338,7 +378,7 @@
     .food-row {
       margin: 10px 0;
       padding: 12px;
-      background: #f8fafc;
+      background: var(--bg-color);
       border-radius: var(--radius-md);
       border: 1px solid var(--border-color);
     }
@@ -358,11 +398,16 @@
       font-size: 12px;
     }
 
+    body.dark-mode .sub-btn {
+      background: #334155;
+    }
+
     .substitutions {
       margin-top: 10px;
       padding: 10px;
-      background: #f1f5f9;
+      background: var(--card-bg);
       border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
     }
 
     .substitutions ul {
@@ -382,18 +427,27 @@
     }
 
     .fav-list, .print-list {
-      padding-left: 18px;
+      padding-left: 0;
+      list-style: none;
     }
 
-    .fav-list li, .print-list li {
+    .fav-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
       margin-bottom: 8px;
+      font-size: 14px;
     }
 
     .shopping-category {
       margin-top: 14px;
       padding: 10px 12px;
       border-radius: var(--radius-md);
-      background: #e2e8f0;
+      background: var(--border-color);
       font-weight: 700;
       font-size: 14px;
     }
@@ -404,7 +458,7 @@
       gap: 8px;
       margin: 8px 0;
       padding: 8px 10px;
-      background: #f8fafc;
+      background: var(--bg-color);
       border-radius: var(--radius-md);
       cursor: pointer;
       font-size: 14px;
@@ -413,7 +467,7 @@
     .shopping-item.checked {
       text-decoration: line-through;
       color: var(--text-muted);
-      background: #ecfdf5;
+      opacity: 0.6;
     }
 
     .small-note {
@@ -431,6 +485,7 @@
     .print-card {
       background: #fff7ed;
       border: 1px dashed #fb923c;
+      color: #0f172a;
     }
 
     .print-empty {
@@ -439,14 +494,49 @@
     }
 
     .recipe-card {
-      background: #fffaf5;
-      border: 1px solid #fed7aa;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
     }
 
     .recipe-title {
       margin: 0 0 8px;
-      color: #9a3412;
+      color: var(--primary-light);
       font-size: 18px;
+    }
+
+    .recipe-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      background: #fef3c7;
+      color: #92400e;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .filter-btn-group {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+    }
+
+    .filter-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+      background: var(--bg-color);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .filter-btn.active {
+      background: var(--primary-light);
+      color: white;
+      border-color: var(--primary-light);
     }
 
     .shopping-actions {
@@ -460,7 +550,7 @@
     .share-btn { background: #2563eb; }
     .pdf-btn { background: #7c3aed; }
 
-    /* Weight & Form Styles */
+    /* Form Styles */
     .form-group {
       display: flex;
       flex-direction: column;
@@ -480,7 +570,8 @@
       border-radius: var(--radius-md);
       font-size: 15px;
       outline: none;
-      background: #fff;
+      background: var(--card-bg);
+      color: var(--text-main);
     }
 
     .weight-input-group {
@@ -496,6 +587,8 @@
       border-radius: var(--radius-md);
       font-size: 16px;
       outline: none;
+      background: var(--card-bg);
+      color: var(--text-main);
     }
 
     .weight-stats {
@@ -506,7 +599,7 @@
     }
 
     .stat-box {
-      background: #f8fafc;
+      background: var(--bg-color);
       padding: 12px;
       border-radius: var(--radius-md);
       border: 1px solid var(--border-color);
@@ -516,7 +609,7 @@
     .stat-val {
       font-size: 20px;
       font-weight: 800;
-      color: #059669;
+      color: var(--primary-light);
     }
 
     .stat-label {
@@ -552,6 +645,7 @@
       padding: 14px;
       border-radius: var(--radius-md);
       margin-bottom: 14px;
+      color: #0f172a;
     }
 
     .mounjaro-next-title {
@@ -573,33 +667,28 @@
       font-weight: 600;
     }
 
-    /* Planning & Weekly Styles */
-    .day-plan-card {
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 12px;
-      margin-bottom: 12px;
-    }
-
-    .day-plan-title {
-      font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 8px;
-    }
-
-    .idea-box {
-      background: #fffbeb;
-      border: 1px solid #fef3c7;
-      border-radius: var(--radius-md);
+    /* Assistant Insight Card */
+    .assistant-card {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border: 1px solid #a7f3d0;
+      color: #065f46;
       padding: 14px;
-      margin-top: 10px;
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
     }
 
-    .idea-title {
+    .assistant-title {
       font-weight: 800;
-      color: #b45309;
+      font-size: 15px;
       margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .assistant-text {
+      font-size: 13px;
+      line-height: 1.4;
     }
 
     @media print {
@@ -629,6 +718,7 @@
       <div class="card greeting-card">
         <div class="greeting-header">
           <div class="greeting-title" id="greetingText">Bom dia, Gisele 🌿</div>
+          <button style="background:rgba(255,255,255,0.2); border:none; padding:6px 10px; font-size:12px;" onclick="toggleTheme()">🌙 Modo Escuro</button>
         </div>
         <div class="greeting-date" id="currentDateText">Segunda-feira, 20 de Julho</div>
         <div class="quote-box" id="quoteText">"Pequenas escolhas diárias constroem grandes resultados."</div>
@@ -692,6 +782,7 @@
         <button class="action-button plan-btn" onclick="openMeal('planningScreen')">📅 Planejar a Semana</button>
         <button class="action-button mounjaro-btn" onclick="openMeal('mounjaroScreen')">💉 Controle do Mounjaro</button>
         <button class="action-button peso-btn" onclick="openMeal('weightScreen')">⚖️ Controle de Peso</button>
+        <button class="action-button stats-btn" onclick="openMeal('statsScreen')">📊 Estatísticas & Assistente</button>
 
         <hr class="soft">
         <div class="sub">Consultar plano alimentar:</div>
@@ -708,7 +799,56 @@
         <button class="action-button favoritos-btn" onclick="openMeal('favScreen')">⭐ Favoritos</button>
         <button class="action-button compras-btn" onclick="openMeal('shoppingScreen')">🛒 Lista de compras</button>
         <button class="action-button receitas-btn" onclick="openMeal('recipesScreen')">📖 Receitas</button>
+        <button class="action-button backup-btn" onclick="openMeal('backupScreen')">💾 Backup & Configurações</button>
       </div>
+    </div>
+
+    <!-- TELA ESTATÍSTICAS E ASSISTENTE -->
+    <div id="statsScreen" class="screen">
+      <button class="back-btn" onclick="goHome()">← Voltar</button>
+
+      <div class="card">
+        <h3 class="option-title" style="background:#0284c7;">📊 Estatísticas & Desempenho</h3>
+
+        <div class="assistant-card">
+          <div class="assistant-title">🤖 Insights do Assistente</div>
+          <div class="assistant-text" id="assistantInsightText">Carregando seus insights...</div>
+        </div>
+
+        <div class="weight-stats">
+          <div class="stat-box">
+            <div class="stat-val" id="streakVal">0 dias</div>
+            <div class="stat-label">Sequência (Streak)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="mounjaroTotalVal">0</div>
+            <div class="stat-label">Aplicações Mounjaro</div>
+          </div>
+        </div>
+
+        <button style="width:100%; background:#7c3aed; font-weight:bold; padding:12px; margin-top:10px;" onclick="generateNutriReportPDF()">📄 Exportar Relatório para Nutri (PDF)</button>
+      </div>
+
+      <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
+    </div>
+
+    <!-- TELA BACKUP -->
+    <div id="backupScreen" class="screen">
+      <button class="back-btn" onclick="goHome()">← Voltar</button>
+
+      <div class="card">
+        <h3 class="option-title" style="background:#475569;">💾 Backup & Segurança</h3>
+        <div class="sub">Exporte ou importe seus dados para nunca perder seu histórico.</div>
+
+        <button style="width:100%; background:#0f766e; padding:12px; font-weight:bold; margin-bottom:10px;" onclick="exportBackupData()">📥 Baixar Arquivo de Backup (JSON)</button>
+        
+        <div class="form-group" style="margin-top:10px;">
+          <label>Restaurar de arquivo:</label>
+          <input type="file" id="importFileInput" accept=".json" class="form-control" onchange="importBackupData(event)" />
+        </div>
+      </div>
+
+      <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
     </div>
 
     <!-- TELA ESTOU SEM IDEIAS -->
@@ -867,13 +1007,13 @@
         <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:14px; padding:14px; margin:12px 0;">
           <div style="font-weight:700; color:#166534; margin-bottom:8px;">Divisão Recomendada:</div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-            <div style="grid-column: span 2; background:white; padding:10px; border-radius:10px; border:1px solid #dcfce7; font-size:13px;">
+            <div style="grid-column: span 2; background:white; padding:10px; border-radius:10px; border:1px solid #dcfce7; font-size:13px; color:#0f172a;">
               <strong>50% Vegetais</strong><br>Crus e cozidos
             </div>
-            <div style="background:white; padding:10px; border-radius:10px; border:1px solid #dcfce7; font-size:13px;">
+            <div style="background:white; padding:10px; border-radius:10px; border:1px solid #dcfce7; font-size:13px; color:#0f172a;">
               <strong>25% Carboidratos</strong><br>De preferência integrais
             </div>
-            <div style="background:white; padding:10px; border-radius:10px; border:1px solid #dcfce7; font-size:13px;">
+            <div style="background:white; padding:10px; border-radius:10px; border:1px solid #dcfce7; font-size:13px; color:#0f172a;">
               <strong>25% Proteínas</strong><br>Animal e vegetal
             </div>
           </div>
@@ -908,7 +1048,12 @@
     <div id="favScreen" class="screen">
       <button class="back-btn" onclick="goHome()">← Voltar</button>
       <div class="card">
-        <h3 class="option-title" style="background:#1d4ed8;">Favoritos</h3>
+        <h3 class="option-title" style="background:#1d4ed8;">⭐ Meus Favoritos</h3>
+        
+        <div class="form-group">
+          <input type="text" id="favSearchInput" placeholder="🔍 Pesquisar favorito..." class="form-control" oninput="loadFavorites()" />
+        </div>
+
         <ul id="list" class="fav-list"></ul>
       </div>
       <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
@@ -944,71 +1089,17 @@
     <div id="recipesScreen" class="screen">
       <button class="back-btn" onclick="goHome()">← Voltar</button>
 
-      <div class="card recipe-card">
-        <h3 class="recipe-title">🍳 Ovos cozidos cremosos</h3>
-        <div class="sub"><strong>Ingredientes</strong></div>
-        <ul class="details">
-          <li>1 ovo cozido</li>
-          <li>1 colher de sobremesa de requeijão light</li>
-          <li>3 tomatinhos cereja</li>
-          <li>Temperos a gosto</li>
-        </ul>
-        <div class="sub"><strong>Modo de preparo</strong></div>
-        <p>Pique os ovos em cubinhos pequenos, junte todos os ingredientes e pronto.</p>
+      <div class="card">
+        <h3 class="option-title" style="background:#ea580c;">📖 Receitas Especiais</h3>
+        <div class="filter-btn-group">
+          <button class="filter-btn active" onclick="filterRecipes('all', this)">Todas</button>
+          <button class="filter-btn" onclick="filterRecipes('proteico', this)">Proteicas</button>
+          <button class="filter-btn" onclick="filterRecipes('lowcarb', this)">Low Carb</button>
+          <button class="filter-btn" onclick="filterRecipes('lanche', this)">Lanches</button>
+        </div>
       </div>
 
-      <div class="card recipe-card">
-        <h3 class="recipe-title">🐟 Patê fit</h3>
-        <div class="sub"><strong>Ingredientes</strong></div>
-        <ul class="details">
-          <li>1 lata de atum ou 200g de frango cozido desfiado</li>
-          <li>1/2 cenoura</li>
-          <li>2 colheres de sopa cheias de requeijão light</li>
-          <li>Temperos a gosto</li>
-        </ul>
-        <div class="sub"><strong>Modo de preparo</strong></div>
-        <p>Misture todos os ingredientes com um garfo.</p>
-      </div>
-
-      <div class="card recipe-card">
-        <h3 class="recipe-title">🥛 Requeijão fake de iogurte</h3>
-        <div class="sub"><strong>Ingredientes</strong></div>
-        <ul class="details">
-          <li>Iogurte natural</li>
-          <li>Temperos a gosto</li>
-        </ul>
-        <div class="sub"><strong>Modo de preparo</strong></div>
-        <p>Em um coador de café ou pano, deixe o iogurte dessorar na geladeira de um dia para o outro. Depois que tirar o soro, tempere a massa a gosto.</p>
-        <div class="note">Dica de tempero: lemon pepper, orégano e azeite.</div>
-      </div>
-
-      <div class="card recipe-card">
-        <h3 class="recipe-title">🥞 Aveioca</h3>
-        <div class="sub"><strong>Ingredientes</strong></div>
-        <ul class="details">
-          <li>2 colheres de sopa de tapioca</li>
-          <li>2 colheres de sopa de aveia</li>
-          <li>3 colheres de sopa de água</li>
-          <li>Temperos a gosto</li>
-          <li>Mix de sementes a gosto (chia, linhaça, gergelim)</li>
-        </ul>
-        <div class="sub"><strong>Modo de preparo</strong></div>
-        <p>Junte todos os ingredientes e bata com um garfo até ficar homogêneo. Despeje em frigideira untada ou antiaderente em fogo baixo. Quando soltar do fundo, vire e deixe dourar. Recheie como preferir.</p>
-      </div>
-
-      <div class="card recipe-card">
-        <h3 class="recipe-title">☕ Cappuccino saudável</h3>
-        <div class="sub"><strong>Ingredientes</strong></div>
-        <ul class="details">
-          <li>300 g de leite em pó desnatado</li>
-          <li>50 g de café solúvel</li>
-          <li>1/2 xícara de cacau em pó</li>
-          <li>2 colheres de sopa de canela em pó</li>
-          <li>2 colheres de chá de bicarbonato de sódio</li>
-        </ul>
-        <div class="sub"><strong>Modo de preparo</strong></div>
-        <p>Misture tudo muito bem. Para servir, use 4 colheres da mistura para uma xícara de água, ou 2 a 3 colheres para uma xícara de leite. Mexa bem e pronto.</p>
-      </div>
+      <div id="recipesContainer"></div>
 
       <button class="back-bottom-btn" onclick="goHome()">Voltar</button>
     </div>
@@ -1030,6 +1121,7 @@
     let weightHistory = JSON.parse(localStorage.getItem('weightHistory') || '[{"date":"20/07","weight":78.9}]');
     let mounjaroHistory = JSON.parse(localStorage.getItem('mounjaroHistory') || '[]');
     let weeklyPlan = JSON.parse(localStorage.getItem('weeklyPlan') || '{}');
+    let streakDays = parseInt(localStorage.getItem('streakDays') || '1');
 
     const quotes = [
       '"Pequenas escolhas diárias constroem grandes resultados."',
@@ -1044,6 +1136,49 @@
     ];
 
     const weekDays = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
+
+    const recipeData = [
+      {
+        title: "🍳 Ovos cozidos cremosos",
+        cat: ["proteico", "lowcarb"],
+        time: "10 min",
+        yield: "1 porção",
+        ingredients: ["1 ovo cozido", "1 colher de sobremesa de requeijão light", "3 tomatinhos cereja", "Temperos a gosto"],
+        prep: "Pique os ovos em cubinhos pequenos, junte todos os ingredientes e pronto."
+      },
+      {
+        title: "🐟 Patê fit",
+        cat: ["proteico", "lanche"],
+        time: "5 min",
+        yield: "2 porções",
+        ingredients: ["1 lata de atum ou 200g de frango cozido desfiado", "1/2 cenoura", "2 colheres de sopa cheias de requeijão light", "Temperos a gosto"],
+        prep: "Misture todos os ingredientes com um garfo."
+      },
+      {
+        title: "🥛 Requeijão fake de iogurte",
+        cat: ["lowcarb", "lanche"],
+        time: "12h (geladeira)",
+        yield: "4 porções",
+        ingredients: ["Iogurte natural", "Temperos a gosto (lemon pepper, orégano, azeite)"],
+        prep: "Em um coador de café ou pano, deixe o iogurte dessorar na geladeira de um dia para o outro. Depois tempere a massa."
+      },
+      {
+        title: "🥞 Aveioca",
+        cat: ["lanche"],
+        time: "8 min",
+        yield: "1 porção",
+        ingredients: ["2 col. de sopa de tapioca", "2 col. de sopa de aveia", "3 col. de sopa de água", "Temperos e mix de sementes a gosto"],
+        prep: "Bata tudo com um garfo. Despeje em frigideira untada em fogo baixo. Vire e doure."
+      },
+      {
+        title: "☕ Cappuccino saudável",
+        cat: ["lanche"],
+        time: "5 min",
+        yield: "10 porções",
+        ingredients: ["300g leite em pó desnatado", "50g café solúvel", "1/2 xícara cacau em pó", "2 col. sopa canela", "2 col. chá bicarbonato"],
+        prep: "Misture tudo muito bem. Para servir, use 4 colheres da mistura para uma xícara de água quente."
+      }
+    ];
 
     const substitutions = {
       carbo: [
@@ -1451,6 +1586,9 @@
 
     // INIT DASHBOARD DATA
     function initDashboard() {
+      const isDark = localStorage.getItem('themeDark') === 'true';
+      if (isDark) document.body.classList.add('dark-mode');
+
       const now = new Date();
       const hours = now.getHours();
       let greeting = "Bom dia, Gisele 🌿";
@@ -1471,6 +1609,132 @@
       updateWeightUI();
       updateMounjaroUI();
       renderWeeklyPlanUI();
+      renderRecipes('all');
+      updateAssistantUI();
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('themeDark', isDark);
+    }
+
+    // ASSISTANT & STATS
+    function updateAssistantUI() {
+      document.getElementById('streakVal').innerText = `${streakDays} dias`;
+      document.getElementById('mounjaroTotalVal').innerText = `${mounjaroHistory.length}`;
+
+      const latestWeight = weightHistory.length > 0 ? weightHistory[weightHistory.length - 1].weight : 78.9;
+      const initialWeight = weightHistory.length > 0 ? weightHistory[0].weight : 78.9;
+      const lost = (initialWeight - latestWeight).toFixed(1);
+      const remaining = (latestWeight - 65.0).toFixed(1);
+
+      let text = `Você está há <strong>${streakDays} dias consecutivos</strong> seguindo o plano! 👏<br>`;
+      if (lost > 0) {
+        text += `Já eliminou <strong>${lost} kg</strong> desde o início do acompanhamento. `;
+      }
+      text += `Faltam <strong>${remaining} kg</strong> para atingir a meta de 65,0 kg. Mantenha o foco na hidratação!`;
+
+      document.getElementById('assistantInsightText').innerHTML = text;
+    }
+
+    function generateNutriReportPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      doc.text("Relatorio de Acompanhamento Nutricional", 14, 20);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(11);
+      doc.text(`Paciente: Gisele Lopes Waltschanoff`, 14, 30);
+      doc.text(`Sequencia no plano: ${streakDays} dias`, 14, 38);
+
+      const latestWeight = weightHistory.length > 0 ? weightHistory[weightHistory.length - 1].weight : 78.9;
+      doc.text(`Peso Atual: ${latestWeight} kg (Meta: 65.0 kg)`, 14, 46);
+      doc.text(`Aplicaçoes de Mounjaro: ${mounjaroHistory.length} registradas`, 14, 54);
+
+      let y = 68;
+      doc.setFont("helvetica", "bold");
+      doc.text("Historico de Peso:", 14, y);
+      y += 8;
+      doc.setFont("helvetica", "normal");
+
+      weightHistory.slice().reverse().forEach(w => {
+        doc.text(`• ${w.date}: ${w.weight} kg`, 14, y);
+        y += 6;
+      });
+
+      doc.save("relatorio-nutricional-gisele.pdf");
+    }
+
+    // BACKUP & RESTORE
+    function exportBackupData() {
+      const data = {
+        favs, shoppingChecks, waterAmount, dailyTasks, weightHistory, mounjaroHistory, weeklyPlan, streakDays
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'backup-guia-alimentar.json';
+      a.click();
+    }
+
+    function importBackupData(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const data = JSON.parse(evt.target.result);
+          if (data.favs) localStorage.setItem('favs', JSON.stringify(data.favs));
+          if (data.shoppingChecks) localStorage.setItem('shoppingChecks', JSON.stringify(data.shoppingChecks));
+          if (data.waterAmount) localStorage.setItem('waterAmount', data.waterAmount.toString());
+          if (data.dailyTasks) localStorage.setItem('dailyTasks', JSON.stringify(data.dailyTasks));
+          if (data.weightHistory) localStorage.setItem('weightHistory', JSON.stringify(data.weightHistory));
+          if (data.mounjaroHistory) localStorage.setItem('mounjaroHistory', JSON.stringify(data.mounjaroHistory));
+          if (data.weeklyPlan) localStorage.setItem('weeklyPlan', JSON.stringify(data.weeklyPlan));
+
+          alert('Backup restaurado com sucesso! O aplicativo será recarregado.');
+          location.reload();
+        } catch (err) {
+          alert('Erro ao ler o arquivo de backup.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // RECIPES & FILTERS
+    function renderRecipes(catFilter) {
+      const container = document.getElementById('recipesContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      recipeData.forEach(r => {
+        if (catFilter !== 'all' && !r.cat.includes(catFilter)) return;
+
+        const div = document.createElement('div');
+        div.className = 'card recipe-card';
+        div.innerHTML = `
+          <h3 class="recipe-title">${r.title}</h3>
+          <span class="recipe-badge">⏱️ ${r.time} • 🍽️ ${r.yield}</span>
+          <div class="sub"><strong>Ingredientes</strong></div>
+          <ul class="details">
+            ${r.ingredients.map(i => `<li>${i}</li>`).join('')}
+          </ul>
+          <div class="sub"><strong>Modo de preparo</strong></div>
+          <p style="font-size:14px; line-height:1.4;">${r.prep}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function filterRecipes(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderRecipes(cat);
     }
 
     // MOUNJARO FUNCTIONS
@@ -1494,21 +1758,21 @@
 
       localStorage.setItem('mounjaroHistory', JSON.stringify(mounjaroHistory));
       updateMounjaroUI();
+      updateAssistantUI();
       alert('Aplicação do Mounjaro registrada com sucesso!');
     }
 
     function updateMounjaroUI() {
       const listEl = document.getElementById('mounjaroHistoryList');
+      if (!listEl) return;
       listEl.innerHTML = '';
 
       if (mounjaroHistory.length === 0) {
-        // Default Next Spot Suggestion
         document.getElementById('mounjaroNextSpotText').innerText = "Local sugerido: Abdômen direito";
         document.getElementById('mounjaroNextDateText').innerText = "Pendente de registro";
         return;
       }
 
-      // Sort by date
       mounjaroHistory.sort((a,b) => new Date(a.date) - new Date(b.date));
 
       const lastApp = mounjaroHistory[mounjaroHistory.length - 1];
@@ -1519,19 +1783,17 @@
       const dateFormatted = `${String(nextDate.getDate()).padStart(2,'0')}/${String(nextDate.getMonth()+1).padStart(2,'0')}`;
       document.getElementById('mounjaroNextDateText').innerText = dateFormatted;
 
-      // Calculate Next Spot Rotation
       const lastSpotIdx = spotRotation.indexOf(lastApp.spot);
       const nextSpotIdx = (lastSpotIdx + 1) % spotRotation.length;
       document.getElementById('mounjaroNextSpotText').innerText = `Local sugerido: ${spotRotation[nextSpotIdx]}`;
 
-      // History Render
-      mounjaroHistory.slice().reverse().forEach((item, index) => {
+      mounjaroHistory.slice().reverse().forEach((item) => {
         const d = new Date(item.date + 'T' + item.time);
         const dtStr = `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')} às ${item.time}`;
         const li = document.createElement('li');
         li.className = 'weight-history-item';
         li.innerHTML = `
-          <span>📅 ${dtStr}<br><small style="color:#64748b;">${item.spot}</small></span>
+          <span>📅 ${dtStr}<br><small style="color:var(--text-muted);">${item.spot}</small></span>
           <span><strong>${item.dose}</strong></span>
         `;
         listEl.appendChild(li);
@@ -1550,8 +1812,8 @@
           const m = meals[mKey];
           const randomOpt = m.options[Math.floor(Math.random() * m.options.length)];
           html += `
-            <div class="idea-box">
-              <div class="idea-title">${m.title}</div>
+            <div style="background:var(--bg-color); border:1px solid var(--border-color); border-radius:14px; padding:12px; margin-top:10px;">
+              <div style="font-weight:bold; color:var(--primary-light); margin-bottom:4px;">${m.title}</div>
               <div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${randomOpt.title}</div>
               <ul style="margin:4px 0 0; padding-left:18px; font-size:13px;">
                 ${randomOpt.items.map(i => `<li>${i.name}</li>`).join('')}
@@ -1565,8 +1827,8 @@
         const m = meals[type];
         const randomOpt = m.options[Math.floor(Math.random() * m.options.length)];
         container.innerHTML = `
-          <div class="idea-box">
-            <div class="idea-title">${m.title}</div>
+          <div style="background:var(--bg-color); border:1px solid var(--border-color); border-radius:14px; padding:12px; margin-top:10px;">
+            <div style="font-weight:bold; color:var(--primary-light); margin-bottom:4px;">${m.title}</div>
             <div style="font-weight:bold; font-size:15px; margin-bottom:6px;">${randomOpt.title}</div>
             <ul style="margin:4px 0 0; padding-left:18px; font-size:14px;">
               ${randomOpt.items.map(i => `<li>${i.name}</li>`).join('')}
@@ -1585,15 +1847,19 @@
       weekDays.forEach(day => {
         const dayPlan = weeklyPlan[day] || {};
         const div = document.createElement('div');
-        div.className = 'day-plan-card';
+        div.style.background = 'var(--bg-color)';
+        div.style.border = '1px solid var(--border-color)';
+        div.style.borderRadius = '14px';
+        div.style.padding = '12px';
+        div.style.marginBottom = '12px';
 
-        let inner = `<div class="day-plan-title">📌 ${day}</div>`;
+        let inner = `<div style="font-weight:800; color:var(--primary-light); margin-bottom:8px;">📌 ${day}</div>`;
         Object.keys(meals).forEach(mKey => {
           const m = meals[mKey];
           const selectedIdx = dayPlan[mKey] !== undefined ? dayPlan[mKey] : 0;
           inner += `
             <div style="margin-bottom:8px;">
-              <span style="font-size:12px; font-weight:bold; color:#64748b;">${m.title}:</span>
+              <span style="font-size:12px; font-weight:bold; color:var(--text-muted);">${m.title}:</span>
               <select class="form-control" style="padding:6px; font-size:12px; margin-top:2px;" onchange="updateDayPlan('${day}', '${mKey}', this.value)">
                 ${m.options.map((opt, idx) => `<option value="${idx}" ${idx == selectedIdx ? 'selected' : ''}>${opt.title}</option>`).join('')}
               </select>
@@ -1626,9 +1892,7 @@
     }
 
     function generateAutoShoppingFromPlan() {
-      // Clear current checks
       shoppingChecks = {};
-
       const itemsToMark = new Set();
 
       weekDays.forEach(day => {
@@ -1640,7 +1904,6 @@
           
           if (option) {
             option.items.forEach(it => {
-              // Match item with shopping database
               Object.keys(shoppingData).forEach(cat => {
                 shoppingData[cat].forEach(sItem => {
                   if (it.name.toLowerCase().includes(sItem.toLowerCase())) {
@@ -1748,6 +2011,7 @@
       input.value = '';
       updateWeightUI();
       updateTasksUI();
+      updateAssistantUI();
       alert('Peso registrado com sucesso!');
     }
 
@@ -1756,6 +2020,7 @@
         weightHistory.splice(index, 1);
         localStorage.setItem('weightHistory', JSON.stringify(weightHistory));
         updateWeightUI();
+        updateAssistantUI();
       }
     }
 
@@ -1769,8 +2034,8 @@
       const remaining = Math.max(0, latest - target);
       document.getElementById('weightRemainingVal').innerText = `${remaining.toFixed(1)} kg`;
 
-      // Render History List
       const listEl = document.getElementById('weightHistoryList');
+      if (!listEl) return;
       listEl.innerHTML = '';
       weightHistory.slice().reverse().forEach((item, index) => {
         const realIndex = weightHistory.length - 1 - index;
@@ -1792,7 +2057,6 @@
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
 
-      // Adjust canvas resolution
       canvas.width = canvas.parentElement.clientWidth - 40;
       canvas.height = 180;
 
@@ -1814,7 +2078,6 @@
       const getX = (i) => padding + (i * (canvas.width - 2 * padding)) / (weightHistory.length - 1);
       const getY = (w) => canvas.height - padding - ((w - minWeight) * (canvas.height - 2 * padding)) / (maxWeight - minWeight);
 
-      // Draw Grid Lines
       ctx.strokeStyle = '#e2e8f0';
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -1824,7 +2087,6 @@
       ctx.lineTo(canvas.width - padding, getY(maxWeight));
       ctx.stroke();
 
-      // Draw Chart Line
       ctx.strokeStyle = '#059669';
       ctx.lineWidth = 3;
       ctx.beginPath();
@@ -1836,7 +2098,6 @@
       });
       ctx.stroke();
 
-      // Draw Points & Labels
       weightHistory.forEach((pt, i) => {
         const x = getX(i);
         const y = getY(pt.weight);
@@ -1846,7 +2107,7 @@
         ctx.arc(x, y, 5, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.fillStyle = '#0f172a';
+        ctx.fillStyle = document.body.classList.contains('dark-mode') ? '#f8fafc' : '#0f172a';
         ctx.font = '10px sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(`${pt.weight}kg`, x, y - 10);
@@ -1869,24 +2130,49 @@
     }
 
     function save(item){
-      favs.push(item);
+      const now = new Date();
+      const dtStr = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}`;
+      favs.push({ title: item, date: dtStr });
       localStorage.setItem('favs', JSON.stringify(favs));
-      alert('Salvo!');
+      alert('Salvo nos Favoritos!');
+      loadFavorites();
+    }
+
+    function deleteFav(index) {
+      favs.splice(index, 1);
+      localStorage.setItem('favs', JSON.stringify(favs));
       loadFavorites();
     }
 
     function loadFavorites(){
       const list = document.getElementById('list');
+      if (!list) return;
       list.innerHTML = '';
-      if (favs.length === 0) {
+
+      const query = (document.getElementById('favSearchInput')?.value || '').toLowerCase();
+      const filtered = favs.filter(f => (typeof f === 'string' ? f : f.title).toLowerCase().includes(query));
+
+      if (filtered.length === 0) {
         const li = document.createElement('li');
-        li.innerText = 'Nenhum favorito salvo ainda.';
+        li.innerText = 'Nenhum favorito encontrado.';
+        li.style.color = 'var(--text-muted)';
         list.appendChild(li);
         return;
       }
-      favs.forEach(f => {
+
+      filtered.forEach((f, idx) => {
+        const title = typeof f === 'string' ? f : f.title;
+        const date = typeof f === 'object' && f.date ? f.date : '';
+
         const li = document.createElement('li');
-        li.innerText = f;
+        li.className = 'fav-item';
+        li.innerHTML = `
+          <div>
+            <strong>${title}</strong>
+            ${date ? `<br><small style="color:var(--text-muted);">Salvo em ${date}</small>` : ''}
+          </div>
+          <button style="background:#dc2626; padding:6px 10px; font-size:12px;" onclick="deleteFav(${idx})">✕ Excluir</button>
+        `;
         list.appendChild(li);
       });
     }
@@ -1930,7 +2216,7 @@
           `;
         });
 
-        html += `<button onclick="save('${meal.title} - ${opt.title}')">Salvar</button></div>`;
+        html += `<button onclick="save('${meal.title} - ${opt.title}')">Salvar nos Favoritos</button></div>`;
       });
 
       html += `<button class="back-bottom-btn" onclick="goHome()">Voltar</button>`;
@@ -2052,7 +2338,7 @@
       doc.setFontSize(11);
 
       let y = 32;
-      selectedItems.forEach((item, index) => {
+      selectedItems.forEach((item) => {
         doc.text(`• ${item}`, 14, y);
         y += 8;
         if (y > 280) {
